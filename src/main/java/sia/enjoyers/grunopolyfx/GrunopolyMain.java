@@ -122,6 +122,18 @@ public class GrunopolyMain {
         });
 
         // Create temporary player
+        Pane newPane = getPane();
+
+        board.getChildren().add(newPane);
+
+        step.setOnAction(event -> {
+            int ranNum = (int) Math.max(2, 1 + (Math.random() * 12));
+            System.out.println(ranNum);
+            Step(ranNum, newPane);
+        });
+    }
+
+    private Pane getPane() {
         Pane newPane = new Pane();
         newPane.setVisible(true);
         newPane.setPrefSize(20, 20);
@@ -138,14 +150,7 @@ public class GrunopolyMain {
 
         newPane.setLayoutX(X);
         newPane.setLayoutY(Y);
-
-        board.getChildren().add(newPane);
-
-        step.setOnAction(event -> {
-            int ranNum = (int) Math.max(2, 1 + (Math.random() * 12));
-            System.out.println(ranNum);
-            Step(ranNum, newPane);
-        });
+        return newPane;
     }
 
     public void Step(int stepCount, Pane player) {
