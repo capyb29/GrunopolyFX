@@ -30,7 +30,7 @@ tasks.withType(JavaCompile) {
 
 application {
     mainModule = 'sia.enjoyers.grunopolyfx'
-    mainClass = 'sia.enjoyers.grunopolyfx.HelloApplication'
+    mainClass = 'sia.enjoyers.grunopolyfx.Main'
 }
 
 javafx {
