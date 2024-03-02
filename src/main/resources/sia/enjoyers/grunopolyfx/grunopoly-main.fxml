@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="board" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1139.0" prefWidth="1637.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<Pane fx:id="board" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1139.0" prefWidth="1637.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sia.enjoyers.grunopolyfx.GrunopolyMain">
    <children>
       <Pane fx:id="boardimg" prefHeight="1139.0" prefWidth="1139.0" style="-fx-background-image: url('https://cdn.discordapp.com/attachments/1200418428243148802/1213608476849471548/Board.png?ex=65f617f8&amp;is=65e3a2f8&amp;hm=67b8bac31391561a723144236d35794e81e9041c369635755c638154ffdec65d&amp;'); -fx-background-size: cover;">
          <children>
@@ -204,6 +204,8 @@
                         <Font name="Comic Sans MS Bold" size="21.0" />
                      </font>
                   </Label>
+
+
                </children></Pane>
             <Label alignment="TOP_CENTER" layoutX="25.0" layoutY="9.0" prefHeight="30.0" prefWidth="101.0" text="Nichts" textAlignment="CENTER" wrapText="true">
                <font>
@@ -218,6 +220,47 @@
                   <Font name="Comic Sans MS Bold" size="21.0" />
                </font>
             </Label>
+            <Pane layoutX="1057.0" layoutY="1068.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x0" />
+            <Pane layoutX="938.0" layoutY="1068.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x1" />
+            <Pane layoutX="844.0" layoutY="1068.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x2" />
+            <Pane layoutX="752.0" layoutY="1068.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x3" />
+            <Pane layoutX="658.0" layoutY="1068.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x4" />
+            <Pane layoutX="563.0" layoutY="1068.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x5" />
+            <Pane layoutX="470.0" layoutY="1068.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x6" />
+            <Pane layoutX="376.0" layoutY="1068.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x7" />
+            <Pane layoutX="284.0" layoutY="1068.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x8" />
+            <Pane layoutX="189.0" layoutY="1068.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x9" />
+            <Pane layoutX="25.0" layoutY="1100.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x10" />
+            <Pane layoutX="51.0" layoutY="950.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x11" />
+            <Pane layoutX="51.0" layoutY="852.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x12" />
+            <Pane layoutX="51.0" layoutY="754.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x13" />
+            <Pane layoutX="51.0" layoutY="661.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x14" />
+            <Pane layoutX="51.0" layoutY="570.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x15" />
+            <Pane layoutX="51.0" layoutY="472.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x16" />
+            <Pane layoutX="51.0" layoutY="381.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x17" />
+            <Pane layoutX="51.0" layoutY="283.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x18" />
+            <Pane layoutX="51.0" layoutY="191.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x19" />
+            <Pane layoutX="58.0" layoutY="59.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x20" />
+            <Pane layoutX="189.0" layoutY="59.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x21" />
+            <Pane layoutX="284.0" layoutY="59.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x22" />
+            <Pane layoutX="376.0" layoutY="59.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x23" />
+            <Pane layoutX="470.0" layoutY="59.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x24" />
+            <Pane layoutX="563.0" layoutY="59.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x25" />
+            <Pane layoutX="658.0" layoutY="59.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x26" />
+            <Pane layoutX="752.0" layoutY="59.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x27" />
+            <Pane layoutX="844.0" layoutY="59.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x28" />
+            <Pane layoutX="939.0" layoutY="59.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x29" />
+            <Pane layoutX="1050.0" layoutY="105.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x30" />
+            <Pane layoutX="1074.0" layoutY="191.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x31" />
+            <Pane layoutX="1074.0" layoutY="283.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x32" />
+            <Pane layoutX="1074.0" layoutY="381.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x33" />
+            <Pane layoutX="1074.0" layoutY="472.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x34" />
+            <Pane layoutX="1074.0" layoutY="570.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x35" />
+            <Pane layoutX="1074.0" layoutY="661.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x36" />
+            <Pane layoutX="1074.0" layoutY="754.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x37" />
+            <Pane layoutX="1074.0" layoutY="852.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x38" />
+            <Pane layoutX="1074.0" layoutY="950.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x39" />
          </children></Pane>
+      <Button fx:id="step" layoutX="1219.0" layoutY="57.0" mnemonicParsing="false" text="Schritt" />
    </children>
 </Pane>
