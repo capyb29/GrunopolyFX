@@ -16,6 +16,7 @@ import java.io.IOException;
 public class GrunopolyStart {
     @FXML
     public Button startButton;
+    public Button exitButton;
     @FXML
     private ChoiceBox<String> playerChoiceBox;
 
@@ -36,5 +37,10 @@ public class GrunopolyStart {
         newStage.show();
     }
 
+    public void onExitButtonClick(ActionEvent evt) {
+        Node source = (Node) evt.getSource();
+        Stage currentStage = (Stage) source.getScene().getWindow();
+        currentStage.close();
+    }
 
 }
