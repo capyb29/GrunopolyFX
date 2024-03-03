@@ -2,6 +2,7 @@ package sia.enjoyers.grunopolyfx;
 
 
 import javafx.fxml.FXML;
+import javafx.scene.Group;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -12,7 +13,8 @@ import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
-
+import javafx.scene.transform.Scale;
+import javafx.scene.Scene;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -20,6 +22,7 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.math.*;
 import java.util.stream.Collectors;
+import java.awt.Dimension;
 
 public class GrunopolyMain {
 
@@ -125,6 +128,19 @@ public class GrunopolyMain {
 
     @FXML
     public void initialize() {
+        // apply scaling transforms
+        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
+        double width = screenSize.getWidth();
+        double height = screenSize.getHeight();
+        double ratio = (height / width) + 0.25;
+
+        Scale scale = new Scale(ratio, ratio);
+        scale.setPivotX(0);
+        scale.setPivotY(0);
+        board.getTransforms().setAll(scale);
+        board.setPrefWidth(width / 1.5);
+        board.setPrefHeight(height / 1.5);
+
         // get background image
         String imagePath = "src\\main\\resources\\sia\\enjoyers\\grunopolyfx\\Board.png";
         try {
