@@ -115,6 +115,8 @@ public class GrunopolyMain {
     ArrayList<Card> cards = new ArrayList<Card>();
     ArrayList<Player> players = new ArrayList<Player>();
     int activePlayer = 0;
+    int playerCount = 0;
+    int buttonCountClicked = 0;
 
     @FXML
     public void initialize() {
@@ -128,21 +130,25 @@ public class GrunopolyMain {
             pane.setVisible(false);
         });
 
-        // Create temporary players
-        for (int i = 0; i < (int) Math.max(1, 1 + Math.random() * 5); i++) {
-            Color color = Color.color(Math.random(), Math.random(), Math.random());
-            Player player = new Player("GRU", color, 1000);
 
-            player.setPosition(allPanes.getFirst());
-            board.getChildren().add(player);
-            players.add(player);
-        }
-
-        activePlayer = (int) (Math.random() * players.size());
 
         stepButton.setOnAction(event -> {
+            if (buttonCountClicked == 0) {
+                // Create temporary players
+                for (int i = 0; i < (int) Math.max(1, 1 + Math.random() * 5); i++) {
+                    Color color = Color.color(Math.random(), Math.random(), Math.random());
+                    Player player = new Player("GRU", color, 1000);
+
+                    player.setPosition(allPanes.getFirst());
+                    board.getChildren().add(player);
+                    players.add(player);
+                }
+
+                activePlayer = (int) (Math.random() * players.size());
+            }
+
+            this.buttonCountClicked++;
             int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
-            System.out.println(randNum);
             step(randNum, players.get(activePlayer));
 
             if (activePlayer >= players.size() - 1) {
@@ -177,5 +183,9 @@ public class GrunopolyMain {
 
         player.setLayoutX(xNew);
         player.setLayoutY(yNew);
+    }
+
+    public void setPlayerCount (int playerCount) {
+        this.playerCount = playerCount;
     }
 }
