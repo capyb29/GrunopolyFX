@@ -12,6 +12,6 @@ public class Card {
     Card(Pane pane) {
         this.playersOnCard = new ArrayList<Player>();
         this.pane = pane;
-        this.price = 10;
+        this.price = 100;
     }
 }

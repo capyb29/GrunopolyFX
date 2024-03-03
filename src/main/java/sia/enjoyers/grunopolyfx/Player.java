@@ -7,11 +7,9 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
 public class Player extends Pane {
-    String name;
     int money;
     boolean jail;
-    Player(String name, Color color, int initialMoney) {
-        this.name = name;
+    Player( Color color, int initialMoney) {
         this.money = initialMoney;
 
         this.setPrefSize(20, 20);

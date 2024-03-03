@@ -32,6 +32,18 @@ public class GrunopolyMain {
 
     public Label youGotA;
     public Label header;
+    public Label player0;
+    public Label player1;
+    public Label player2;
+    public Label player3;
+    public Label player0_money;
+    public Label player1_money;
+    public Label player2_money;
+    public Label player3_money;
+    public Label player0_props;
+    public Label player1_props;
+    public Label player2_props;
+    public Label player3_props;
     @FXML
     private Pane board;
     @FXML
@@ -129,6 +141,8 @@ public class GrunopolyMain {
     List<Pane> allPanes;
     ArrayList<Card> cards = new ArrayList<Card>();
     ArrayList<Player> players = new ArrayList<Player>();
+    ArrayList<Label> playerLabels ;
+    ArrayList<Label> playerMoneyLabels;
     int activePlayer = 0;
     @FXML
     public void initialize() {
@@ -233,17 +247,37 @@ public class GrunopolyMain {
     public void initPlayers (int playerCount) {
         for (int i = 0; i < playerCount; i++) {
             Color color = Color.color(Math.random(), Math.random(), Math.random());
-            Player player = new Player("Player " + i + 1, color, 1000);
+            Player player = new Player( color, 1000);
 
             player.setPosition(allPanes.getFirst());
             board.getChildren().add(player);
             players.add(player);
-
-
         }
-
+        initPlayerInfo();
         activePlayer = (int) (Math.random() * players.size());
         header.setText("Spieler "+ activePlayer + " am Zug!");
+    }
+
+    private void initPlayerInfo() {
+        playerLabels = new ArrayList<Label>(Arrays.asList(player0 , player1, player2, player3));
+        playerMoneyLabels = new ArrayList<Label>(Arrays.asList(player0_money, player1_money, player2_money, player3_money));
+        if (playerLabels.size() > players.size()) {
+            playerLabels.subList(players.size(), playerLabels.size()).clear();
+            playerMoneyLabels.subList(players.size(), playerMoneyLabels.size()).clear();
+        }
+
+        for (int i = 0; i < players.size(); i++) {
+            playerMoneyLabels.get(i).setText(players.get(i).money + "€");
+            if (i == 0) {
+                playerLabels.get(i).setText("Sie");
+            } else {
+                playerLabels.get(i).setText("Player " + (i + 1));
+            }
+        }
+    }
+
+    private void setPlayerInfo() {
+
     }
 
     private record SceneSizeChangeListener(double ratio, double initHeight, double initWidth, Pane contentPane) implements ChangeListener<Number> {
