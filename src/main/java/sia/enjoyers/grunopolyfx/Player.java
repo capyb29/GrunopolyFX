@@ -1,5 +1,6 @@
 package sia.enjoyers.grunopolyfx;
 
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
@@ -14,14 +15,14 @@ public class Player extends Pane {
     AtomicInteger pos;
     int id;
     boolean jail;
-    ArrayList<String> properties = new ArrayList<>();
-    //public ArrayList<Card.StreetColor> hasColor;
+    ArrayList<Card> properties = new ArrayList<>();
+    public ArrayList<Card.StreetColor> hasColor;
 
     Player(String name, int id, Color color, int initialMoney) {
         this.name = name;
         this.money = initialMoney;
         this.id = id;
-        //this.hasColor = new ArrayList<>();
+        this.hasColor = new ArrayList<>();
         this.pos = new AtomicInteger(0);
         this.setPrefSize(25, 25);
 
@@ -68,4 +69,26 @@ public class Player extends Pane {
 
         this.setVisible(true);
     }
+
+    public void checkIfOneColor(ChoiceBox<String> playerChoiceBox) {
+        // Check if player has all streets of one color
+        for (Card.StreetColor color : this.hasColor) {
+            int count = 0;
+            for (Card card : this.properties) {
+                if (card.cardColor == color) {
+                    count++;
+                }
+            }
+            if (count == 3) {
+                properties.forEach((card) -> {
+                        playerChoiceBox.getItems().clear();
+                        playerChoiceBox.getItems().add(card.name);
+                    });
+                ;
+            }
+
+        }
+    }
+
+
 }

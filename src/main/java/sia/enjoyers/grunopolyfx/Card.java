@@ -23,6 +23,7 @@ public class Card {
     String name;
     Player owner;
     int houses;
+    StreetColor cardColor;
 
     Card(String name, int price, StreetColor color) {
         this.playersOnCard = new ArrayList<Player>();
@@ -31,11 +32,14 @@ public class Card {
         this.rent = 0;
         this.owner = null;
         this.houses = 0;
+        this.cardColor = color;
+
     }
     public void buyStreet(Player player) {
         if (player.money >= this.price) {
             this.owner = player;
-            player.properties.add(this.name);
+            player.properties.add(this);
+            player.hasColor.add(this.cardColor);
             player.money -= this.price;
         }
     }
