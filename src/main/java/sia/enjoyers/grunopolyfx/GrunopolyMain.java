@@ -290,7 +290,7 @@ public class GrunopolyMain {
 
     public void initPlayers (int playerCount, String[] playerNames) {
         for (int i = 0; i < playerCount; i++) {
-            Color hsb = Color.hsb((double) (((360 / playerCount) * (i + 1)) ), .7, .7);
+            Color hsb = Color.hsb((double) (((360 / playerCount) * (i + 1)) ), .5, .7);
 
             Player player = new Player(playerNames[i], i + 1, hsb, 1000);
             player.setPosition(allPanes.getFirst(), 0);
