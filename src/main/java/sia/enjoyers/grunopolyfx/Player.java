@@ -13,7 +13,8 @@ public class Player extends Pane {
     int money;
     boolean jail;
     ArrayList<String> properties = new ArrayList<>();
-    Player( Color color, int initialMoney) {
+    Player(String name, Color color, int initialMoney) {
+        this.name = name;
         this.money = initialMoney;
 
         this.setPrefSize(20, 20);
