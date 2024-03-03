@@ -187,6 +187,11 @@
             <Font name="Comic Sans MS Bold" size="13.0" />
          </font>
       </Label>
+      <Label fx:id="eventText" alignment="CENTER" layoutX="457.0" layoutY="510.0" prefHeight="62.0" prefWidth="226.0" text="..." textAlignment="CENTER" wrapText="true">
+         <font>
+            <Font name="Comic Sans MS Bold" size="21.0" />
+         </font>
+      </Label>
       <Pane layoutX="47.0" layoutY="989.0" prefHeight="102.0" prefWidth="101.0" style="-fx-background-color: Orange; -fx-border-color: BLACK; -fx-border-width: 3px;">
          <Label alignment="TOP_CENTER" prefHeight="22.0" prefWidth="101.0" text="Gefängis" textAlignment="CENTER" wrapText="true">
             <font>

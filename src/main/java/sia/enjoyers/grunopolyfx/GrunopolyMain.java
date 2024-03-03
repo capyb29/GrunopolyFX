@@ -143,6 +143,8 @@ public class GrunopolyMain {
     // Get interactive elements
     @FXML
     public Button stepButton;
+    @FXML
+    public Label eventText;
 
 
     // Declare data
@@ -252,7 +254,6 @@ public class GrunopolyMain {
         });
     }
 
-
     public void step(int stepCount, Player player) {
         if (player.jailRounds > 0) {
             updateUi(x40, 0);
@@ -261,6 +262,16 @@ public class GrunopolyMain {
 
         int initial = player.pos.get();
         int newPos = initial + stepCount <= 39 ? initial + stepCount : (initial + stepCount) % 40;
+
+        eventText.setText("...");
+
+        if (initial + stepCount > 40) {
+            player.money += 200;
+            eventText.setText(player.name + " über los!\n+200€");
+        } else if (newPos == 0) {
+            player.money += 300;
+            eventText.setText(player.name + " auf los!\n+300€");
+        }
 
         this.cards.forEach((pane, cards) -> cards.playersOnCard.removeIf(p -> p.id == player.id));
 
@@ -272,6 +283,8 @@ public class GrunopolyMain {
             player.setPosition(x40, player.pos.intValue());
             player.jailRounds = 3;
             updateUi(x40, 10);
+
+            eventText.setText(player.name + " ist ins Gefängnis geraten!");
             player.pos = new AtomicInteger(10);
             return;
         }
