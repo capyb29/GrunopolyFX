@@ -449,7 +449,6 @@ public class GrunopolyMain {
 
             if (rolled != 0) {
                 youGotA.setText(players.get(activePlayer).name + " hat eine " + rolled + " gewürfelt!");
-
             }
 
             streetChoiceHouses.getItems().clear();
@@ -460,6 +459,7 @@ public class GrunopolyMain {
 
             streetSelector.getItems().clear();
             players.get(activePlayer).properties.forEach(c -> streetSelector.getItems().add(c.name));
+            streetSellButton.setDisable(streetSelector.getItems().isEmpty());
         }
     }
 
