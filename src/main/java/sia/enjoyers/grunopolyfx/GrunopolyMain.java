@@ -194,50 +194,47 @@ public class GrunopolyMain {
         // Set properties
         cards = new HashMap<>();
         cards.put(x0, new Card("Los", -1, Card.StreetColor.None));
-        cards.put(x1, new Card("Athenaeum", 0, Card.StreetColor.BROWN));
+        cards.put(x1, new Card("Athenaeum", 200, Card.StreetColor.BROWN));
         cards.put(x2, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x3, new Card("VLG", 0, Card.StreetColor.BROWN));
+        cards.put(x3, new Card("VLG", 200, Card.StreetColor.BROWN));
         cards.put(x4, new Card("Unbesetzt", -1, Card.StreetColor.None));
         cards.put(x5, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x6, new Card("Rossmann", 0, Card.StreetColor.LIGHTBLUE));
+        cards.put(x6, new Card("Rossmann", 200, Card.StreetColor.LIGHTBLUE));
         cards.put(x7, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x8, new Card("H&M", 0, Card.StreetColor.LIGHTBLUE));
-        cards.put(x9, new Card("Thalia", 0, Card.StreetColor.LIGHTBLUE));
+        cards.put(x8, new Card("H&M", 200, Card.StreetColor.LIGHTBLUE));
+        cards.put(x9, new Card("Thalia", 200, Card.StreetColor.LIGHTBLUE));
         cards.put(x10, new Card("Gefängnis", -1, Card.StreetColor.None));
-        cards.put(x11, new Card("Parkhotel Stade", 0, Card.StreetColor.PINK));
+        cards.put(x11, new Card("Parkhotel Stade", 200, Card.StreetColor.PINK));
         cards.put(x12, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x13, new Card("Stadissimo", 0, Card.StreetColor.PINK));
-        cards.put(x14, new Card("Stadeum", 0, Card.StreetColor.PINK));
+        cards.put(x13, new Card("Stadissimo", 200, Card.StreetColor.PINK));
+        cards.put(x14, new Card("Stadeum", 200, Card.StreetColor.PINK));
         cards.put(x15, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x16, new Card("Al Porto", 0, Card.StreetColor.ORANGE));
+        cards.put(x16, new Card("Al Porto", 200, Card.StreetColor.ORANGE));
         cards.put(x17, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x18, new Card("Mister Vu", 0, Card.StreetColor.ORANGE));
-        cards.put(x19, new Card("Tacos", 0, Card.StreetColor.ORANGE));
+        cards.put(x18, new Card("Mister Vu", 200, Card.StreetColor.ORANGE));
+        cards.put(x19, new Card("Tacos", 200, Card.StreetColor.ORANGE));
         cards.put(x20, new Card("Nichts", -1, Card.StreetColor.None));
-        cards.put(x21, new Card("Commerzbank", 0, Card.StreetColor.RED));
-        cards.put(x22, new Card("Unbesetzt", 0, Card.StreetColor.None));
-        cards.put(x23, new Card("Sparkasse", 0, Card.StreetColor.RED));
-        cards.put(x24, new Card("Postbank", 0, Card.StreetColor.RED));
-        cards.put(x25, new Card("Unbesetzt", 0, Card.StreetColor.None));
-        cards.put(x26, new Card("Lidl", 0, Card.StreetColor.YELLOW));
-        cards.put(x27, new Card("Netto", 0, Card.StreetColor.YELLOW));
+        cards.put(x21, new Card("Commerzbank", 200, Card.StreetColor.RED));
+        cards.put(x22, new Card("Unbesetzt", 200, Card.StreetColor.None));
+        cards.put(x23, new Card("Sparkasse", 200, Card.StreetColor.RED));
+        cards.put(x24, new Card("Postbank", 200, Card.StreetColor.RED));
+        cards.put(x25, new Card("Unbesetzt", 200, Card.StreetColor.None));
+        cards.put(x26, new Card("Lidl", 200, Card.StreetColor.YELLOW));
+        cards.put(x27, new Card("Netto", 200, Card.StreetColor.YELLOW));
         cards.put(x28, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x29, new Card("REWE", 0, Card.StreetColor.YELLOW));
+        cards.put(x29, new Card("REWE", 200, Card.StreetColor.YELLOW));
         cards.put(x30, new Card("Gehe ins Gefängnis", -1, Card.StreetColor.None));
-        cards.put(x31, new Card("Orient Express", 0, Card.StreetColor.GREEN));
-        cards.put(x32, new Card("Rena's Grill", 0, Card.StreetColor.GREEN));
+        cards.put(x31, new Card("Orient Express", 200, Card.StreetColor.GREEN));
+        cards.put(x32, new Card("Rena's Grill", 200, Card.StreetColor.GREEN));
         cards.put(x33, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x34, new Card("Köz", 0, Card.StreetColor.GREEN));
+        cards.put(x34, new Card("Köz", 200, Card.StreetColor.GREEN));
         cards.put(x35, new Card("Unbesetzt", -1, Card.StreetColor.None));
         cards.put(x36, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x37, new Card("Pferdemarkt", 0, Card.StreetColor.BLUE));
+        cards.put(x37, new Card("Pferdemarkt", 200, Card.StreetColor.BLUE));
         cards.put(x38, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x39, new Card("Jobelmann-Schule", 0, Card.StreetColor.BLUE));
+        cards.put(x39, new Card("Jobelmann-Schule", 200, Card.StreetColor.BLUE));
 
         stepButton.setOnAction(event -> {
-            this.diceNumber = (int) Math.max(2, 1 + (Math.random() * 12));
-
-            step(this.diceNumber, players.get(activePlayer));
             if (activePlayer >= players.size() - 1) {
                 activePlayer = 0;
                 rounds++;
@@ -245,6 +242,8 @@ public class GrunopolyMain {
                 activePlayer++;
             }
 
+            this.diceNumber = (int) Math.max(2, 1 + (Math.random() * 12));
+            step(this.diceNumber, players.get(activePlayer));
         });
     }
 
@@ -281,7 +280,7 @@ public class GrunopolyMain {
 
         hidePlayerStats(playerCount);
         activePlayer = (int) (Math.random() * players.size());
-        header.setText("Spieler "+ activePlayer + " am Zug!");
+        header.setText("Spieler " + activePlayer + " am Zug!");
         updateUi(x0, 0);
     }
 
@@ -350,16 +349,20 @@ public class GrunopolyMain {
             youAreAt.setText("Sie befinden sich auf: " + card.name);
 
             if (card.price != -1) {
-                buyButton.setVisible(true);
+                buyButton.setDisable(false);
                 streetOwner.setVisible(true);
                 streetCost.setVisible(true);
 
-                streetOwner.setText(card.owner == null ? "Kein Besitzer" : "Besitzer: " + card.owner.name);
-                if (card.owner != player) {
-                    streetCost.setText("Kosten: " + card.rent + "€");
+                if (card.owner == null) {
+                    streetCost.setText("Preis: " + card.price + "€");
+                    streetOwner.setText("Kein Besitzer");
+                } else  {
+                    buyButton.setDisable(true);
+                    streetCost.setText("Miete: " + card.rent + "€");
+                    streetOwner.setText("Besitzer: " + card.owner.name);
                 }
             } else {
-                buyButton.setVisible(false);
+                buyButton.setDisable(true);
                 streetOwner.setVisible(false);
                 streetCost.setVisible(false);
             }
