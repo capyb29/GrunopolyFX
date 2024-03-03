@@ -246,24 +246,9 @@ public class GrunopolyMain {
         properties.put(x38, "Unbesetzt");
         properties.put(x39, "Jobelmann-Schule");
 
-        updateUi();
+
 
         stepButton.setOnAction(event -> {
-            if (buttonCountClicked == 0) {
-                // Create temporary players
-                for (int i = 0; i < this.playerCount; i++) {
-                    Color color = Color.color(Math.random(), Math.random(), Math.random());
-                    Player player = new Player("GRU", i + 1, color, 900);
-
-                    player.setPosition(allPanes.getFirst(), 0);
-                    board.getChildren().add(player);
-                    players.add(player);
-                }
-
-                activePlayer = (int) (Math.random() * players.size());
-            }
-
-            this.buttonCountClicked++;
             int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
             //System.out.println(randNum);
 
@@ -276,7 +261,6 @@ public class GrunopolyMain {
                 activePlayer++;
             }
 
-            updateUi();
         });
     }
 
@@ -310,6 +294,8 @@ public class GrunopolyMain {
 
 
         player.setPosition(newDesiredPane, newPos);
+
+        updateUi(newDesiredPane);
         System.out.println(player.pos.get());
     }
 
@@ -325,6 +311,7 @@ public class GrunopolyMain {
 
         activePlayer = (int) (Math.random() * players.size());
         header.setText("Spieler "+ activePlayer + " am Zug!");
+        updateUi(x0);
     }
 
     private record SceneSizeChangeListener(double ratio, double initHeight, double initWidth, Pane contentPane) implements ChangeListener<Number> {
@@ -350,7 +337,7 @@ public class GrunopolyMain {
                 contentPane.setPrefHeight(newHeight / scaleFactor);
             }
     }
-    private void updateUi() {
+    private void updateUi(Pane currentPane) {
         // Update player labels
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
@@ -385,6 +372,10 @@ public class GrunopolyMain {
             if (propsLabel != null) {
                 propsLabel.setText(player.properties.toString());
             }
+
+            youAreAt.setText("Sie befinden sich auf: " + properties.get(currentPane));
+
+
         }
     }
 }
