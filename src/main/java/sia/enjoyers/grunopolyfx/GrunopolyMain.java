@@ -3,6 +3,7 @@ package sia.enjoyers.grunopolyfx;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -13,12 +14,17 @@ import javafx.geometry.Insets;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.math.*;
+import javafx.scene.image.Image;
+import javafx.scene.paint.ImagePattern;
+
 
 public class GrunopolyMain {
 
     @FXML
     private Pane board;
+
+    @FXML
+    private Pane boardimg;
 
     // Get anchor points
     @FXML
@@ -112,14 +118,30 @@ public class GrunopolyMain {
 
     @FXML
     public void initialize() {
+        // get background image
+        String imagePath = "C:\\Users\\w2005\\IdeaProjects\\GrunopolyFX\\src\\main\\resources\\sia\\enjoyers\\grunopolyfx\\Board.png";
+        try {
+            Image image = new Image("file:" + imagePath);
+
+            // Create an ImageView for flexible sizing
+            ImageView imageView = new ImageView(image);
+            imageView.fitWidthProperty().bind(boardimg.widthProperty());
+            imageView.fitHeightProperty().bind(boardimg.heightProperty());
+
+            // Set the ImagePattern as the pane's background
+            ImagePattern imagePattern = new ImagePattern(image);
+            boardimg.setBackground(new Background(new BackgroundFill(imagePattern, CornerRadii.EMPTY, Insets.EMPTY)));
+        } catch (Exception e) {
+            System.exit(1);
+        }
+
+
         // Initialization code here, if needed
         // Example: Collecting panes in a list for easier manipulation
         allPanes = Arrays.asList(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x30, x31, x32, x33, x34, x35, x36, x37, x38, x39);
         // Now you can loop through allPanes to manipulate them
 
-        allPanes.forEach((pane) -> {
-            pane.setVisible(false);
-        });
+        allPanes.forEach((pane) -> pane.setVisible(false));
 
         // Create temporary player
         Pane newPane = getPane();
