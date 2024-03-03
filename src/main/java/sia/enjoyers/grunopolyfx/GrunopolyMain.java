@@ -136,6 +136,8 @@ public class GrunopolyMain {
     private Pane x38;
     @FXML
     private Pane x39;
+    @FXML
+    private Pane x40;
 
     // Get interactive elements
     @FXML
@@ -179,9 +181,7 @@ public class GrunopolyMain {
        setBackgroundImage();
 
 
-
-
-        allPanes = Arrays.asList(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x30, x31, x32, x33, x34, x35, x36, x37, x38, x39);
+        allPanes = Arrays.asList(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x30, x31, x32, x33, x34, x35, x36, x37, x38, x39, x40);
 
         allPanes.forEach((pane) -> pane.setVisible(false));
 
@@ -206,7 +206,7 @@ public class GrunopolyMain {
         cards.put(x7, new Card("Unbesetzt", -1, Card.StreetColor.None));
         cards.put(x8, new Card("H&M", 200, Card.StreetColor.LIGHTBLUE));
         cards.put(x9, new Card("Thalia", 200, Card.StreetColor.LIGHTBLUE));
-        cards.put(x10, new Card("Gefängnis", -1, Card.StreetColor.None));
+        cards.put(x10, new Card("Gefängnis (Besucher)", -1, Card.StreetColor.None));
         cards.put(x11, new Card("Parkhotel Stade", 200, Card.StreetColor.PINK));
         cards.put(x12, new Card("Unbesetzt", -1, Card.StreetColor.None));
         cards.put(x13, new Card("Stadissimo", 200, Card.StreetColor.PINK));
@@ -236,6 +236,7 @@ public class GrunopolyMain {
         cards.put(x37, new Card("Pferdemarkt", 1000, Card.StreetColor.BLUE));
         cards.put(x38, new Card("Unbesetzt", -1, Card.StreetColor.None));
         cards.put(x39, new Card("Jobelmann-Schule", 2000, Card.StreetColor.BLUE));
+        cards.put(x40, new Card("Gefängnis", -1, Card.StreetColor.None));
 
         stepButton.setOnAction(event -> {
             if (activePlayer >= players.size() - 1) {
@@ -253,7 +254,7 @@ public class GrunopolyMain {
 
     public void step(int stepCount, Player player) {
         if (player.jailRounds > 0) {
-            updateUi(x10, 0);
+            updateUi(x40, 0);
             return;
         }
 
@@ -265,11 +266,11 @@ public class GrunopolyMain {
         Pane newDesiredPane = allPanes.get(newPos);
         Card newDesiredCard = this.cards.get(newDesiredPane);
 
-        // Gefängnis
+        //  Gehe ins Gefängnis
         if (newDesiredPane == x30) {
-            player.setPosition(x10, 10);
+            player.setPosition(x40, player.pos.intValue());
             player.jailRounds = 3;
-            updateUi(x10, stepCount);
+            updateUi(x40, 10);
             return;
         }
 
@@ -369,12 +370,14 @@ public class GrunopolyMain {
             buyButton.setDisable(true);
             streetOwner.setVisible(false);
             streetCost.setVisible(false);
+            stepButton.setText("Würfeln");
 
             // Gefängnis
             if (players.get(activePlayer).jailRounds > 0) {
                 streetOwner.setVisible(false);
                 streetCost.setVisible(false);
                 buyButton.setDisable(true);
+                stepButton.setText("Skip");
                 header.setText("Du bist im Gefängnis.");
                 youGotA.setText(players.get(activePlayer).jailRounds > 1 ? "Warte " + players.get(activePlayer).jailRounds + " Runden." : "Warte 1 Runde.");
                 players.get(activePlayer).jailRounds--;

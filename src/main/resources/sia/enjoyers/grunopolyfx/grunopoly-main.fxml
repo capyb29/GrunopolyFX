@@ -256,6 +256,7 @@
       <Pane layoutX="1074.0" layoutY="754.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x37" />
       <Pane layoutX="1074.0" layoutY="852.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x38" />
       <Pane layoutX="1074.0" layoutY="950.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x39" />
+      <Pane layoutX="80.0" layoutY="1042.3" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x40" />
    </Pane>
    <Button fx:id="stepButton" layoutX="1216.0" layoutY="11.0" mnemonicParsing="false" prefHeight="77.0" prefWidth="171.0" text="Würfeln">
       <font>
