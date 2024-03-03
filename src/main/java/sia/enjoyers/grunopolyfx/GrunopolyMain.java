@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class GrunopolyMain {
@@ -244,8 +244,6 @@ public class GrunopolyMain {
         properties.put(x37, "Pferdemarkt");
         properties.put(x38, "Unbesetzt");
         properties.put(x39, "Jobelmann-Schule");
-
-
 
         stepButton.setOnAction(event -> {
             int randNum = (int) Math.max(2, 1 + (Math.random() * 12));

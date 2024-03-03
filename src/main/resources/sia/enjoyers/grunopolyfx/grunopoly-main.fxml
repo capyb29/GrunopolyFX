@@ -233,7 +233,7 @@
       <Pane layoutX="51.0" layoutY="661.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x14" />
       <Pane layoutX="51.0" layoutY="570.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x15" />
       <Pane layoutX="51.0" layoutY="472.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x16" />
-      <Pane layoutX="51.0" layoutY="381.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x17" />
+      <Pane layoutX="51.0" layoutY="381.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 15px; -fx-background-color: black;" fx:id="x17" />
       <Pane layoutX="51.0" layoutY="283.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x18" />
       <Pane layoutX="51.0" layoutY="191.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x19" />
       <Pane layoutX="58.0" layoutY="59.0" prefHeight="13.0" prefWidth="13.0" style="-fx-border-radius: 10px; -fx-background-color: black;" fx:id="x20" />

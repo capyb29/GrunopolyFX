@@ -1,8 +1,4 @@
 package sia.enjoyers.grunopolyfx;
-import javafx.geometry.Insets;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
@@ -17,27 +13,39 @@ public class Player extends Pane {
     int playerId;
     boolean jail;
     ArrayList<String> properties = new ArrayList<>();
+
     Player(String name, int playerId, Color color, int initialMoney) {
         this.name = name;
         this.money = initialMoney;
         this.playerId = playerId;
         this.pos = new AtomicInteger(0);
+        this.setPrefSize(25, 25);
 
-        this.setPrefSize(20, 20);
+        // Player appearance
+        String hex = String.format("#%02x%02x%02x", (int) (color.getRed() * 255), (int) (color.getGreen() * 255), (int) (color.getBlue() * 255));
 
-        BackgroundFill colorFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
-        Background background = new Background(colorFill);
+        String style = """
+                    -fx-background-radius: 15px;
+                    -fx-background-color: %s;
 
-        this.setBackground(background);
+                    -fx-border-radius: 15px;
+                    -fx-border-width: 3px;
+                    -fx-border-color: black;
+                    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 10, 0, 0, 0);\
+                """;
+
+        this.setStyle(String.format(style, hex));
+
         this.setVisible(false);
     }
 
     public void setPosition(Pane referencePane, int pos) {
+        // Set player object position and update metadata
         double x = referencePane.getLayoutX();
         double y = referencePane.getLayoutY();
 
-        this.setLayoutX(x);
-        this.setLayoutY(y);
+        this.setLayoutX(x + (10 * (playerId % 2)));
+        this.setLayoutY(y - (10 * (playerId % 3)));
 
         this.pos.set(pos);
 
