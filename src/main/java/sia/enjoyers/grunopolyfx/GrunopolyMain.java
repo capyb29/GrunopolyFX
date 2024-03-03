@@ -271,7 +271,7 @@ public class GrunopolyMain {
             if (i == 0) {
                 playerLabels.get(i).setText("Sie");
             } else {
-                playerLabels.get(i).setText("Player " + (i + 1));
+                playerLabels.get(i).setText("Spieler " + (i + 1));
             }
         }
     }
