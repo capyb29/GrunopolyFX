@@ -204,7 +204,7 @@ public class GrunopolyMain {
         });
 
         // Set properties
-         properties = new HashMap<>();
+        properties = new HashMap<>();
         properties.put(x0, "Los");
         properties.put(x1, "Athenaeum");
         properties.put(x2, "Unbesetzt");
