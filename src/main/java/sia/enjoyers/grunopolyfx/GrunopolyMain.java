@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
+
 import java.util.stream.Collectors;
 
 public class GrunopolyMain {
@@ -153,8 +153,6 @@ public class GrunopolyMain {
     ArrayList<Player> players = new ArrayList<>();
     public HashMap<Pane, String> properties;
     int activePlayer = 0;
-    int playerCount = 0;
-    int buttonCountClicked = 0;
 
     @FXML
     public void initialize() {
@@ -262,7 +260,6 @@ public class GrunopolyMain {
                 activePlayer++;
             }
 
-            updateUi();
         });
     }
 
@@ -290,7 +287,7 @@ public class GrunopolyMain {
 
         System.out.println("Player " + player.playerId + " rolled " + stepCount + " | " + " Old Pos: " + initial + " New Pos: " + newPos);
 
-        updateUi(newDesiredPane);
+        updateUi(newDesiredPane, stepCount);
         System.out.println(player.pos.get());
     }
 
@@ -306,7 +303,7 @@ public class GrunopolyMain {
 
         activePlayer = (int) (Math.random() * players.size());
         header.setText("Spieler "+ activePlayer + " am Zug!");
-        updateUi(x0);
+        updateUi(x0, 0);
     }
 
     private record SceneSizeChangeListener(double ratio, double initHeight, double initWidth, Pane contentPane) implements ChangeListener<Number> {
@@ -332,7 +329,7 @@ public class GrunopolyMain {
                 contentPane.setPrefHeight(newHeight / scaleFactor);
             }
     }
-    private void updateUi(Pane currentPane) {
+    private void updateUi(Pane currentPane, int rolled) {
         // Update player labels
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
@@ -369,6 +366,15 @@ public class GrunopolyMain {
             }
 
             youAreAt.setText("Sie befinden sich auf: " + properties.get(currentPane));
+
+            if (rolled != 0) {
+            youGotA.setText("Sie haben eine " + rolled + " gewürfelt!");
+
+            } else {
+                youGotA.setText("Viel Glück!");
+            }
+
+
 
 
         }
