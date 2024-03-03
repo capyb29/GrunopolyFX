@@ -275,6 +275,7 @@ public class GrunopolyMain {
             Color hsb = Color.hsb((((double) 360 / playerCount) * (i + 1)), .5, .7);
 
             Player player = new Player(playerNames[i], i + 1, hsb, 1000);
+            devBuild(player);
             player.setPosition(allPanes.getFirst(), 0);
 
             board.getChildren().add(player);
@@ -454,5 +455,34 @@ public class GrunopolyMain {
         return null;
     }
 
+    public void devBuild(Player name) {
+        if (Objects.equals(name.name, "dev")) {
+            Button cashButton = new Button("Cash Money");
+            Button oneStepButton = new Button("One Step");
+            cashButton.setOnAction(e -> {
+                name.money += 1000;
+                updateUi(allPanes.get(name.pos.intValue()), 0);
+            });
+            oneStepButton.setOnAction(e -> {
+                int initial = name.pos.get();
+                int newPos = initial + 1 <= 39 ? initial + 1 : (initial + 1) % 40;
 
+                this.cards.forEach((pane, cards) -> cards.playersOnCard.removeIf(p -> p.id == name.id));
+
+                Pane newDesiredPane = allPanes.get(newPos);
+                Card newDesiredCard = this.cards.get(newDesiredPane);
+
+                assert newDesiredCard != null;
+                newDesiredCard.playersOnCard.add(name);
+
+                name.setPosition(newDesiredPane, newPos);
+
+                updateUi(newDesiredPane, 1);
+            });
+
+            board.getChildren().add(cashButton);
+            board.getChildren().add(oneStepButton);
+
+        }
+    }
 }
