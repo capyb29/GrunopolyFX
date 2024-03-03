@@ -48,6 +48,8 @@ public class GrunopolyMain {
     public Button buyHouses;
     public Label youGotA;
     public Label header;
+    public Button streetSellButton;
+    public ChoiceBox streetSelector;
 
 
     //Get Board and Background
@@ -330,8 +332,6 @@ public class GrunopolyMain {
                                            Pane contentPane) implements ChangeListener<Number> {
         @Override
         public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-
-
             final double newWidth = contentPane.getWidth();
             final double newHeight = contentPane.getHeight();
 
