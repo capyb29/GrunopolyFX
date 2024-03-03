@@ -48,7 +48,7 @@ public class GrunopolyMain {
     public Label youGotA;
     public Label header;
     public Button streetSellButton;
-    public ChoiceBox streetSelector;
+    public ChoiceBox<String> streetSelector;
 
 
     //Get Board and Background
@@ -257,7 +257,6 @@ public class GrunopolyMain {
 
         buyHouses.setOnAction(event -> {
             Player player = players.get(activePlayer);
-            Card street = cards.get(allPanes.get(player.pos.intValue()));
             if (streetChoiceHouses.getValue() == null) {
                 eventText.setText("Bitte wählen Sie eine Straße aus!");
                 return;

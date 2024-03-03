@@ -101,8 +101,8 @@ public class Player extends Pane {
         if (currentCard.houses < 5 && money >= currentCard.price / 2) {
             currentCard.houses++;
             money -= currentCard.price / 2;
-
             eventText.setText(name + " hat ein Haus auf " + currentCard.name + " gebaut!");
+            currentCard.updateRent(currentCard.houses);
         }
     }
 }

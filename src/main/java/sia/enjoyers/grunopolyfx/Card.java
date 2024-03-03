@@ -74,6 +74,12 @@ public class Card {
         }
     }
 
+    public void updateRent(int houses) {
+        for (int i = 0; i < houses; i++) {
+            this.rent = (int) (this.rent * 1.25);
+        }
+    }
+
 
 }
 
