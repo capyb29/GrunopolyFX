@@ -20,6 +20,7 @@ import javafx.scene.transform.Scale;
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class GrunopolyMain {
 
@@ -271,6 +272,7 @@ public class GrunopolyMain {
             player.setPosition(x40, player.pos.intValue());
             player.jailRounds = 3;
             updateUi(x40, 10);
+            player.pos = new AtomicInteger(10);
             return;
         }
 
