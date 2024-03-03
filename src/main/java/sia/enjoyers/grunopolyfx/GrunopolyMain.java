@@ -378,7 +378,7 @@ public class GrunopolyMain {
 
         }
     }
-        public void hidePlayerStats(int numberPlayers) {
+    public void hidePlayerStats(int numberPlayers) {
             for (int i = numberPlayers; i < 4; i++) {
                 Label playerLabel = switch (i) {
                     case 0 -> player1;
@@ -413,5 +413,4 @@ public class GrunopolyMain {
             }
 
         }
-
 }
