@@ -3,7 +3,6 @@ package sia.enjoyers.grunopolyfx;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BackgroundFill;
@@ -16,17 +15,13 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
-import javafx.scene.image.Image;
-import javafx.scene.paint.ImagePattern;
-
+import java.math.*;
+import java.util.stream.Collectors;
 
 public class GrunopolyMain {
 
     @FXML
     private Pane board;
-
-    @FXML
-    private Pane boardimg;
 
     // Get anchor points
     @FXML
@@ -117,57 +112,37 @@ public class GrunopolyMain {
     // Declare data
     AtomicInteger pos = new AtomicInteger();
     List<Pane> allPanes;
+    ArrayList<Card> cards = new ArrayList<Card>();
     ArrayList<Player> players = new ArrayList<Player>();
     int activePlayer = 0;
-    int playerCount = 0;
-    private int buttonClicked = 0;
 
     @FXML
     public void initialize() {
-        // get background image
-        String imagePath = "C:\\Users\\w2005\\IdeaProjects\\GrunopolyFX\\src\\main\\resources\\sia\\enjoyers\\grunopolyfx\\Board.png";
-        try {
-            Image image = new Image("file:" + imagePath);
-
-            // Create an ImageView for flexible sizing
-            ImageView imageView = new ImageView(image);
-            imageView.fitWidthProperty().bind(boardimg.widthProperty());
-            imageView.fitHeightProperty().bind(boardimg.heightProperty());
-
-            // Set the ImagePattern as the pane's background
-            ImagePattern imagePattern = new ImagePattern(image);
-            boardimg.setBackground(new Background(new BackgroundFill(imagePattern, CornerRadii.EMPTY, Insets.EMPTY)));
-        } catch (Exception e) {
-            System.exit(1);
-        }
-
-
         // Initialization code here, if needed
         // Example: Collecting panes in a list for easier manipulation
         allPanes = Arrays.asList(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x30, x31, x32, x33, x34, x35, x36, x37, x38, x39);
         // Now you can loop through allPanes to manipulate them
 
         allPanes.forEach((pane) -> {
+            cards.add(new Card(pane));
             pane.setVisible(false);
         });
 
+        // Create temporary players
+        for (int i = 0; i < (int) Math.max(1, 1 + Math.random() * 5); i++) {
+            Color color = Color.color(Math.random(), Math.random(), Math.random());
+            Player player = new Player("GRU", color, 1000);
+
+            player.setPosition(allPanes.getFirst());
+            board.getChildren().add(player);
+            players.add(player);
+        }
+
+        activePlayer = (int) (Math.random() * players.size());
+
         stepButton.setOnAction(event -> {
-            if (buttonClicked == 0) {
-                // Create temporary players
-                for (int i = 0; i < this.playerCount; i++) {
-                    Color color = Color.color(Math.random(), Math.random(), Math.random());
-                    Player player = new Player("GRU", color, 1000);
-
-                    player.setPosition(allPanes.getFirst());
-                    board.getChildren().add(player);
-                    players.add(player);
-                }
-
-                activePlayer = (int) (Math.random() * players.size());
-            }
-            buttonClicked++;
-
             int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
+            System.out.println(randNum);
             step(randNum, players.get(activePlayer));
 
             if (activePlayer >= players.size() - 1) {
@@ -177,25 +152,30 @@ public class GrunopolyMain {
             }
         });
     }
-    public void step(int stepCount, Pane player) {
+    public void step(int stepCount, Player player) {
         if (pos.get() + stepCount <= 39) {
             pos.set(pos.get() + stepCount);
         } else {
-            pos.set(((pos.get() + stepCount) - 40));
+            pos.set((pos.get() + stepCount) % 40);
         }
 
-        Pane newDesired = allPanes.get(pos.get());
+        this.cards = (ArrayList<Card>) this.cards.stream()
+                .peek(card -> card.playersOnCard.remove(player))
+                .collect(Collectors.toList());
 
-        double Xnew = newDesired.getLayoutX();
-        double Ynew = newDesired.getLayoutY();
+        Pane newDesiredPane = allPanes.get(pos.get());
+        Card newDesiredCard = cards.stream()
+                .filter(card -> card.pane.equals(newDesiredPane))
+                .findFirst()
+                .orElse(null);
 
-        player.setLayoutX(Xnew);
-        player.setLayoutY(Ynew);
+        assert newDesiredCard != null;
+        newDesiredCard.playersOnCard.add(player);
+
+        double xNew = newDesiredPane.getLayoutX();
+        double yNew = newDesiredPane.getLayoutY();
+
+        player.setLayoutX(xNew);
+        player.setLayoutY(yNew);
     }
-
-    public void setPlayerCount(int count) {
-        this.playerCount = count;
-    }
-
-
 }
