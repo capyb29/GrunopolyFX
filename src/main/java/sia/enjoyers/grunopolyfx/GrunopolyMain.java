@@ -280,7 +280,7 @@ public class GrunopolyMain {
 
         hidePlayerStats(playerCount);
         activePlayer = (int) (Math.random() * players.size());
-        header.setText("Spieler " + activePlayer + " am Zug!");
+        header.setText(players.get(activePlayer).toString() + " am Zug!");
         updateUi(x0, 0);
     }
 
