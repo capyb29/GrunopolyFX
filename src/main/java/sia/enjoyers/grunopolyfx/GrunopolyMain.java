@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -18,6 +19,10 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.transform.Scale;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -144,7 +149,6 @@ public class GrunopolyMain {
     @FXML
     private Button stepButton;
 
-
     // Declare data
     AtomicInteger pos = new AtomicInteger();
     List<Pane> allPanes;
@@ -152,9 +156,6 @@ public class GrunopolyMain {
     ArrayList<Player> players = new ArrayList<>();
     public HashMap<Pane, String> properties;
     int activePlayer = 0;
-    int playerCount = 0;
-    int buttonCountClicked = 0;
-
     @FXML
     public void initialize() {
         // apply scaling transforms
@@ -249,24 +250,17 @@ public class GrunopolyMain {
         updateUi();
 
         stepButton.setOnAction(event -> {
-            if (buttonCountClicked == 0) {
-                // Create temporary players
-                for (int i = 0; i < this.playerCount; i++) {
-                    Color color = Color.color(Math.random(), Math.random(), Math.random());
-                    Player player = new Player("GRU", color, 900);
-
-                    player.setPosition(allPanes.getFirst());
-                    board.getChildren().add(player);
-                    players.add(player);
-                }
-
-                activePlayer = (int) (Math.random() * players.size());
+            int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
+            if (activePlayer == 0) {
+                header.setText("Sie sind am Zug!");
+                youGotA.setText("Sie haben eine " + randNum + " gewürfelt!");
+            } else {
+                header.setText("Spieler "+ activePlayer + " am Zug!");
+                youGotA.setText("Spieler " + activePlayer + " hat eine " + randNum + " gewürfelt!");
             }
 
-            this.buttonCountClicked++;
-            int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
-            System.out.println(randNum);
             step(randNum, players.get(activePlayer));
+
 
             if (activePlayer >= players.size() - 1) {
                 activePlayer = 0;
@@ -305,8 +299,40 @@ public class GrunopolyMain {
         player.setLayoutY(yNew);
     }
 
-    public void setPlayerCount (int playerCount) {
-        this.playerCount = playerCount;
+    public void initPlayers (int playerCount) {
+        for (int i = 0; i < playerCount; i++) {
+            Color color = Color.color(Math.random(), Math.random(), Math.random());
+            Player player = new Player( color, 1000);
+
+            player.setPosition(allPanes.getFirst());
+            board.getChildren().add(player);
+            players.add(player);
+        }
+        initPlayerInfo();
+        activePlayer = (int) (Math.random() * players.size());
+        header.setText("Spieler "+ activePlayer + " am Zug!");
+    }
+
+    private void initPlayerInfo() {
+        playerLabels = new ArrayList<Label>(Arrays.asList(player0 , player1, player2, player3));
+        playerMoneyLabels = new ArrayList<Label>(Arrays.asList(player0_money, player1_money, player2_money, player3_money));
+        if (playerLabels.size() > players.size()) {
+            playerLabels.subList(players.size(), playerLabels.size()).clear();
+            playerMoneyLabels.subList(players.size(), playerMoneyLabels.size()).clear();
+        }
+
+        for (int i = 0; i < players.size(); i++) {
+            playerMoneyLabels.get(i).setText(players.get(i).money + "€");
+            if (i == 0) {
+                playerLabels.get(i).setText("Sie");
+            } else {
+                playerLabels.get(i).setText("Spieler " + i);
+            }
+        }
+    }
+
+    private void setPlayerInfo() {
+
     }
 
     private record SceneSizeChangeListener(double ratio, double initHeight, double initWidth, Pane contentPane) implements ChangeListener<Number> {

@@ -34,7 +34,7 @@ public class GrunopolyStart {
         Parent root = loader.load();
 
         GrunopolyMain controller = loader.getController();
-        controller.setPlayerCount(playerChoiceBox.getSelectionModel().getSelectedIndex() + 2);
+        controller.initPlayers(playerChoiceBox.getSelectionModel().getSelectedIndex() + 2);
 
 
         Stage newStage = new Stage();

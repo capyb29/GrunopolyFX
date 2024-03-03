@@ -262,67 +262,67 @@
          <Font name="Comic Sans MS Bold Italic" size="31.0" />
       </font>
    </Button>
-   <Label alignment="CENTER" layoutX="1387.0" layoutY="14.0" prefHeight="70.0" prefWidth="236.0" text="Spieler x am Zug">
+   <Label fx:id="header" alignment="CENTER" layoutX="1387.0" layoutY="14.0" prefHeight="70.0" prefWidth="236.0">
       <font>
          <Font name="Comic Sans MS" size="22.0" />
       </font>
    </Label>
-   <Label fx:id="player1" alignment="CENTER" layoutX="1216.0" layoutY="224.0" prefHeight="51.0" prefWidth="87.0" text="Spieler 1" textAlignment="CENTER">
+   <Label fx:id="player0" alignment="CENTER" layoutX="1216.0" layoutY="224.0" prefHeight="51.0" prefWidth="87.0" textAlignment="CENTER">
       <font>
          <Font name="Comic Sans MS Bold Italic" size="17.0" />
       </font>
    </Label>
-   <Label fx:id="player2" alignment="CENTER" layoutX="1216.0" layoutY="354.0" prefHeight="51.0" prefWidth="87.0" text="Spieler 2" textAlignment="CENTER">
+   <Label fx:id="player1" alignment="CENTER" layoutX="1216.0" layoutY="354.0" prefHeight="51.0" prefWidth="87.0" textAlignment="CENTER">
       <font>
          <Font name="Comic Sans MS Bold Italic" size="17.0" />
       </font>
    </Label>
-   <Label fx:id="player3" alignment="CENTER" layoutX="1216.0" layoutY="484.0" prefHeight="51.0" prefWidth="87.0" text="Spieler 3" textAlignment="CENTER">
+   <Label fx:id="player2" alignment="CENTER" layoutX="1216.0" layoutY="484.0" prefHeight="51.0" prefWidth="87.0" textAlignment="CENTER">
       <font>
          <Font name="Comic Sans MS Bold Italic" size="17.0" />
       </font>
    </Label>
-   <Label fx:id="player4" alignment="CENTER" layoutX="1216.0" layoutY="614.0" prefHeight="51.0" prefWidth="87.0" text="Spieler 4" textAlignment="CENTER">
+   <Label fx:id="player3" alignment="CENTER" layoutX="1216.0" layoutY="614.0" prefHeight="51.0" prefWidth="87.0" textAlignment="CENTER">
       <font>
          <Font name="Comic Sans MS Bold Italic" size="17.0" />
       </font>
    </Label>
-   <Label fx:id="player1_money" alignment="CENTER" layoutX="1324.0" layoutY="235.0" prefHeight="29.0" prefWidth="63.0" text="1000€" textAlignment="CENTER">
+   <Label fx:id="player0_money" alignment="CENTER" layoutX="1324.0" layoutY="235.0" prefHeight="29.0" prefWidth="63.0" textAlignment="CENTER">
       <font>
          <Font name="Comic Sans MS" size="15.0" />
       </font>
    </Label>
-   <Label fx:id="player2_money" alignment="CENTER" layoutX="1324.0" layoutY="365.0" prefHeight="29.0" prefWidth="63.0" text="1000€" textAlignment="CENTER">
+   <Label fx:id="player1_money" alignment="CENTER" layoutX="1324.0" layoutY="365.0" prefHeight="29.0" prefWidth="63.0" textAlignment="CENTER">
       <font>
          <Font name="Comic Sans MS" size="15.0" />
       </font>
    </Label>
-   <Label fx:id="player3_money" alignment="CENTER" layoutX="1324.0" layoutY="495.0" prefHeight="29.0" prefWidth="63.0" text="1000€" textAlignment="CENTER">
+   <Label fx:id="player2_money" alignment="CENTER" layoutX="1324.0" layoutY="495.0" prefHeight="29.0" prefWidth="63.0" textAlignment="CENTER">
       <font>
          <Font name="Comic Sans MS" size="15.0" />
       </font>
    </Label>
-   <Label fx:id="player4_money" alignment="CENTER" layoutX="1324.0" layoutY="625.0" prefHeight="29.0" prefWidth="63.0" text="1000€" textAlignment="CENTER">
+   <Label fx:id="player3_money" alignment="CENTER" layoutX="1324.0" layoutY="625.0" prefHeight="29.0" prefWidth="63.0" textAlignment="CENTER">
       <font>
          <Font name="Comic Sans MS" size="15.0" />
       </font>
    </Label>
-   <Label fx:id="player1_props" alignment="TOP_LEFT" layoutX="1225.0" layoutY="274.0" prefHeight="70.0" prefWidth="377.0" text="Test Straße" wrapText="true">
+   <Label fx:id="player0_props" alignment="TOP_LEFT" layoutX="1225.0" layoutY="274.0" prefHeight="70.0" prefWidth="377.0" wrapText="true">
       <font>
          <Font name="System Bold" size="14.0" />
       </font>
    </Label>
-   <Label fx:id="player2_props" alignment="TOP_LEFT" layoutX="1225.0" layoutY="404.0" prefHeight="70.0" prefWidth="377.0" text="Test Straße" wrapText="true">
+   <Label fx:id="player1_props" alignment="TOP_LEFT" layoutX="1225.0" layoutY="404.0" prefHeight="70.0" prefWidth="377.0" wrapText="true">
       <font>
          <Font name="System Bold" size="14.0" />
       </font>
    </Label>
-   <Label fx:id="player3_props" alignment="TOP_LEFT" layoutX="1225.0" layoutY="534.0" prefHeight="70.0" prefWidth="377.0" text="Test Straße" wrapText="true">
+   <Label fx:id="player2_props" alignment="TOP_LEFT" layoutX="1225.0" layoutY="534.0" prefHeight="70.0" prefWidth="377.0" wrapText="true">
       <font>
          <Font name="System Bold" size="14.0" />
       </font>
    </Label>
-   <Label fx:id="player4_props" alignment="TOP_LEFT" layoutX="1225.0" layoutY="664.0" prefHeight="70.0" prefWidth="377.0" text="Test Straße" wrapText="true">
+   <Label fx:id="player3_props" alignment="TOP_LEFT" layoutX="1225.0" layoutY="664.0" prefHeight="70.0" prefWidth="377.0" wrapText="true">
       <font>
          <Font name="System Bold" size="14.0" />
       </font>
@@ -358,7 +358,7 @@
          <Font size="14.0" />
       </font>
    </Button>
-   <Label fx:id="youGotA" alignment="CENTER" layoutX="1249.0" layoutY="122.0" prefHeight="39.0" prefWidth="300.0" text="Sie haben eine XX gewürfelt!" textAlignment="CENTER">
+   <Label fx:id="youGotA" alignment="CENTER" layoutX="1249.0" layoutY="122.0" prefHeight="39.0" prefWidth="300.0" textAlignment="CENTER">
       <font>
          <Font name="Comic Sans MS" size="18.0" />
       </font>
