@@ -258,9 +258,15 @@ public class GrunopolyMain {
         buyHouses.setOnAction(event -> {
             Player player = players.get(activePlayer);
             Card street = cards.get(allPanes.get(player.pos.intValue()));
+            if (streetChoiceHouses.getValue() == null) {
+                eventText.setText("Bitte wählen Sie eine Straße aus!");
+                return;
+            }
+            String streetName = streetChoiceHouses.getValue();
 
-            player.buildHouse(streetChoiceHouses.getValue(), eventText);
+            player.buildHouse(streetName, eventText);
             updateUi(allPanes.get(player.pos.intValue()), 0);
+            streetChoiceHouses.setValue(streetName);
 
         });
     }
