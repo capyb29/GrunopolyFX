@@ -215,7 +215,7 @@ public class GrunopolyMain {
         cards.put(x19, new Card("Tacos", 200, Card.StreetColor.ORANGE));
         cards.put(x20, new Card("Nichts", -1, Card.StreetColor.None));
         cards.put(x21, new Card("Commerzbank", 200, Card.StreetColor.RED));
-        cards.put(x22, new Card("Unbesetzt", 200, Card.StreetColor.None));
+        cards.put(x22, new Card("Unbesetzt", -1, Card.StreetColor.None));
         cards.put(x23, new Card("Sparkasse", 200, Card.StreetColor.RED));
         cards.put(x24, new Card("Postbank", 200, Card.StreetColor.RED));
         cards.put(x25, new Card("Unbesetzt", 200, Card.StreetColor.None));
@@ -224,15 +224,15 @@ public class GrunopolyMain {
         cards.put(x28, new Card("Unbesetzt", -1, Card.StreetColor.None));
         cards.put(x29, new Card("REWE", 200, Card.StreetColor.YELLOW));
         cards.put(x30, new Card("Gehe ins Gefängnis", -1, Card.StreetColor.None));
-        cards.put(x31, new Card("Orient Express", 200, Card.StreetColor.GREEN));
-        cards.put(x32, new Card("Rena's Grill", 200, Card.StreetColor.GREEN));
+        cards.put(x31, new Card("Orient Express", 600, Card.StreetColor.GREEN));
+        cards.put(x32, new Card("Rena's Grill", 700, Card.StreetColor.GREEN));
         cards.put(x33, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x34, new Card("Köz", 200, Card.StreetColor.GREEN));
+        cards.put(x34, new Card("Köz", 800, Card.StreetColor.GREEN));
         cards.put(x35, new Card("Unbesetzt", -1, Card.StreetColor.None));
         cards.put(x36, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x37, new Card("Pferdemarkt", 200, Card.StreetColor.BLUE));
+        cards.put(x37, new Card("Pferdemarkt", 1000, Card.StreetColor.BLUE));
         cards.put(x38, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x39, new Card("Jobelmann-Schule", 200, Card.StreetColor.BLUE));
+        cards.put(x39, new Card("Jobelmann-Schule", 2000, Card.StreetColor.BLUE));
 
         stepButton.setOnAction(event -> {
             if (activePlayer >= players.size() - 1) {
