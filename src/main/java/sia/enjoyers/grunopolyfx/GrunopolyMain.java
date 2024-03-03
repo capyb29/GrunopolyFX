@@ -284,17 +284,8 @@ public class GrunopolyMain {
     //TODO fix player teleportation
     public void step(int stepCount, Player player) {
 
-        int newPos = 0;
-        System.out.println(player.pos.get());
-        System.out.println(stepCount);
-
-        if (player.pos.get() + stepCount <= 39) {
-            newPos = player.pos.get() + stepCount;
-          //  System.out.println(stepCount + " | " + players.get(activePlayer).playerId);
-        } else {
-            newPos = (player.pos.get() + stepCount) % 40;
-          //  System.out.println(stepCount + " | " + players.get(activePlayer).playerId);
-        }
+        int initial = player.pos.get();
+        int newPos = initial + stepCount <= 39 ? initial + stepCount : (initial + stepCount) % 40;
 
         this.cards = (ArrayList<Card>) this.cards.stream()
                 .peek(card -> card.playersOnCard.remove(player))
@@ -309,17 +300,17 @@ public class GrunopolyMain {
         assert newDesiredCard != null;
         newDesiredCard.playersOnCard.add(player);
 
-
         player.setPosition(newDesiredPane, newPos);
-        System.out.println(player.pos.get());
+
+        System.out.println("Player " + player.playerId + " rolled " + stepCount + " | " + " Old Pos: " + initial + " New Pos: " + newPos);
     }
 
     public void initPlayers (int playerCount) {
         for (int i = 0; i < playerCount; i++) {
             Color color = Color.color(Math.random(), Math.random(), Math.random());
-            Player player = new Player("Gru", color, 1000);
+            Player player = new Player("Gru", i + 1, color, 1000);
 
-            player.setPosition(allPanes.getFirst());
+            player.setPosition(allPanes.getFirst(), 0);
             board.getChildren().add(player);
             players.add(player);
         }
