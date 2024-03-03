@@ -181,48 +181,55 @@ public class GrunopolyMain {
 
         allPanes.forEach((pane) -> pane.setVisible(false));
 
+        buyButton.setOnAction(e -> {
+            Player player = players.get(activePlayer);
+            Pane cPane = allPanes.get(player.pos.intValue());
+            Card cCard = cards.get(cPane);
+            cCard.buy(player);
+        });
+
         // Set properties
         cards = new HashMap<>();
-        cards.put(x0, new Card("Los", -1, Card.StreetColor.None));
-        cards.put(x1, new Card("Athenaeum", 0, Card.StreetColor.BROWN));
-        cards.put(x2, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x3, new Card("VLG", 0, Card.StreetColor.BROWN));
-        cards.put(x4, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x5, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x6, new Card("Rossmann", 0, Card.StreetColor.LIGHTBLUE));
-        cards.put(x7, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x8, new Card("H&M", 0, Card.StreetColor.LIGHTBLUE));
-        cards.put(x9, new Card("Thalia", 0, Card.StreetColor.LIGHTBLUE));
-        cards.put(x10, new Card("Gefängnis", -1, Card.StreetColor.None));
-        cards.put(x11, new Card("Parkhotel Stade", 0, Card.StreetColor.PINK));
-        cards.put(x12, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x13, new Card("Stadissimo", 0, Card.StreetColor.PINK));
-        cards.put(x14, new Card("Stadeum", 0, Card.StreetColor.PINK));
-        cards.put(x15, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x16, new Card("Al Porto", 0, Card.StreetColor.ORANGE));
-        cards.put(x17, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x18, new Card("Mister Vu", 0, Card.StreetColor.ORANGE));
-        cards.put(x19, new Card("Tacos", 0, Card.StreetColor.ORANGE));
-        cards.put(x20, new Card("Nichts", -1, Card.StreetColor.None));
-        cards.put(x21, new Card("Commerzbank", 0, Card.StreetColor.RED));
-        cards.put(x22, new Card("Unbesetzt", 0, Card.StreetColor.None));
-        cards.put(x23, new Card("Sparkasse", 0, Card.StreetColor.RED));
-        cards.put(x24, new Card("Postbank", 0, Card.StreetColor.RED));
-        cards.put(x25, new Card("Unbesetzt", 0, Card.StreetColor.None));
-        cards.put(x26, new Card("Lidl", 0, Card.StreetColor.YELLOW));
-        cards.put(x27, new Card("Netto", 0, Card.StreetColor.YELLOW));
-        cards.put(x28, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x29, new Card("REWE", 0, Card.StreetColor.YELLOW));
-        cards.put(x30, new Card("Gehe ins Gefängnis", -1, Card.StreetColor.None));
-        cards.put(x31, new Card("Orient Express", 0, Card.StreetColor.GREEN));
-        cards.put(x32, new Card("Rena's Grill", 0, Card.StreetColor.GREEN));
-        cards.put(x33, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x34, new Card("Köz", 0, Card.StreetColor.GREEN));
-        cards.put(x35, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x36, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x37, new Card("Pferdemarkt", 0, Card.StreetColor.BLUE));
-        cards.put(x38, new Card("Unbesetzt", -1, Card.StreetColor.None));
-        cards.put(x39, new Card("Jobelmann-Schule", 0, Card.StreetColor.BLUE));
+        cards.put(x0, new Card("Los", -1));
+        cards.put(x1, new Card("Athenaeum", 0));
+        cards.put(x2, new Card("Unbesetzt", -1));
+        cards.put(x3, new Card("VLG", 0));
+        cards.put(x4, new Card("Unbesetzt", -1));
+        cards.put(x5, new Card("Unbesetzt", -1));
+        cards.put(x6, new Card("Rossmann", 0));
+        cards.put(x7, new Card("Unbesetzt", -1));
+        cards.put(x8, new Card("H&M", 0));
+        cards.put(x9, new Card("Thalia", 0));
+        cards.put(x10, new Card("Gefängnis", -1));
+        cards.put(x11, new Card("Parkhotel Stade", 0));
+        cards.put(x12, new Card("Unbesetzt", -1));
+        cards.put(x13, new Card("Stadissimo", 0));
+        cards.put(x14, new Card("Stadeum", 0));
+        cards.put(x15, new Card("Unbesetzt", -1));
+        cards.put(x16, new Card("Al Porto", 0));
+        cards.put(x17, new Card("Unbesetzt", -1));
+        cards.put(x18, new Card("Mister Vu", 0));
+        cards.put(x19, new Card("Tacos", 0));
+        cards.put(x20, new Card("Nichts", -1));
+        cards.put(x21, new Card("Commerzbank", 0));
+        cards.put(x22, new Card("Unbesetzt", 0));
+        cards.put(x23, new Card("Sparkasse", 0));
+        cards.put(x24, new Card("Postbank", 0));
+        cards.put(x25, new Card("Unbesetzt", 0));
+        cards.put(x26, new Card("Lidl", 0));
+        cards.put(x27, new Card("Netto", 0));
+        cards.put(x28, new Card("Unbesetzt", -1));
+        cards.put(x29, new Card("REWE", 0));
+        cards.put(x30, new Card("Gehe ins Gefängnis", -1));
+        cards.put(x31, new Card("Orient Express", 0));
+        cards.put(x32, new Card("Rena's Grill", 0));
+        cards.put(x33, new Card("Unbesetzt", -1));
+        cards.put(x34, new Card("Köz", 0));
+        cards.put(x35, new Card("Unbesetzt", -1));
+        cards.put(x36, new Card("Unbesetzt", -1));
+        cards.put(x37, new Card("Pferdemarkt", 0));
+        cards.put(x38, new Card("Unbesetzt", -1));
+        cards.put(x39, new Card("Jobelmann-Schule", 0));
 
         stepButton.setOnAction(event -> {
             int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
@@ -252,7 +259,6 @@ public class GrunopolyMain {
         assert newDesiredCard != null;
         newDesiredCard.playersOnCard.add(player);
 
-
         player.setPosition(newDesiredPane, newPos);
 
         System.out.println("Player " + player.id + " rolled " + stepCount + " | " + " Old Pos: " + initial + " New Pos: " + newPos);
@@ -263,7 +269,7 @@ public class GrunopolyMain {
 
     public void initPlayers (int playerCount, String[] playerNames) {
         for (int i = 0; i < playerCount; i++) {
-            Color hsb = Color.hsb((((double) 360 / playerCount) * (i + 1)), .5, .7);
+            Color hsb = Color.hsb((double) (((360 / playerCount) * (i + 1)) ), .5, .7);
 
             Player player = new Player(playerNames[i], i + 1, hsb, 1000);
             player.setPosition(allPanes.getFirst(), 0);
@@ -337,9 +343,26 @@ public class GrunopolyMain {
                 propsLabel.setText(player.properties.toString());
             }
 
-            header.setText("Spieler "+ (activePlayer + 1) + " am Zug!");
+            Card card = cards.get(currentPane);
 
-            youAreAt.setText("Sie befinden sich auf: " + cards.get(currentPane).name);
+            header.setText("Spieler "+ (activePlayer + 1) + " am Zug!");
+            youAreAt.setText("Sie befinden sich auf: " + card.name);
+
+            if (card.price != -1) {
+                buyButton.setVisible(true);
+                streetOwner.setVisible(true);
+                streetCost.setVisible(true);
+
+                streetOwner.setText(card.owner == null ? "Kein Besitzer" : "Besitzer: " + card.owner);
+                if (card.owner != player) {
+                    streetCost.setText("Kosten: " + card.rent + "€");
+                }
+            } else {
+                buyButton.setVisible(false);
+                streetOwner.setVisible(false);
+                streetCost.setVisible(false);
+
+            }
 
             if (rolled != 0) {
                 youGotA.setText("Sie haben eine " + rolled + " gewürfelt!");
@@ -412,14 +435,12 @@ public class GrunopolyMain {
                 if (file.getName().equals(filename)) {
                     return file;
                 }
-                File foundFile = recursiveSearchImage(file, filename);
+                File foundFile = recursiveSearchImage(file, filename); // Recursion on subdirectories
                 if (foundFile != null) {
                     return foundFile;
                 }
             }
         }
-        return null;
+        return null; // Image not found
     }
-
-
 }
