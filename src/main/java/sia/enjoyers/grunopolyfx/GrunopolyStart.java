@@ -48,14 +48,14 @@ public class GrunopolyStart {
 
     public void onStartButtonClick(ActionEvent evt) throws IOException {
         playerNames = new String[playerChoiceBox.getSelectionModel().getSelectedIndex() + 2];
-        playerNames[0] = playerName1.getText().isEmpty() ? "Gru" : playerName1.getText();
-        playerNames[1] = playerName2.getText().isEmpty() ? "Gru" : playerName2.getText();
+        playerNames[0] = playerName1.getText().isEmpty() ? "Gru1" : playerName1.getText();
+        playerNames[1] = playerName2.getText().isEmpty() ? "Gru2" : playerName2.getText();
 
         if (playerChoiceBox.getSelectionModel().getSelectedIndex() == 1) {
-            playerNames[2] = playerName3.getText().isEmpty() ? "Gru" : playerName3.getText();
+            playerNames[2] = playerName3.getText().isEmpty() ? "Gru3" : playerName3.getText();
         } else if (playerChoiceBox.getSelectionModel().getSelectedIndex() == 2) {
-            playerNames[2] = playerName3.getText().isEmpty() ? "Gru" : playerName3.getText();
-            playerNames[3] = playerName4.getText().isEmpty() ? "Gru" : playerName4.getText();
+            playerNames[2] = playerName3.getText().isEmpty() ? "Gru3" : playerName3.getText();
+            playerNames[3] = playerName4.getText().isEmpty() ? "Gru4" : playerName4.getText();
         }
 
         Node source = (Node) evt.getSource();

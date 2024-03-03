@@ -139,7 +139,7 @@ public class GrunopolyMain {
 
     // Get interactive elements
     @FXML
-    private Button stepButton;
+    public Button stepButton;
 
 
     // Declare data
@@ -221,7 +221,7 @@ public class GrunopolyMain {
         cards.put(x22, new Card("Unbesetzt", -1, Card.StreetColor.None));
         cards.put(x23, new Card("Sparkasse", 200, Card.StreetColor.RED));
         cards.put(x24, new Card("Postbank", 200, Card.StreetColor.RED));
-        cards.put(x25, new Card("Unbesetzt", 200, Card.StreetColor.None));
+        cards.put(x25, new Card("Unbesetzt", -1, Card.StreetColor.None));
         cards.put(x26, new Card("Lidl", 200, Card.StreetColor.YELLOW));
         cards.put(x27, new Card("Netto", 200, Card.StreetColor.YELLOW));
         cards.put(x28, new Card("Unbesetzt", -1, Card.StreetColor.None));
@@ -261,11 +261,19 @@ public class GrunopolyMain {
         Pane newDesiredPane = allPanes.get(newPos);
         Card newDesiredCard = this.cards.get(newDesiredPane);
 
+        // Gefängnis
+        if (newDesiredPane == x30) {
+            Pane jailPane = x10;
+            player.setPosition(jailPane, 10);
+            player.jail = true;
+            updateUi(jailPane, stepCount);
+            return;
+        }
+
         assert newDesiredCard != null;
         newDesiredCard.playersOnCard.add(player);
 
         player.setPosition(newDesiredPane, newPos);
-
         updateUi(newDesiredPane, stepCount);
 
     }
@@ -284,7 +292,6 @@ public class GrunopolyMain {
 
         hidePlayerStats(playerCount);
         activePlayer = (int) (Math.random() * players.size());
-        header.setText(players.get(activePlayer).toString() + " am Zug!");
         updateUi(x0, 0);
     }
 
@@ -353,8 +360,23 @@ public class GrunopolyMain {
 
             Card card = cards.get(currentPane);
 
-            header.setText("Spieler "+ (activePlayer + 1) + " am Zug!");
+            header.setText(players.get(activePlayer).name + " am Zug!");
             youAreAt.setText("Sie befinden sich auf: " + card.name);
+
+            buyButton.setDisable(true);
+            streetOwner.setVisible(false);
+            streetCost.setVisible(false);
+
+            // Gefängnis
+            if (player.jail) {
+                streetOwner.setVisible(false);
+                streetCost.setVisible(true);
+                buyButton.setDisable(true);
+                header.setText("Du bist im Gefängnis.");
+                streetCost.setText("Warte 1 Runde");
+                player.jail = false;
+                return;
+            }
 
             if (card.price != -1) {
                 buyButton.setDisable(false);
@@ -369,14 +391,10 @@ public class GrunopolyMain {
                     streetCost.setText("Miete: " + card.rent + "€");
                     streetOwner.setText("Besitzer: " + card.owner.name);
                 }
-            } else {
-                buyButton.setDisable(true);
-                streetOwner.setVisible(false);
-                streetCost.setVisible(false);
             }
 
             if (rolled != 0) {
-                youGotA.setText("Sie haben eine " + rolled + " gewürfelt!");
+                youGotA.setText(players.get(activePlayer).name + " hat eine " + rolled + " gewürfelt!");
 
             } else {
                 youGotA.setText("Viel Glück!");
