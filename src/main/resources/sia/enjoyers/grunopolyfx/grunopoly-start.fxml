@@ -7,8 +7,8 @@
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to right, red, yellow);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sia.enjoyers.grunopolyfx.GrunopolyStart">
    <Button fx:id="startButton" layoutX="336.0" layoutY="189.0" mnemonicParsing="false" onAction="#onStartButtonClick" prefHeight="34.0" prefWidth="169.0" text="Start" />
-   <Button fx:id="exitButton" layoutX="336.0" layoutY="257.0" mnemonicParsing="false" prefHeight="34.0" prefWidth="169.0" text="Verlassen" onAction="#onExitButtonClick"/>
-   <ChoiceBox fx:id="playerChoiceBox" layoutX="66.0" layoutY="223.0" prefHeight="34.0" prefWidth="156.0" />
+   <Button fx:id="exitButton" layoutX="336.0" layoutY="257.0" mnemonicParsing="false" onAction="#onExitButtonClick" prefHeight="34.0" prefWidth="169.0" text="Verlassen" />
+   <ChoiceBox fx:id="playerChoiceBox" layoutX="64.0" layoutY="190.0" prefHeight="34.0" prefWidth="156.0" />
    <Text fill="RED" layoutX="97.0" layoutY="77.0" strokeType="OUTSIDE" strokeWidth="2.0" text="GRUNOPOLY" textAlignment="CENTER" wrappingWidth="406.13671875">
       <font>
          <Font name="Comic Sans MS" size="50.0" />
@@ -30,7 +30,7 @@
          </LinearGradient>
       </stroke>
    </Text>
-   <Text fill="#00ff75" layoutX="66.0" layoutY="210.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Anzahl Spieler:" textAlignment="CENTER" wrappingWidth="156.0">
+   <Text fill="#00ff75" layoutX="64.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Anzahl Spieler:" textAlignment="CENTER" wrappingWidth="156.0">
       <font>
          <Font name="Comic Sans MS" size="20.0" />
       </font>
@@ -51,4 +51,5 @@
          </LinearGradient>
       </stroke>
    </Text>
+   <Label layoutX="64.0" layoutY="257.0" text="Label" />
 </Pane>

@@ -49,6 +49,7 @@ public class GrunopolyMain {
     public Label houseBuyLabel;
     public Button buyHouses;
     public Label youGotA;
+    public Label header;
 
 
     //Get Board and Background
@@ -313,8 +314,18 @@ public class GrunopolyMain {
         System.out.println(player.pos.get());
     }
 
-    public void setPlayerCount (int playerCount) {
-        this.playerCount = playerCount;
+    public void initPlayers (int playerCount) {
+        for (int i = 0; i < playerCount; i++) {
+            Color color = Color.color(Math.random(), Math.random(), Math.random());
+            Player player = new Player("Gru", color, 1000);
+
+            player.setPosition(allPanes.getFirst());
+            board.getChildren().add(player);
+            players.add(player);
+        }
+
+        activePlayer = (int) (Math.random() * players.size());
+        header.setText("Spieler "+ activePlayer + " am Zug!");
     }
 
     private record SceneSizeChangeListener(double ratio, double initHeight, double initWidth, Pane contentPane) implements ChangeListener<Number> {
