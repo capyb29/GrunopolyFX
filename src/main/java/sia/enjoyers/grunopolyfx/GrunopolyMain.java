@@ -22,7 +22,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class GrunopolyMain {
@@ -147,7 +146,7 @@ public class GrunopolyMain {
 
 
     // Declare data
-    AtomicInteger pos = new AtomicInteger();
+
     List<Pane> allPanes;
     ArrayList<Card> cards = new ArrayList<>();
     ArrayList<Player> players = new ArrayList<>();
@@ -284,7 +283,7 @@ public class GrunopolyMain {
     //TODO fix player teleportation
     public void step(int stepCount, Player player) {
 
-        int newPos = 0;
+        int newPos;
         System.out.println(player.pos.get());
         System.out.println(stepCount);
 
@@ -317,9 +316,9 @@ public class GrunopolyMain {
     public void initPlayers (int playerCount) {
         for (int i = 0; i < playerCount; i++) {
             Color color = Color.color(Math.random(), Math.random(), Math.random());
-            Player player = new Player("Gru", color, 1000);
+            Player player = new Player("Gru",i + 1, color, 1000);
 
-            player.setPosition(allPanes.getFirst());
+            player.setPosition(allPanes.getFirst(),0);
             board.getChildren().add(player);
             players.add(player);
         }
