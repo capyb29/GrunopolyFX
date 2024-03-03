@@ -252,6 +252,10 @@ public class GrunopolyMain {
 
 
     public void step(int stepCount, Player player) {
+        if (player.jailRounds > 0) {
+            updateUi(x10, 0);
+            return;
+        }
 
         int initial = player.pos.get();
         int newPos = initial + stepCount <= 39 ? initial + stepCount : (initial + stepCount) % 40;
@@ -263,10 +267,9 @@ public class GrunopolyMain {
 
         // Gefängnis
         if (newDesiredPane == x30) {
-            Pane jailPane = x10;
-            player.setPosition(jailPane, 10);
-            player.jail = true;
-            updateUi(jailPane, stepCount);
+            player.setPosition(x10, 10);
+            player.jailRounds = 3;
+            updateUi(x10, stepCount);
             return;
         }
 
@@ -368,13 +371,13 @@ public class GrunopolyMain {
             streetCost.setVisible(false);
 
             // Gefängnis
-            if (player.jail) {
+            if (players.get(activePlayer).jailRounds > 0) {
                 streetOwner.setVisible(false);
-                streetCost.setVisible(true);
+                streetCost.setVisible(false);
                 buyButton.setDisable(true);
                 header.setText("Du bist im Gefängnis.");
-                streetCost.setText("Warte 1 Runde");
-                player.jail = false;
+                youGotA.setText(players.get(activePlayer).jailRounds > 1 ? "Warte " + players.get(activePlayer).jailRounds + " Runden." : "Warte 1 Runde.");
+                players.get(activePlayer).jailRounds--;
                 return;
             }
 

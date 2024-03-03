@@ -14,7 +14,7 @@ public class Player extends Pane {
 
     AtomicInteger pos;
     int id;
-    boolean jail;
+    int jailRounds;
     ArrayList<Card> properties = new ArrayList<>();
     public ArrayList<Card.StreetColor> hasColor;
 
