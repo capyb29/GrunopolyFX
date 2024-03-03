@@ -1,16 +1,12 @@
 package sia.enjoyers.grunopolyfx;
 
-import javafx.beans.InvalidationListener;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
-import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
 
 public class Player extends Pane {
     String name;
@@ -22,12 +18,14 @@ public class Player extends Pane {
     ArrayList<Card> properties = new ArrayList<>();
 
     public ArrayList<Card.StreetColor> hasColor;
+    public ArrayList<Card> housableStreets;
 
     Player(String name, int id, Color color, int initialMoney) {
         this.name = name;
         this.money = initialMoney;
         this.id = id;
         this.hasColor = new ArrayList<>();
+        this.housableStreets = new ArrayList<>();
         this.pos = new AtomicInteger(0);
         this.setPrefSize(25, 25);
         this.color = color;
@@ -74,5 +72,37 @@ public class Player extends Pane {
         this.pos.set(pos);
 
         this.setVisible(true);
+    }
+
+    public ArrayList<Card> getEligibleStreetsForBuilding() {
+        ArrayList<Card> eligibleStreets = new ArrayList<>();
+
+        HashMap<Card.StreetColor, ArrayList<Card>> cardsByColor = new HashMap<>();
+        for (Card card : properties) {
+            cardsByColor.computeIfAbsent(card.cardColor, k -> new ArrayList<>()).add(card);
+        }
+
+        for (Card.StreetColor color : cardsByColor.keySet()) {
+            int requiredCount = color == Card.StreetColor.BROWN || color == Card.StreetColor.BLUE ? 2: 3;
+            if (cardsByColor.get(color).size() >= requiredCount && hasColor.contains(color)) {
+                eligibleStreets.addAll(cardsByColor.get(color));
+            }
+        }
+        this.housableStreets = eligibleStreets;
+
+        return eligibleStreets;
+    }
+
+
+
+    public void buildHouse(String card, Label eventText) {
+        Card currentCard = properties.stream().filter(c -> c.name.equals(card)).toList().getFirst();
+
+        if (currentCard.houses < 5 && money >= currentCard.price / 2) {
+            currentCard.houses++;
+            money -= currentCard.price / 2;
+
+            eventText.setText(name + " hat ein Haus auf " + currentCard.name + " gebaut!");
+        }
     }
 }

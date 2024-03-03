@@ -73,5 +73,7 @@ public class Card {
             owner.money += this.rent;
         }
     }
+
+
 }
 
