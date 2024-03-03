@@ -354,7 +354,7 @@ public class GrunopolyMain {
                 streetOwner.setVisible(true);
                 streetCost.setVisible(true);
 
-                streetOwner.setText(card.owner == null ? "Kein Besitzer" : "Besitzer: " + card.owner);
+                streetOwner.setText(card.owner == null ? "Kein Besitzer" : "Besitzer: " + card.owner.name);
                 if (card.owner != player) {
                     streetCost.setText("Kosten: " + card.rent + "€");
                 }
