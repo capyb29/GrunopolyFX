@@ -15,13 +15,13 @@ public class Player extends Pane {
     int id;
     boolean jail;
     ArrayList<String> properties = new ArrayList<>();
-    public ArrayList<Card.StreetColor> hasColor;
+    //public ArrayList<Card.StreetColor> hasColor;
 
     Player(String name, int id, Color color, int initialMoney) {
         this.name = name;
         this.money = initialMoney;
         this.id = id;
-        this.hasColor = new ArrayList<>();
+        //this.hasColor = new ArrayList<>();
         this.pos = new AtomicInteger(0);
         this.setPrefSize(25, 25);
 

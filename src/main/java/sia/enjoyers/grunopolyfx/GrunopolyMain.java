@@ -149,6 +149,7 @@ public class GrunopolyMain {
     public HashMap<Pane, Card> cards;
     int activePlayer = 0;
     int rounds = 0;
+    int diceNumber = 0;
 
     @FXML
     public void initialize() {
@@ -185,7 +186,9 @@ public class GrunopolyMain {
             Player player = players.get(activePlayer);
             Pane cPane = allPanes.get(player.pos.intValue());
             Card cCard = cards.get(cPane);
-            cCard.buy(player);
+            cCard.buyStreet(player);
+            // Update UI
+            updateUi(cPane, diceNumber);
         });
 
         // Set properties
@@ -232,9 +235,9 @@ public class GrunopolyMain {
         cards.put(x39, new Card("Jobelmann-Schule", 0, Card.StreetColor.BLUE));
 
         stepButton.setOnAction(event -> {
-            int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
+            this.diceNumber = (int) Math.max(2, 1 + (Math.random() * 12));
 
-            step(randNum, players.get(activePlayer));
+            step(this.diceNumber, players.get(activePlayer));
             if (activePlayer >= players.size() - 1) {
                 activePlayer = 0;
                 rounds++;
@@ -361,7 +364,6 @@ public class GrunopolyMain {
                 buyButton.setVisible(false);
                 streetOwner.setVisible(false);
                 streetCost.setVisible(false);
-
             }
 
             if (rolled != 0) {
@@ -370,8 +372,6 @@ public class GrunopolyMain {
             } else {
                 youGotA.setText("Viel Glück!");
             }
-
-
         }
     }
     public void hidePlayerStats(int numberPlayers) {

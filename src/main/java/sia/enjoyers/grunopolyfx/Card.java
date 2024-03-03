@@ -32,8 +32,12 @@ public class Card {
         this.owner = null;
         this.houses = 0;
     }
-    public void buy(Player player) {
-
+    public void buyStreet(Player player) {
+        if (player.money >= this.price) {
+            this.owner = player;
+            player.properties.add(this.name);
+            player.money -= this.price;
+        }
     }
 }
 
