@@ -301,6 +301,7 @@ public class GrunopolyMain {
             players.add(player);
         }
 
+        hidePlayerStats(playerCount);
         activePlayer = (int) (Math.random() * players.size());
         header.setText("Spieler "+ activePlayer + " am Zug!");
         updateUi(x0, 0);
@@ -368,15 +369,49 @@ public class GrunopolyMain {
             youAreAt.setText("Sie befinden sich auf: " + properties.get(currentPane));
 
             if (rolled != 0) {
-            youGotA.setText("Sie haben eine " + rolled + " gewürfelt!");
+                youGotA.setText("Sie haben eine " + rolled + " gewürfelt!");
 
             } else {
                 youGotA.setText("Viel Glück!");
             }
 
 
-
-
         }
     }
+        public void hidePlayerStats(int numberPlayers) {
+            for (int i = numberPlayers; i < 4; i++) {
+                Label playerLabel = switch (i) {
+                    case 0 -> player1;
+                    case 1 -> player2;
+                    case 2 -> player3;
+                    case 3 -> player4;
+                    default -> null;
+                };
+                Label moneyLabel = switch (i) {
+                    case 0 -> player1_money;
+                    case 1 -> player2_money;
+                    case 2 -> player3_money;
+                    case 3 -> player4_money;
+                    default -> null;
+                };
+                Label propsLabel = switch (i) {
+                    case 0 -> player1_props;
+                    case 1 -> player2_props;
+                    case 2 -> player3_props;
+                    case 3 -> player4_props;
+                    default -> null;
+                };
+                if (playerLabel != null) {
+                    playerLabel.setVisible(false);
+                }
+                if (moneyLabel != null) {
+                    moneyLabel.setVisible(false);
+                }
+                if (propsLabel != null) {
+                    propsLabel.setVisible(false);
+                }
+            }
+
+        }
+
 }
