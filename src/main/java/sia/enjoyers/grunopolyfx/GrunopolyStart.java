@@ -1,5 +1,6 @@
 package sia.enjoyers.grunopolyfx;
 
+import javafx.beans.DefaultProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -22,6 +23,7 @@ public class GrunopolyStart {
 
     public void initialize() {
         playerChoiceBox.getItems().addAll("2 Spieler", "3 Spieler", "4 Spieler");
+        playerChoiceBox.setValue("2 Spieler");
     }
 
     public void onStartButtonClick(ActionEvent evt) throws IOException {
@@ -31,6 +33,11 @@ public class GrunopolyStart {
 
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("grunopoly-main.fxml"));
         Parent root = loader.load();
+
+        GrunopolyMain controller = loader.getController();
+        controller.setPlayerCount(playerChoiceBox.getSelectionModel().getSelectedIndex() + 2);
+
+
         Stage newStage = new Stage();
         newStage.setScene(new Scene(root));
         newStage.setTitle("Grunopoly");
