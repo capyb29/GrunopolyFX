@@ -450,8 +450,6 @@ public class GrunopolyMain {
             if (rolled != 0) {
                 youGotA.setText(players.get(activePlayer).name + " hat eine " + rolled + " gewürfelt!");
 
-            } else {
-                youGotA.setText("Viel Glück!");
             }
 
             streetChoiceHouses.getItems().clear();
