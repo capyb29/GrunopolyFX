@@ -5,14 +5,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
-import javafx.scene.paint.Color;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.math.*;
 
@@ -125,8 +126,10 @@ public class GrunopolyMain {
         });
 
         // Create temporary players
-        for (int i = 0; i < (int) Math.max(1, Math.random() * 5); i++) {
-            Player player = new Player("GRU", Color.GREEN, 1000);
+        for (int i = 0; i < (int) Math.max(1, 1 + Math.random() * 5); i++) {
+            Color color = Color.color(Math.random(), Math.random(), Math.random());
+            Player player = new Player("GRU", color, 1000);
+
             player.setPosition(allPanes.getFirst());
             board.getChildren().add(player);
             players.add(player);
