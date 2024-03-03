@@ -405,7 +405,6 @@ public class GrunopolyMain {
                 streetCost.setVisible(false);
                 buyButton.setDisable(true);
                 stepButton.setText("Skip");
-                header.setText("Du bist im Gefängnis.");
                 youGotA.setText(players.get(activePlayer).jailRounds > 1 ? "Warte " + players.get(activePlayer).jailRounds + " Runden." : "Warte 1 Runde.");
                 players.get(activePlayer).jailRounds--;
                 return;
