@@ -294,7 +294,7 @@ public class GrunopolyMain {
         } else if (newDesiredPane == x20) {
             // Steuern
             int moolah = (int) (player.money * 0.1);
-            player.money -= moolah;
+            player.money -= Math.abs(moolah);
 
             eventText.setText(player.name + " hat die 10%-Steuer bezahlt!\n-"+ moolah + "€");
         }
