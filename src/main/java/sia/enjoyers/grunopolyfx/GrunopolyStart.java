@@ -25,6 +25,8 @@ public class GrunopolyStart {
     public TextField playerName3;
     public TextField playerName4;
 
+    public String[] playerNames;
+
     public void initialize() {
         playerChoiceBox.getItems().addAll("2 Spieler", "3 Spieler", "4 Spieler");
         playerChoiceBox.setValue("2 Spieler");
@@ -45,6 +47,17 @@ public class GrunopolyStart {
     }
 
     public void onStartButtonClick(ActionEvent evt) throws IOException {
+        playerNames = new String[playerChoiceBox.getSelectionModel().getSelectedIndex() + 2];
+        playerNames[0] = playerName1.getText().isEmpty() ? "Gru" : playerName1.getText();
+        playerNames[1] = playerName2.getText().isEmpty() ? "Gru" : playerName2.getText();
+
+        if (playerChoiceBox.getSelectionModel().getSelectedIndex() == 1) {
+            playerNames[2] = playerName3.getText().isEmpty() ? "Gru" : playerName3.getText();
+        } else if (playerChoiceBox.getSelectionModel().getSelectedIndex() == 2) {
+            playerNames[2] = playerName3.getText().isEmpty() ? "Gru" : playerName3.getText();
+            playerNames[3] = playerName4.getText().isEmpty() ? "Gru" : playerName4.getText();
+        }
+
         Node source = (Node) evt.getSource();
         Stage currentStage = (Stage) source.getScene().getWindow();
         currentStage.close();
@@ -53,7 +66,7 @@ public class GrunopolyStart {
         Parent root = loader.load();
 
         GrunopolyMain controller = loader.getController();
-        controller.initPlayers(playerChoiceBox.getSelectionModel().getSelectedIndex() + 2);
+        controller.initPlayers(playerChoiceBox.getSelectionModel().getSelectedIndex() + 2, playerNames);
 
 
         Stage newStage = new Stage();
