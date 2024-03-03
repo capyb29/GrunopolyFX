@@ -48,6 +48,7 @@ public class GrunopolyMain {
     public Label youGotA;
     public Label header;
     public Button streetSellButton;
+
     public ChoiceBox<String> streetSelector;
 
 
@@ -257,6 +258,7 @@ public class GrunopolyMain {
 
         buyHouses.setOnAction(event -> {
             Player player = players.get(activePlayer);
+            Card street = cards.get(allPanes.get(player.pos.intValue()));
             if (streetChoiceHouses.getValue() == null) {
                 eventText.setText("Bitte wählen Sie eine Straße aus!");
                 return;
@@ -267,6 +269,13 @@ public class GrunopolyMain {
             updateUi(allPanes.get(player.pos.intValue()), 0);
             streetChoiceHouses.setValue(streetName);
 
+        });
+
+        streetSellButton.setOnAction(event -> {
+            Player player = players.get(activePlayer);
+            Pane pane = allPanes.get(player.pos.intValue());
+            player.sellStreet(eventText, streetSelector, pane);
+            updateUi(pane,0);
         });
     }
 
@@ -450,6 +459,9 @@ public class GrunopolyMain {
                 streetChoiceHouses.getItems().add(street.name);
             }
             buyHouses.setDisable(streetChoiceHouses.getItems().isEmpty());
+
+            streetSelector.getItems().clear();
+            players.get(activePlayer).properties.forEach(c -> streetSelector.getItems().add(c.name));
         }
     }
 

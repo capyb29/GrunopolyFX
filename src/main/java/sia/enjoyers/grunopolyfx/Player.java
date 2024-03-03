@@ -1,5 +1,6 @@
 package sia.enjoyers.grunopolyfx;
 
+import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
@@ -103,6 +104,20 @@ public class Player extends Pane {
             money -= currentCard.price / 2;
             eventText.setText(name + " hat ein Haus auf " + currentCard.name + " gebaut!");
             currentCard.updateRent(currentCard.houses);
+        }
+    }
+
+    public void sellStreet(Label eventText, ChoiceBox<String> selector, Pane pane) {
+        String card = selector.getValue();
+        boolean exist = !properties.stream().filter(c -> c.name.equals(card)).toList().isEmpty();
+        if (exist) {
+            Card currentCard = properties.stream().filter(c -> c.name.equals(card)).toList().getFirst();
+            currentCard.owner = null;
+            money += currentCard.price;
+            eventText.setText(name + " hat " + currentCard.name + " vekauft!");
+            pane.setVisible(false);
+            properties.remove(currentCard);
+            selector.getItems().remove(card);
         }
     }
 }
