@@ -126,7 +126,7 @@ public class GrunopolyMain {
     @FXML
     public void initialize() {
         // get background image
-        String imagePath = "C:\\Users\\w2005\\IdeaProjects\\GrunopolyFX\\src\\main\\resources\\sia\\enjoyers\\grunopolyfx\\Board.png";
+        String imagePath = "src\\main\\resources\\sia\\enjoyers\\grunopolyfx\\Board.png";
         try {
             Image image = new Image("file:" + imagePath);
 
