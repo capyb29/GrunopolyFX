@@ -3,12 +3,15 @@ package sia.enjoyers.grunopolyfx;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.ImagePattern;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -22,6 +25,8 @@ public class GrunopolyMain {
 
     @FXML
     private Pane board;
+    @FXML
+    private Pane boardimg;
 
     // Get anchor points
     @FXML
@@ -120,6 +125,24 @@ public class GrunopolyMain {
 
     @FXML
     public void initialize() {
+        // get background image
+        String imagePath = "C:\\Users\\w2005\\IdeaProjects\\GrunopolyFX\\src\\main\\resources\\sia\\enjoyers\\grunopolyfx\\Board.png";
+        try {
+            Image image = new Image("file:" + imagePath);
+
+            // Create an ImageView for flexible sizing
+            ImageView imageView = new ImageView(image);
+            imageView.fitWidthProperty().bind(boardimg.widthProperty());
+            imageView.fitHeightProperty().bind(boardimg.heightProperty());
+
+            // Set the ImagePattern as the pane's background
+            ImagePattern imagePattern = new ImagePattern(image);
+            boardimg.setBackground(new Background(new BackgroundFill(imagePattern, CornerRadii.EMPTY, Insets.EMPTY)));
+        } catch (Exception e) {
+            System.exit(1);
+        }
+
+
         // Initialization code here, if needed
         // Example: Collecting panes in a list for easier manipulation
         allPanes = Arrays.asList(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x30, x31, x32, x33, x34, x35, x36, x37, x38, x39);
@@ -135,7 +158,7 @@ public class GrunopolyMain {
         stepButton.setOnAction(event -> {
             if (buttonCountClicked == 0) {
                 // Create temporary players
-                for (int i = 0; i < (int) Math.max(1, 1 + Math.random() * 5); i++) {
+                for (int i = 0; i < this.playerCount; i++) {
                     Color color = Color.color(Math.random(), Math.random(), Math.random());
                     Player player = new Player("GRU", color, 1000);
 

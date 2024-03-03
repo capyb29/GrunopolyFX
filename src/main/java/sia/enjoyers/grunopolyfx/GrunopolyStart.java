@@ -1,6 +1,5 @@
 package sia.enjoyers.grunopolyfx;
 
-import javafx.beans.DefaultProperty;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
