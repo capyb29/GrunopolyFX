@@ -6,10 +6,13 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
+
 public class Player extends Pane {
     String name;
     int money;
     boolean jail;
+    ArrayList<String> properties = new ArrayList<>();
     Player(String name, Color color, int initialMoney) {
         this.name = name;
         this.money = initialMoney;

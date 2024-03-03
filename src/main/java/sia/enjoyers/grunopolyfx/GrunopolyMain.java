@@ -1,37 +1,62 @@
 package sia.enjoyers.grunopolyfx;
 
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.Group;
-import javafx.scene.Scene;
+import javafx.geometry.Insets;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
-import javafx.geometry.Insets;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.transform.Scale;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
-import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.math.*;
 import java.util.stream.Collectors;
-import java.awt.Dimension;
 
 public class GrunopolyMain {
 
+    // Get UI components
+    @FXML
+    public Label player1;
+    public Label player2;
+    public Label player3;
+    public Label player4;
+    public Label player1_money;
+    public Label player2_money;
+    public Label player3_money;
+    public Label player4_money;
+    public Label player1_props;
+    public Label player2_props;
+    public Label player3_props;
+    public Label player4_props;
+    public Label youAreAt;
+    public Label streetOwner;
+    public Label streetCost;
+    public Button buyButton;
+    public ChoiceBox<String> streetChoiceHouses;
+    public Label houseBuyLabel;
+    public Button buyHouses;
+    public Label youGotA;
+
+
+    //Get Board and Background
     @FXML
     private Pane board;
     @FXML
     private Pane boardimg;
+
 
     // Get anchor points
     @FXML
@@ -119,11 +144,13 @@ public class GrunopolyMain {
     @FXML
     private Button stepButton;
 
+
     // Declare data
     AtomicInteger pos = new AtomicInteger();
     List<Pane> allPanes;
-    ArrayList<Card> cards = new ArrayList<Card>();
-    ArrayList<Player> players = new ArrayList<Player>();
+    ArrayList<Card> cards = new ArrayList<>();
+    ArrayList<Player> players = new ArrayList<>();
+    public HashMap<Pane, String> properties;
     int activePlayer = 0;
     int playerCount = 0;
     int buttonCountClicked = 0;
@@ -131,10 +158,6 @@ public class GrunopolyMain {
     @FXML
     public void initialize() {
         // apply scaling transforms
-        Dimension screenSize = java.awt.Toolkit.getDefaultToolkit().getScreenSize();
-        double width = screenSize.getWidth();
-        double height = screenSize.getHeight();
-
         double startWidth = 1700;
         double startHeight = 1150;
 
@@ -180,12 +203,57 @@ public class GrunopolyMain {
             pane.setVisible(false);
         });
 
+        // Set properties
+         properties = new HashMap<>();
+        properties.put(x0, "Los");
+        properties.put(x1, "Athenaeum");
+        properties.put(x2, "Unbesetzt");
+        properties.put(x3, "VLG");
+        properties.put(x4, "Unbesetzt");
+        properties.put(x5, "Unbesetzt");
+        properties.put(x6, "Rossmann");
+        properties.put(x7, "Unbesetzt");
+        properties.put(x8, "H&M");
+        properties.put(x9, "Thalia");
+        properties.put(x10, "Gefängnis");
+        properties.put(x11, "Parkhotel Stade");
+        properties.put(x12, "Unbesetzt");
+        properties.put(x13, "Stadissimo");
+        properties.put(x14, "Stadeum");
+        properties.put(x15, "Unbesetzt");
+        properties.put(x16, "Al Porto");
+        properties.put(x17, "Unbesetzt");
+        properties.put(x18, "Mister Vu");
+        properties.put(x19, "Tacos");
+        properties.put(x20, "Nichts");
+        properties.put(x21, "Commerzbank");
+        properties.put(x22, "Unbesetzt");
+        properties.put(x23, "Sparkasse");
+        properties.put(x24, "Postbank");
+        properties.put(x25, "Unbesetzt");
+        properties.put(x26, "Lidl");
+        properties.put(x27, "Netto");
+        properties.put(x28, "Unbesetzt");
+        properties.put(x29, "REWE");
+        properties.put(x30, "Gehe ins Gefängnis");
+        properties.put(x31, "Orient Express");
+        properties.put(x32, "Rena's Grill");
+        properties.put(x33, "Unbesetzt");
+        properties.put(x34, "Köz");
+        properties.put(x35, "Unbesetzt");
+        properties.put(x36, "Unbesetzt");
+        properties.put(x37, "Pferdemarkt");
+        properties.put(x38, "Unbesetzt");
+        properties.put(x39, "Jobelmann-Schule");
+
+        updateUi();
+
         stepButton.setOnAction(event -> {
             if (buttonCountClicked == 0) {
                 // Create temporary players
                 for (int i = 0; i < this.playerCount; i++) {
                     Color color = Color.color(Math.random(), Math.random(), Math.random());
-                    Player player = new Player("GRU", color, 1000);
+                    Player player = new Player("GRU", color, 900);
 
                     player.setPosition(allPanes.getFirst());
                     board.getChildren().add(player);
@@ -197,6 +265,7 @@ public class GrunopolyMain {
 
             this.buttonCountClicked++;
             int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
+            System.out.println(randNum);
             step(randNum, players.get(activePlayer));
 
             if (activePlayer >= players.size() - 1) {
@@ -204,8 +273,11 @@ public class GrunopolyMain {
             } else {
                 activePlayer++;
             }
+            updateUi();
         });
     }
+
+    //TODO fix player teleportation
     public void step(int stepCount, Player player) {
         if (pos.get() + stepCount <= 39) {
             pos.set(pos.get() + stepCount);
@@ -238,20 +310,17 @@ public class GrunopolyMain {
     }
 
     private record SceneSizeChangeListener(double ratio, double initHeight, double initWidth, Pane contentPane) implements ChangeListener<Number> {
-        @Override
+            @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
 
-                System.out.println(initHeight);
+
                 final double newWidth = contentPane.getWidth();
                 final double newHeight = contentPane.getHeight();
 
-                System.out.println(newHeight);
                 double scaleFactor =
                         newWidth / newHeight > ratio
                                 ? newHeight / initHeight
                                 : newWidth / initWidth;
-
-                //System.out.println(scaleFactor);
 
                 Scale scale = new Scale(scaleFactor, scaleFactor);
                 scale.setPivotX(0);
@@ -262,5 +331,45 @@ public class GrunopolyMain {
                 contentPane.setPrefWidth(newWidth / scaleFactor);
                 contentPane.setPrefHeight(newHeight / scaleFactor);
             }
+    }
+    private void updateUi() {
+        // Update player labels
+        for (int i = 0; i < players.size(); i++) {
+            Player player = players.get(i);
+            Label playerLabel = switch (i) {
+                case 0 -> player1;
+                case 1 -> player2;
+                case 2 -> player3;
+                case 3 -> player4;
+                default -> null;
+            };
+            Label moneyLabel = switch (i) {
+                case 0 -> player1_money;
+                case 1 -> player2_money;
+                case 2 -> player3_money;
+                case 3 -> player4_money;
+                default -> null;
+            };
+            Label propsLabel = switch (i) {
+                case 0 -> player1_props;
+                case 1 -> player2_props;
+                case 2 -> player3_props;
+                case 3 -> player4_props;
+                default -> null;
+            };
+            if (playerLabel != null) {
+                playerLabel.setText(player.name);
+            }
+            if (moneyLabel != null) {
+                moneyLabel.setText(player.money + "€");
+            }
+            //TODO remove brackets
+            if (propsLabel != null) {
+                propsLabel.setText(player.properties.toString());
+            }
+
+
+
         }
+    }
 }

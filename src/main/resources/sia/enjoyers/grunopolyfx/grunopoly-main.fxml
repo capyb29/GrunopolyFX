@@ -348,7 +348,7 @@
       </font>
    </Button>
    <ChoiceBox fx:id="streetChoiceHouses" layoutX="1216.0" layoutY="1053.0" prefWidth="150.0" />
-   <Label fx:id="houseBuyLable" layoutX="1317.0" layoutY="999.0" text="Häuserkauf">
+   <Label fx:id="houseBuyLabel" layoutX="1317.0" layoutY="999.0" text="Häuserkauf">
       <font>
          <Font name="Comic Sans MS" size="18.0" />
       </font>
