@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 public class Player extends Pane {
     String name;
     int money;
-
+    Color color;
     AtomicInteger pos;
     int id;
     int jailRounds;
@@ -30,6 +30,7 @@ public class Player extends Pane {
         this.hasColor = new ArrayList<>();
         this.pos = new AtomicInteger(0);
         this.setPrefSize(25, 25);
+        this.color = color;
 
         // Player appearance
         String hex = String.format("#%02x%02x%02x", (int) (color.getRed() * 255), (int) (color.getGreen() * 255), (int) (color.getBlue() * 255));

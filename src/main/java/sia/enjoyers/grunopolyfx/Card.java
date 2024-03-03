@@ -1,6 +1,8 @@
 package sia.enjoyers.grunopolyfx;
 
+import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
 
 import java.util.ArrayList;
 
@@ -35,12 +37,32 @@ public class Card {
         this.cardColor = color;
 
     }
-    public void buyStreet(Player player) {
+    public void buyStreet(Player player, Label eventText, Pane pane) {
         if (player.money >= this.price) {
             this.owner = player;
             player.properties.add(this);
             player.hasColor.add(this.cardColor);
             player.money -= this.price;
+
+            Color color = player.color;
+            String hex = String.format("#%02x%02x%02x", (int) (color.getRed() * 255), (int) (color.getGreen() * 255), (int) (color.getBlue() * 255));
+            String style = """
+                    -fx-background-radius: 15px;
+                    -fx-background-color: %s;
+                    -fx-text-fill: RED;
+
+                    -fx-border-radius: 3px;
+                    -fx-border-width: 2px;
+                    -fx-border-color: black;
+                    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 15, 0, 0, 0);
+                """;
+
+            pane.setPrefHeight(15.0);
+            pane.setPrefWidth(15.0);
+            pane.setStyle(String.format(style, hex));
+            pane.setVisible(true);
+
+            eventText.setText(player.name + " hat " + this.name + " gekauft!");
         }
     }
 }

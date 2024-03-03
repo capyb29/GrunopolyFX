@@ -193,7 +193,7 @@ public class GrunopolyMain {
             Player player = players.get(activePlayer);
             Pane cPane = allPanes.get(player.pos.intValue());
             Card cCard = cards.get(cPane);
-            cCard.buyStreet(player);
+            cCard.buyStreet(player, eventText, cPane);
             // Update UI
             updateUi(cPane, diceNumber);
         });
@@ -265,8 +265,6 @@ public class GrunopolyMain {
         int newPos = initial + stepCount <= 39 ? initial + stepCount : (initial + stepCount) % 40;
 
         eventText.setText("...");
-
-
 
         this.cards.forEach((pane, cards) -> cards.playersOnCard.removeIf(p -> p.id == player.id));
 
