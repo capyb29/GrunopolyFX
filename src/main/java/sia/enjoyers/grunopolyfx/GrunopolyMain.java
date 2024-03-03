@@ -10,6 +10,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.geometry.Insets;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -104,11 +105,13 @@ public class GrunopolyMain {
 
     // Get interactive elements
     @FXML
-    private Button step;
+    private Button stepButton;
 
     // Declare data
     AtomicInteger pos = new AtomicInteger();
     List<Pane> allPanes;
+    ArrayList<Player> players = new ArrayList<Player>();
+    int activePlayer = 0;
 
     @FXML
     public void initialize() {
@@ -120,28 +123,29 @@ public class GrunopolyMain {
         allPanes.forEach((pane) -> {
             pane.setVisible(false);
         });
+
+        // Create temporary players
+        for (int i = 0; i < (int) Math.max(1, Math.random() * 5); i++) {
+            Player player = new Player("GRU", Color.GREEN, 1000);
+            player.setPosition(allPanes.getFirst());
+            board.getChildren().add(player);
+            players.add(player);
+        }
+
+        activePlayer = (int) (Math.random() * players.size());
+
+        stepButton.setOnAction(event -> {
+            int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
+            System.out.println(randNum);
+            step(randNum, players.get(activePlayer));
+
+            if (activePlayer >= players.size() - 1) {
+                activePlayer = 0;
+            } else {
+                activePlayer++;
+            }
+        });
     }
-
-    public Pane getPane() {
-        Pane newPane = new Pane();
-        newPane.setVisible(true);
-        newPane.setPrefSize(20, 20);
-
-        BackgroundFill purpleFill = new BackgroundFill(Color.PURPLE, CornerRadii.EMPTY, Insets.EMPTY);
-        Background purpleBackground = new Background(purpleFill);
-
-        newPane.setBackground(purpleBackground);
-
-        // Set start position
-        Pane desired = allPanes.getFirst();
-        double X = desired.getLayoutX();
-        double Y = desired.getLayoutY();
-
-        newPane.setLayoutX(X);
-        newPane.setLayoutY(Y);
-        return newPane;
-    }
-
     public void step(int stepCount, Pane player) {
         if (pos.get() + stepCount <= 39) {
             pos.set(pos.get() + stepCount);
@@ -151,10 +155,12 @@ public class GrunopolyMain {
 
         Pane newDesired = allPanes.get(pos.get());
 
-        double xNew = newDesired.getLayoutX();
-        double yNew = newDesired.getLayoutY();
+        double Xnew = newDesired.getLayoutX();
+        double Ynew = newDesired.getLayoutY();
 
-        player.setLayoutX(xNew);
-        player.setLayoutY(yNew);
+        player.setLayoutX(Xnew);
+        player.setLayoutY(Ynew);
     }
+
+
 }

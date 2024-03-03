@@ -6,22 +6,19 @@ import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-import java.util.ArrayList;
-
 public class Player extends Pane {
     String name;
-    ArrayList<Integer> cards;
-    Player(String name) {
+    int money;
+    Player(String name, Color color, int initialMoney) {
         this.name = name;
-        this.cards = new ArrayList<Integer>();
+        this.money = initialMoney;
 
         this.setPrefSize(20, 20);
 
-        BackgroundFill purpleFill = new BackgroundFill(Color.PURPLE, CornerRadii.EMPTY, Insets.EMPTY);
-        Background purpleBackground = new Background(purpleFill);
+        BackgroundFill colorFill = new BackgroundFill(color, CornerRadii.EMPTY, Insets.EMPTY);
+        Background background = new Background(colorFill);
 
-        this.setBackground(purpleBackground);
-
+        this.setBackground(background);
         this.setVisible(false);
     }
 
