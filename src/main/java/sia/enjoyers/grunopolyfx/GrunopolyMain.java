@@ -18,10 +18,8 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.transform.Scale;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.io.File;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class GrunopolyMain {
@@ -178,21 +176,7 @@ public class GrunopolyMain {
         board.setPrefHeight(startHeight / (startHeight / 1080));
 
         // get background image
-        String imagePath = "src\\main\\resources\\sia\\enjoyers\\grunopolyfx\\Board.png";
-        try {
-            Image image = new Image("file:" + imagePath);
-
-            // Create an ImageView for flexible sizing
-            ImageView imageView = new ImageView(image);
-            imageView.fitWidthProperty().bind(boardimg.widthProperty());
-            imageView.fitHeightProperty().bind(boardimg.heightProperty());
-
-            // Set the ImagePattern as the pane's background
-            ImagePattern imagePattern = new ImagePattern(image);
-            boardimg.setBackground(new Background(new BackgroundFill(imagePattern, CornerRadii.EMPTY, Insets.EMPTY)));
-        } catch (Exception e) {
-            System.exit(1);
-        }
+       setBackgroundImage();
 
         allPanes = Arrays.asList(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x30, x31, x32, x33, x34, x35, x36, x37, x38, x39);
 
@@ -260,7 +244,7 @@ public class GrunopolyMain {
         });
     }
 
-    //TODO fix player teleportation
+
     public void step(int stepCount, Player player) {
 
         int initial = player.pos.get();
@@ -413,5 +397,40 @@ public class GrunopolyMain {
             }
 
         }
+
+    public void setBackgroundImage() {
+        File imageFile = recursiveSearchImage(new File("."), "Board.png");
+        String imagePath = imageFile.getAbsolutePath();
+        try {
+            Image image = new Image("file:" + imagePath);
+
+            // Create an ImageView for flexible sizing
+            ImageView imageView = new ImageView(image);
+            imageView.fitWidthProperty().bind(boardimg.widthProperty());
+            imageView.fitHeightProperty().bind(boardimg.heightProperty());
+
+            // Set the ImagePattern as the pane's background
+            ImagePattern imagePattern = new ImagePattern(image);
+            boardimg.setBackground(new Background(new BackgroundFill(imagePattern, CornerRadii.EMPTY, Insets.EMPTY)));
+        } catch (Exception e) {
+            System.exit(1);
+        }
+    }
+
+    public File recursiveSearchImage(File rootDirectory, String filename) {
+        if (rootDirectory.isDirectory()) {
+            for (File file : Objects.requireNonNull(rootDirectory.listFiles())) {
+                if (file.getName().equals(filename)) {
+                    return file;
+                }
+                File foundFile = recursiveSearchImage(file, filename); // Recursion on subdirectories
+                if (foundFile != null) {
+                    return foundFile;
+                }
+            }
+        }
+        return null; // Image not found
+    }
+
 
 }
