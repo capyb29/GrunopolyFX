@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Group;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -17,6 +18,8 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.transform.Scale;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+
+import java.awt.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -24,10 +27,11 @@ import java.util.Random;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.math.*;
 import java.util.stream.Collectors;
-import java.awt.Dimension;
 
 public class GrunopolyMain {
 
+    public Label youGotA;
+    public Label header;
     @FXML
     private Pane board;
     @FXML
@@ -119,15 +123,13 @@ public class GrunopolyMain {
     @FXML
     private Button stepButton;
 
+
     // Declare data
     AtomicInteger pos = new AtomicInteger();
     List<Pane> allPanes;
     ArrayList<Card> cards = new ArrayList<Card>();
     ArrayList<Player> players = new ArrayList<Player>();
     int activePlayer = 0;
-    int playerCount = 0;
-    int buttonCountClicked = 0;
-
     @FXML
     public void initialize() {
         // apply scaling transforms
@@ -180,24 +182,19 @@ public class GrunopolyMain {
             pane.setVisible(false);
         });
 
+        // Würfeln
         stepButton.setOnAction(event -> {
-            if (buttonCountClicked == 0) {
-                // Create temporary players
-                for (int i = 0; i < this.playerCount; i++) {
-                    Color color = Color.color(Math.random(), Math.random(), Math.random());
-                    Player player = new Player("GRU", color, 1000);
-
-                    player.setPosition(allPanes.getFirst());
-                    board.getChildren().add(player);
-                    players.add(player);
-                }
-
-                activePlayer = (int) (Math.random() * players.size());
+            int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
+            if (activePlayer == 0) {
+                header.setText("Sie sind am Zug!");
+                youGotA.setText("Sie haben eine " + randNum + " gewürfelt!");
+            } else {
+                header.setText("Spieler "+ activePlayer + " am Zug!");
+                youGotA.setText("Spieler " + activePlayer + " hat eine " + randNum + " gewürfelt!");
             }
 
-            this.buttonCountClicked++;
-            int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
             step(randNum, players.get(activePlayer));
+            
 
             if (activePlayer >= players.size() - 1) {
                 activePlayer = 0;
@@ -233,25 +230,32 @@ public class GrunopolyMain {
         player.setLayoutY(yNew);
     }
 
-    public void setPlayerCount (int playerCount) {
-        this.playerCount = playerCount;
+    public void initPlayers (int playerCount) {
+        for (int i = 0; i < playerCount; i++) {
+            Color color = Color.color(Math.random(), Math.random(), Math.random());
+            Player player = new Player("Player " + i + 1, color, 1000);
+
+            player.setPosition(allPanes.getFirst());
+            board.getChildren().add(player);
+            players.add(player);
+
+
+        }
+
+        activePlayer = (int) (Math.random() * players.size());
+        header.setText("Spieler "+ activePlayer + " am Zug!");
     }
 
     private record SceneSizeChangeListener(double ratio, double initHeight, double initWidth, Pane contentPane) implements ChangeListener<Number> {
         @Override
             public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
-
-                System.out.println(initHeight);
                 final double newWidth = contentPane.getWidth();
                 final double newHeight = contentPane.getHeight();
 
-                System.out.println(newHeight);
                 double scaleFactor =
                         newWidth / newHeight > ratio
                                 ? newHeight / initHeight
                                 : newWidth / initWidth;
-
-                //System.out.println(scaleFactor);
 
                 Scale scale = new Scale(scaleFactor, scaleFactor);
                 scale.setPivotX(0);
