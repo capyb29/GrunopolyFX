@@ -51,7 +51,7 @@ public class Player extends Pane {
                     -fx-text-fill: RED;
 
                     -fx-border-radius: 15px;
-                    -fx-border-width: 3px;
+                    -fx-border-width: 2px;
                     -fx-border-color: black;
                     -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 15, 0, 0, 0);
                 """;
