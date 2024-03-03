@@ -264,10 +264,8 @@ public class GrunopolyMain {
 
         player.setPosition(newDesiredPane, newPos);
 
-        System.out.println("Player " + player.id + " rolled " + stepCount + " | " + " Old Pos: " + initial + " New Pos: " + newPos);
-
         updateUi(newDesiredPane, stepCount);
-        System.out.println(player.pos.get());
+        
     }
 
     public void initPlayers (int playerCount, String[] playerNames) {
@@ -435,12 +433,12 @@ public class GrunopolyMain {
                 if (file.getName().equals(filename)) {
                     return file;
                 }
-                File foundFile = recursiveSearchImage(file, filename); // Recursion on subdirectories
+                File foundFile = recursiveSearchImage(file, filename);
                 if (foundFile != null) {
                     return foundFile;
                 }
             }
         }
-        return null; // Image not found
+        return null;
     }
 }
