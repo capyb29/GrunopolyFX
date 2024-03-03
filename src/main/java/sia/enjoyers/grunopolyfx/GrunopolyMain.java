@@ -253,9 +253,9 @@ public class GrunopolyMain {
                 // Create temporary players
                 for (int i = 0; i < this.playerCount; i++) {
                     Color color = Color.color(Math.random(), Math.random(), Math.random());
-                    Player player = new Player("GRU", color, 900);
+                    Player player = new Player("GRU", i + 1, color, 900);
 
-                    player.setPosition(allPanes.getFirst());
+                    player.setPosition(allPanes.getFirst(), 0);
                     board.getChildren().add(player);
                     players.add(player);
                 }
@@ -265,31 +265,41 @@ public class GrunopolyMain {
 
             this.buttonCountClicked++;
             int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
-            System.out.println(randNum);
+            //System.out.println(randNum);
+
             step(randNum, players.get(activePlayer));
+            System.out.println(activePlayer);
 
             if (activePlayer >= players.size() - 1) {
                 activePlayer = 0;
             } else {
                 activePlayer++;
             }
+
             updateUi();
         });
     }
 
     //TODO fix player teleportation
     public void step(int stepCount, Player player) {
-        if (pos.get() + stepCount <= 39) {
-            pos.set(pos.get() + stepCount);
+
+        int newPos = 0;
+        System.out.println(player.pos.get());
+        System.out.println(stepCount);
+
+        if (player.pos.get() + stepCount <= 39) {
+            newPos = player.pos.get() + stepCount;
+          //  System.out.println(stepCount + " | " + players.get(activePlayer).playerId);
         } else {
-            pos.set((pos.get() + stepCount) % 40);
+            newPos = (player.pos.get() + stepCount) % 40;
+          //  System.out.println(stepCount + " | " + players.get(activePlayer).playerId);
         }
 
         this.cards = (ArrayList<Card>) this.cards.stream()
                 .peek(card -> card.playersOnCard.remove(player))
                 .collect(Collectors.toList());
 
-        Pane newDesiredPane = allPanes.get(pos.get());
+        Pane newDesiredPane = allPanes.get(newPos);
         Card newDesiredCard = cards.stream()
                 .filter(card -> card.pane.equals(newDesiredPane))
                 .findFirst()
@@ -298,11 +308,9 @@ public class GrunopolyMain {
         assert newDesiredCard != null;
         newDesiredCard.playersOnCard.add(player);
 
-        double xNew = newDesiredPane.getLayoutX();
-        double yNew = newDesiredPane.getLayoutY();
 
-        player.setLayoutX(xNew);
-        player.setLayoutY(yNew);
+        player.setPosition(newDesiredPane, newPos);
+        System.out.println(player.pos.get());
     }
 
     public void setPlayerCount (int playerCount) {
@@ -367,9 +375,6 @@ public class GrunopolyMain {
             if (propsLabel != null) {
                 propsLabel.setText(player.properties.toString());
             }
-
-            
-
         }
     }
 }
