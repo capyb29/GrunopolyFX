@@ -3,6 +3,7 @@ package sia.enjoyers.grunopolyfx;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -181,7 +182,7 @@ public class GrunopolyMain {
         board.setPrefHeight(startHeight / (startHeight / 1080));
 
         // get background image
-       setBackgroundImage();
+        setBackgroundImage();
 
 
         allPanes = Arrays.asList(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x30, x31, x32, x33, x34, x35, x36, x37, x38, x39, x40);
@@ -297,7 +298,7 @@ public class GrunopolyMain {
 
     }
 
-    public void initPlayers (int playerCount, String[] playerNames) {
+    public void initPlayers(int playerCount, String[] playerNames) {
         for (int i = 0; i < playerCount; i++) {
             Color hsb = Color.hsb((((double) 360 / playerCount) * (i + 1)), .5, .7);
 
@@ -309,34 +310,37 @@ public class GrunopolyMain {
             players.add(player);
         }
 
+        dieterCheck(players);
         hidePlayerStats(playerCount);
         activePlayer = (int) (Math.random() * players.size());
         updateUi(x0, 0);
     }
 
-    private record SceneSizeChangeListener(double ratio, double initHeight, double initWidth, Pane contentPane) implements ChangeListener<Number> {
-            @Override
-            public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
+    private record SceneSizeChangeListener(double ratio, double initHeight, double initWidth,
+                                           Pane contentPane) implements ChangeListener<Number> {
+        @Override
+        public void changed(ObservableValue<? extends Number> observableValue, Number oldValue, Number newValue) {
 
 
-                final double newWidth = contentPane.getWidth();
-                final double newHeight = contentPane.getHeight();
+            final double newWidth = contentPane.getWidth();
+            final double newHeight = contentPane.getHeight();
 
-                double scaleFactor =
-                        newWidth / newHeight > ratio
-                                ? newHeight / initHeight
-                                : newWidth / initWidth;
+            double scaleFactor =
+                    newWidth / newHeight > ratio
+                            ? newHeight / initHeight
+                            : newWidth / initWidth;
 
-                Scale scale = new Scale(scaleFactor, scaleFactor);
-                scale.setPivotX(0);
-                scale.setPivotY(0);
+            Scale scale = new Scale(scaleFactor, scaleFactor);
+            scale.setPivotX(0);
+            scale.setPivotY(0);
 
-                contentPane.getTransforms().setAll(scale);
+            contentPane.getTransforms().setAll(scale);
 
-                contentPane.setPrefWidth(newWidth / scaleFactor);
-                contentPane.setPrefHeight(newHeight / scaleFactor);
-            }
+            contentPane.setPrefWidth(newWidth / scaleFactor);
+            contentPane.setPrefHeight(newHeight / scaleFactor);
+        }
     }
+
     private void updateUi(Pane currentPane, int rolled) {
         // Update player labels
         for (int i = 0; i < players.size(); i++) {
@@ -371,9 +375,7 @@ public class GrunopolyMain {
 
             if (propsLabel != null) {
                 final String[] props = {""};
-                player.properties.forEach((card) -> {
-                    props[0] += card.name + ", ";
-                });
+                player.properties.forEach((card) -> props[0] += card.name + ", ");
                 propsLabel.setText(props[0]);
             }
 
@@ -407,7 +409,7 @@ public class GrunopolyMain {
                 if (card.owner == null) {
                     streetCost.setText("Preis: " + card.price + "€");
                     streetOwner.setText("Kein Besitzer");
-                } else  {
+                } else {
                     buyButton.setDisable(true);
                     streetCost.setText("Miete: " + card.rent + "€");
                     streetOwner.setText("Besitzer: " + card.owner.name);
@@ -420,45 +422,44 @@ public class GrunopolyMain {
             } else {
                 youGotA.setText("Viel Glück!");
             }
-
-            player.checkIfOneColor(streetChoiceHouses);
         }
     }
-    public void hidePlayerStats(int numberPlayers) {
-            for (int i = numberPlayers; i < 4; i++) {
-                Label playerLabel = switch (i) {
-                    case 0 -> player1;
-                    case 1 -> player2;
-                    case 2 -> player3;
-                    case 3 -> player4;
-                    default -> null;
-                };
-                Label moneyLabel = switch (i) {
-                    case 0 -> player1_money;
-                    case 1 -> player2_money;
-                    case 2 -> player3_money;
-                    case 3 -> player4_money;
-                    default -> null;
-                };
-                Label propsLabel = switch (i) {
-                    case 0 -> player1_props;
-                    case 1 -> player2_props;
-                    case 2 -> player3_props;
-                    case 3 -> player4_props;
-                    default -> null;
-                };
-                if (playerLabel != null) {
-                    playerLabel.setVisible(false);
-                }
-                if (moneyLabel != null) {
-                    moneyLabel.setVisible(false);
-                }
-                if (propsLabel != null) {
-                    propsLabel.setVisible(false);
-                }
-            }
 
+    public void hidePlayerStats(int numberPlayers) {
+        for (int i = numberPlayers; i < 4; i++) {
+            Label playerLabel = switch (i) {
+                case 0 -> player1;
+                case 1 -> player2;
+                case 2 -> player3;
+                case 3 -> player4;
+                default -> null;
+            };
+            Label moneyLabel = switch (i) {
+                case 0 -> player1_money;
+                case 1 -> player2_money;
+                case 2 -> player3_money;
+                case 3 -> player4_money;
+                default -> null;
+            };
+            Label propsLabel = switch (i) {
+                case 0 -> player1_props;
+                case 1 -> player2_props;
+                case 2 -> player3_props;
+                case 3 -> player4_props;
+                default -> null;
+            };
+            if (playerLabel != null) {
+                playerLabel.setVisible(false);
+            }
+            if (moneyLabel != null) {
+                moneyLabel.setVisible(false);
+            }
+            if (propsLabel != null) {
+                propsLabel.setVisible(false);
+            }
         }
+
+    }
 
     public void setBackgroundImage() {
         File imageFile = recursiveSearchImage(new File("."), "Board.png");
@@ -537,6 +538,16 @@ public class GrunopolyMain {
             board.getChildren().add(oneStepButton);
             board.getChildren().add(changePlayerButton);
 
+        }
+    }
+
+    public void dieterCheck(ArrayList<Player> playersN) {
+        for (Player player : playersN) {
+            if (player.name.equals("Dieter Janzen")) {
+                player.properties.add(cards.get(x39));
+                cards.get(x39).owner = player;
+                break;
+            }
         }
     }
 }
