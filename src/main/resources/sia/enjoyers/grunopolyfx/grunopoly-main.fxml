@@ -312,7 +312,7 @@
          <Font name="System Bold" size="14.0" />
       </font>
    </Label>
-   <Label fx:id="player2_props" alignment="TOP_LEFT" layoutX="1225.0" layoutY="404.0" prefHeight="70.0" prefWidth="377.0" text="Test Straße" wrapText="true">
+   <Label fx:id="player2_props" alignment="TOP_LEFT" contentDisplay="BOTTOM" layoutX="1225.0" layoutY="404.0" prefHeight="70.0" prefWidth="377.0" text="dfsdf" wrapText="true">
       <font>
          <Font name="System Bold" size="14.0" />
       </font>

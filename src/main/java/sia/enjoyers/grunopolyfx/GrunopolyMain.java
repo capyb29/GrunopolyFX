@@ -291,8 +291,9 @@ public class GrunopolyMain {
 
     public void initPlayers (int playerCount) {
         for (int i = 0; i < playerCount; i++) {
-            Color color = Color.color(Math.random(), Math.random(), Math.random());
-            Player player = new Player("Gru", i + 1, color, 1000);
+            Color hsb = Color.hsb((double) (((360 / playerCount) * (i + 1)) ), .7, .7);
+
+            Player player = new Player("Gru", i + 1, hsb, 1000);
 
             player.setPosition(allPanes.getFirst(), 0);
             board.getChildren().add(player);
