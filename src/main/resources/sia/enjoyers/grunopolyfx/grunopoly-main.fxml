@@ -5,7 +5,7 @@
 <?import javafx.scene.shape.*?>
 <?import javafx.scene.text.*?>
 
-<Pane fx:id="board" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1139.0" prefWidth="1637.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sia.enjoyers.grunopolyfx.GrunopolyMain">
+<Pane fx:id="board" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1139.0" prefWidth="1637.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sia.enjoyers.grunopolyfx.GrunopolyMain">
    <Pane fx:id="boardimg" prefHeight="1139.0" prefWidth="1139.0">
       <Label alignment="TOP_CENTER" layoutX="1030.0" layoutY="901.0" prefHeight="39.0" prefWidth="101.0" text="Jobelmann- Schule" textAlignment="CENTER" wrapText="true">
          <font>
