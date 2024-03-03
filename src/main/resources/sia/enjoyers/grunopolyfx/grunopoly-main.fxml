@@ -327,7 +327,7 @@
          <Font name="System Bold" size="14.0" />
       </font>
    </Label>
-   <Label fx:id="youAreAt" layoutX="1216.0" layoutY="790.0" prefHeight="51.0" prefWidth="391.0" text="Sie befinden sich auf: FooBar">
+   <Label fx:id="youAreAt" alignment="TOP_LEFT" layoutX="1216.0" layoutY="764.0" prefHeight="77.0" prefWidth="391.0" text="Sie befinden sich auf: Gehe ins Gefängnis" wrapText="true">
       <font>
          <Font name="Comic Sans MS" size="27.0" />
       </font>
