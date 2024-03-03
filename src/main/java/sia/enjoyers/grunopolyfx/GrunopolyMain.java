@@ -477,29 +477,44 @@ public class GrunopolyMain {
         if (Objects.equals(name.name, "dev")) {
             Button cashButton = new Button("Cash Money");
             Button oneStepButton = new Button("One Step");
+            oneStepButton.setLayoutX(100);
+            Button changePlayerButton = new Button("Change Player");
+            changePlayerButton.setLayoutX(200);
             cashButton.setOnAction(e -> {
-                name.money += 1000;
-                updateUi(allPanes.get(name.pos.intValue()), 0);
+                players.get(activePlayer).money += 1000;
+                updateUi(allPanes.get(players.get(activePlayer).pos.intValue()), 0);
             });
             oneStepButton.setOnAction(e -> {
-                int initial = name.pos.get();
+                int initial = players.get(activePlayer).pos.get();
                 int newPos = initial + 1 <= 39 ? initial + 1 : (initial + 1) % 40;
 
-                this.cards.forEach((pane, cards) -> cards.playersOnCard.removeIf(p -> p.id == name.id));
+                this.cards.forEach((pane, cards) -> cards.playersOnCard.removeIf(p -> p.id == players.get(activePlayer).id));
 
                 Pane newDesiredPane = allPanes.get(newPos);
                 Card newDesiredCard = this.cards.get(newDesiredPane);
 
                 assert newDesiredCard != null;
-                newDesiredCard.playersOnCard.add(name);
+                newDesiredCard.playersOnCard.add(players.get(activePlayer));
 
-                name.setPosition(newDesiredPane, newPos);
+                players.get(activePlayer).setPosition(newDesiredPane, newPos);
 
                 updateUi(newDesiredPane, 1);
             });
 
+            changePlayerButton.setOnAction(e -> {
+                if (activePlayer >= players.size() - 1) {
+                    activePlayer = 0;
+                    rounds++;
+                } else {
+                    activePlayer++;
+                }
+                header.setText(players.get(activePlayer).toString() + " am Zug!");
+                updateUi(allPanes.get(players.get(activePlayer).pos.intValue()), 0);
+            });
+
             board.getChildren().add(cashButton);
             board.getChildren().add(oneStepButton);
+            board.getChildren().add(changePlayerButton);
 
         }
     }
