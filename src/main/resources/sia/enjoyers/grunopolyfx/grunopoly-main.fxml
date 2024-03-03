@@ -353,9 +353,9 @@
          <Font name="Comic Sans MS" size="18.0" />
       </font>
    </Label>
-   <Button fx:id="buyHouses" layoutX="1399.0" layoutY="1053.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="128.0" text="1 Haus Kaufen">
+   <Button fx:id="buyHouses" layoutX="1399.0" layoutY="1053.0" mnemonicParsing="false" prefHeight="1.0" prefWidth="128.0" text="1 Haus Kaufen">
       <font>
-         <Font size="14.0" />
+         <Font name="Comic Sans MS" size="14.0" />
       </font>
    </Button>
    <Label fx:id="youGotA" alignment="CENTER" layoutX="1249.0" layoutY="122.0" prefHeight="39.0" prefWidth="300.0" text="Sie haben eine XX gewürfelt!" textAlignment="CENTER">

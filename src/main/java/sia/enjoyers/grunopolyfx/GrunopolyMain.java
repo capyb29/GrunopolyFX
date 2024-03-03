@@ -364,6 +364,8 @@ public class GrunopolyMain {
                 propsLabel.setText(player.properties.toString());
             }
 
+            header.setText("Spieler "+ (activePlayer + 1) + " am Zug!");
+
             youAreAt.setText("Sie befinden sich auf: " + properties.get(currentPane));
 
             if (rolled != 0) {
