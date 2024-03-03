@@ -12,14 +12,14 @@ public class Player extends Pane {
     int money;
 
     AtomicInteger pos;
-    int playerId;
+    int id;
     boolean jail;
     ArrayList<String> properties = new ArrayList<>();
 
-    Player(String name, int playerId, Color color, int initialMoney) {
+    Player(String name, int id, Color color, int initialMoney) {
         this.name = name;
         this.money = initialMoney;
-        this.playerId = playerId;
+        this.id = id;
         this.pos = new AtomicInteger(0);
         this.setPrefSize(25, 25);
 
@@ -33,7 +33,7 @@ public class Player extends Pane {
                     -fx-alignment: TOP_CENTER;
                 """;
 
-        Text text = new Text("\n " + this.playerId);
+        Text text = new Text("\n " + this.id);
         this.getChildren().add(text);
 
         text.setStyle(String.format(textStyle, hex));
@@ -59,8 +59,8 @@ public class Player extends Pane {
         double x = referencePane.getLayoutX();
         double y = referencePane.getLayoutY();
 
-        this.setLayoutX(x + (15 * (playerId % 2)));
-        this.setLayoutY(y + 20 - (15 * (playerId % 3)));
+        this.setLayoutX(x + (15 * (id % 2)));
+        this.setLayoutY(y + 20 - (15 * (id % 3)));
 
         this.pos.set(pos);
 

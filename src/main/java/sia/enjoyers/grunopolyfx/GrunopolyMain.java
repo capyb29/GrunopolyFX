@@ -148,10 +148,10 @@ public class GrunopolyMain {
     // Declare data
 
     List<Pane> allPanes;
-    ArrayList<Card> cards = new ArrayList<>();
     ArrayList<Player> players = new ArrayList<>();
-    public HashMap<Pane, String> properties;
+    public HashMap<Pane, Card> cards;
     int activePlayer = 0;
+    int rounds = 0;
 
     @FXML
     public void initialize() {
@@ -197,62 +197,59 @@ public class GrunopolyMain {
         allPanes = Arrays.asList(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x30, x31, x32, x33, x34, x35, x36, x37, x38, x39);
 
         allPanes.forEach((pane) -> {
-            cards.add(new Card(pane));
             pane.setVisible(false);
         });
 
         // Set properties
-        properties = new HashMap<>();
-        properties.put(x0, "Los");
-        properties.put(x1, "Athenaeum");
-        properties.put(x2, "Unbesetzt");
-        properties.put(x3, "VLG");
-        properties.put(x4, "Unbesetzt");
-        properties.put(x5, "Unbesetzt");
-        properties.put(x6, "Rossmann");
-        properties.put(x7, "Unbesetzt");
-        properties.put(x8, "H&M");
-        properties.put(x9, "Thalia");
-        properties.put(x10, "Gefängnis");
-        properties.put(x11, "Parkhotel Stade");
-        properties.put(x12, "Unbesetzt");
-        properties.put(x13, "Stadissimo");
-        properties.put(x14, "Stadeum");
-        properties.put(x15, "Unbesetzt");
-        properties.put(x16, "Al Porto");
-        properties.put(x17, "Unbesetzt");
-        properties.put(x18, "Mister Vu");
-        properties.put(x19, "Tacos");
-        properties.put(x20, "Nichts");
-        properties.put(x21, "Commerzbank");
-        properties.put(x22, "Unbesetzt");
-        properties.put(x23, "Sparkasse");
-        properties.put(x24, "Postbank");
-        properties.put(x25, "Unbesetzt");
-        properties.put(x26, "Lidl");
-        properties.put(x27, "Netto");
-        properties.put(x28, "Unbesetzt");
-        properties.put(x29, "REWE");
-        properties.put(x30, "Gehe ins Gefängnis");
-        properties.put(x31, "Orient Express");
-        properties.put(x32, "Rena's Grill");
-        properties.put(x33, "Unbesetzt");
-        properties.put(x34, "Köz");
-        properties.put(x35, "Unbesetzt");
-        properties.put(x36, "Unbesetzt");
-        properties.put(x37, "Pferdemarkt");
-        properties.put(x38, "Unbesetzt");
-        properties.put(x39, "Jobelmann-Schule");
+        cards = new HashMap<>();
+        cards.put(x0, new Card("Los", -1));
+        cards.put(x1, new Card("Athenaeum", 0));
+        cards.put(x2, new Card("Unbesetzt", -1));
+        cards.put(x3, new Card("VLG", 0));
+        cards.put(x4, new Card("Unbesetzt", -1));
+        cards.put(x5, new Card("Unbesetzt", -1));
+        cards.put(x6, new Card("Rossmann", 0));
+        cards.put(x7, new Card("Unbesetzt", -1));
+        cards.put(x8, new Card("H&M", 0));
+        cards.put(x9, new Card("Thalia", 0));
+        cards.put(x10, new Card("Gefängnis", -1));
+        cards.put(x11, new Card("Parkhotel Stade", 0));
+        cards.put(x12, new Card("Unbesetzt", -1));
+        cards.put(x13, new Card("Stadissimo", 0));
+        cards.put(x14, new Card("Stadeum", 0));
+        cards.put(x15, new Card("Unbesetzt", -1));
+        cards.put(x16, new Card("Al Porto", 0));
+        cards.put(x17, new Card("Unbesetzt", -1));
+        cards.put(x18, new Card("Mister Vu", 0));
+        cards.put(x19, new Card("Tacos", 0));
+        cards.put(x20, new Card("Nichts", -1));
+        cards.put(x21, new Card("Commerzbank", 0));
+        cards.put(x22, new Card("Unbesetzt", 0));
+        cards.put(x23, new Card("Sparkasse", 0));
+        cards.put(x24, new Card("Postbank", 0));
+        cards.put(x25, new Card("Unbesetzt", 0));
+        cards.put(x26, new Card("Lidl", 0));
+        cards.put(x27, new Card("Netto", 0));
+        cards.put(x28, new Card("Unbesetzt", -1));
+        cards.put(x29, new Card("REWE", 0));
+        cards.put(x30, new Card("Gehe ins Gefängnis", -1));
+        cards.put(x31, new Card("Orient Express", 0));
+        cards.put(x32, new Card("Rena's Grill", 0));
+        cards.put(x33, new Card("Unbesetzt", -1));
+        cards.put(x34, new Card("Köz", 0));
+        cards.put(x35, new Card("Unbesetzt", -1));
+        cards.put(x36, new Card("Unbesetzt", -1));
+        cards.put(x37, new Card("Pferdemarkt", 0));
+        cards.put(x38, new Card("Unbesetzt", -1));
+        cards.put(x39, new Card("Jobelmann-Schule", 0));
 
         stepButton.setOnAction(event -> {
             int randNum = (int) Math.max(2, 1 + (Math.random() * 12));
-            //System.out.println(randNum);
 
             step(randNum, players.get(activePlayer));
-            System.out.println(activePlayer);
-
             if (activePlayer >= players.size() - 1) {
                 activePlayer = 0;
+                rounds++;
             } else {
                 activePlayer++;
             }
@@ -266,15 +263,12 @@ public class GrunopolyMain {
         int initial = player.pos.get();
         int newPos = initial + stepCount <= 39 ? initial + stepCount : (initial + stepCount) % 40;
 
-        this.cards = (ArrayList<Card>) this.cards.stream()
-                .peek(card -> card.playersOnCard.remove(player))
-                .collect(Collectors.toList());
+        this.cards.forEach((pane, cards) -> {
+            cards.playersOnCard.removeIf(p -> p.id == player.id);
+        });
 
         Pane newDesiredPane = allPanes.get(newPos);
-        Card newDesiredCard = cards.stream()
-                .filter(card -> card.pane.equals(newDesiredPane))
-                .findFirst()
-                .orElse(null);
+        Card newDesiredCard = this.cards.get(newDesiredPane);
 
         assert newDesiredCard != null;
         newDesiredCard.playersOnCard.add(player);
@@ -282,7 +276,7 @@ public class GrunopolyMain {
 
         player.setPosition(newDesiredPane, newPos);
 
-        System.out.println("Player " + player.playerId + " rolled " + stepCount + " | " + " Old Pos: " + initial + " New Pos: " + newPos);
+        System.out.println("Player " + player.id + " rolled " + stepCount + " | " + " Old Pos: " + initial + " New Pos: " + newPos);
 
         updateUi(newDesiredPane, stepCount);
         System.out.println(player.pos.get());
@@ -366,7 +360,7 @@ public class GrunopolyMain {
 
             header.setText("Spieler "+ (activePlayer + 1) + " am Zug!");
 
-            youAreAt.setText("Sie befinden sich auf: " + properties.get(currentPane));
+            youAreAt.setText("Sie befinden sich auf: " + cards.get(currentPane).name);
 
             if (rolled != 0) {
                 youGotA.setText("Sie haben eine " + rolled + " gewürfelt!");

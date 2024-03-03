@@ -6,12 +6,12 @@ import java.util.ArrayList;
 
 public class Card {
     ArrayList<Player> playersOnCard;
-    Pane pane;
     int price;
+    String name;
 
-    Card(Pane pane) {
+    Card(String name, int price) {
         this.playersOnCard = new ArrayList<Player>();
-        this.pane = pane;
-        this.price = 100;
+        this.name = name;
+        this.price = price;
     }
 }
