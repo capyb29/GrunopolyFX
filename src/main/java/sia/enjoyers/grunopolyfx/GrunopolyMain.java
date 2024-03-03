@@ -220,7 +220,7 @@ public class GrunopolyMain {
         cards.put(x17, new Card("Unbesetzt", -1, Card.StreetColor.None));
         cards.put(x18, new Card("Mister Vu", 150, Card.StreetColor.ORANGE));
         cards.put(x19, new Card("Tacos", 140, Card.StreetColor.ORANGE));
-        cards.put(x20, new Card("Nichts", -1, Card.StreetColor.None));
+        cards.put(x20, new Card("STEUERN!!!", -1, Card.StreetColor.None));
         cards.put(x21, new Card("Commerzbank", 200, Card.StreetColor.RED));
         cards.put(x22, new Card("Unbesetzt", -1, Card.StreetColor.None));
         cards.put(x23, new Card("Sparkasse", 200, Card.StreetColor.RED));
@@ -266,6 +266,14 @@ public class GrunopolyMain {
 
         eventText.setText("...");
 
+
+
+        this.cards.forEach((pane, cards) -> cards.playersOnCard.removeIf(p -> p.id == player.id));
+
+        Pane newDesiredPane = allPanes.get(newPos);
+        Card newDesiredCard = this.cards.get(newDesiredPane);
+
+        // Los
         if (initial + stepCount > 40) {
             player.money += 200;
             eventText.setText(player.name + " über los!\n+200€");
@@ -273,11 +281,6 @@ public class GrunopolyMain {
             player.money += 300;
             eventText.setText(player.name + " auf los!\n+300€");
         }
-
-        this.cards.forEach((pane, cards) -> cards.playersOnCard.removeIf(p -> p.id == player.id));
-
-        Pane newDesiredPane = allPanes.get(newPos);
-        Card newDesiredCard = this.cards.get(newDesiredPane);
 
         //  Gehe ins Gefängnis
         if (newDesiredPane == x30) {
@@ -288,6 +291,13 @@ public class GrunopolyMain {
             eventText.setText(player.name + " ist ins Gefängnis geraten!");
             player.pos = new AtomicInteger(10);
             return;
+        } else if (newDesiredPane == x20) {
+            // Steuern
+
+            int moolah = (int) (player.money * 0.1);
+            player.money -= moolah;
+
+            eventText.setText(player.name + " hat die 10%-Steuer bezahlt!\n-"+ moolah + "€");
         }
 
         assert newDesiredCard != null;

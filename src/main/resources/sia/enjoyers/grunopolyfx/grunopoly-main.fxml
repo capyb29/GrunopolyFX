@@ -187,7 +187,7 @@
             <Font name="Comic Sans MS Bold" size="13.0" />
          </font>
       </Label>
-      <Label fx:id="eventText" alignment="CENTER" layoutX="457.0" layoutY="510.0" prefHeight="62.0" prefWidth="226.0" text="..." textAlignment="CENTER" wrapText="true">
+      <Label fx:id="eventText" alignment="CENTER" layoutX="397.0" layoutY="510.0" prefHeight="95.0" prefWidth="346.0" text="..." textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Comic Sans MS Bold" size="21.0" />
          </font>
@@ -208,7 +208,11 @@
 
 
       </Pane>
-      <Label alignment="TOP_CENTER" layoutX="25.0" layoutY="9.0" prefHeight="30.0" prefWidth="101.0" text="Nichts" textAlignment="CENTER" wrapText="true">
+      <Pane layoutX="3.0" layoutY="2.0" prefHeight="147.0" prefWidth="147.0" style="-fx-background-color: #ff6e6e; -fx-border-color: BLACK; -fx-border-width: 3px;">
+
+      </Pane>
+
+      <Label alignment="TOP_CENTER" layoutX="25.0" layoutY="9.0" prefHeight="30.0" prefWidth="101.0" text="STEUERN!!!" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Comic Sans MS Bold" size="13.0" />
          </font>
