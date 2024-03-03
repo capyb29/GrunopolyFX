@@ -3,7 +3,6 @@ package sia.enjoyers.grunopolyfx;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
@@ -255,6 +254,15 @@ public class GrunopolyMain {
             this.diceNumber = (int) Math.max(2, 1 + (Math.random() * 12));
             step(this.diceNumber, players.get(activePlayer));
         });
+
+        buyHouses.setOnAction(event -> {
+            Player player = players.get(activePlayer);
+            Card street = cards.get(allPanes.get(player.pos.intValue()));
+
+            player.buildHouse(streetChoiceHouses.getValue(), eventText);
+            updateUi(allPanes.get(player.pos.intValue()), 0);
+
+        });
     }
 
     public void step(int stepCount, Player player) {
@@ -385,7 +393,7 @@ public class GrunopolyMain {
 
             if (propsLabel != null) {
                 final String[] props = {""};
-                player.properties.forEach((card) -> props[0] += card.name + ", ");
+                player.properties.forEach((card) -> props[0] += card.name + "[" + card.houses + "]" + ", ");
                 propsLabel.setText(props[0]);
             }
 
@@ -431,6 +439,12 @@ public class GrunopolyMain {
             } else {
                 youGotA.setText("Viel Glück!");
             }
+
+            streetChoiceHouses.getItems().clear();
+            for (Card street : players.get(activePlayer).getEligibleStreetsForBuilding()) {
+                streetChoiceHouses.getItems().add(street.name);
+            }
+            buyHouses.setDisable(streetChoiceHouses.getItems().isEmpty());
         }
     }
 
