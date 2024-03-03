@@ -141,21 +141,12 @@ public class GrunopolyMain {
         allPanes = Arrays.asList(x0, x1, x2, x3, x4, x5, x6, x7, x8, x9, x10, x11, x12, x13, x14, x15, x16, x17, x18, x19, x20, x21, x22, x23, x24, x25, x26, x27, x28, x29, x30, x31, x32, x33, x34, x35, x36, x37, x38, x39);
         // Now you can loop through allPanes to manipulate them
 
-        allPanes.forEach((pane) -> pane.setVisible(false));
-
-        // Create temporary player
-        Pane newPane = getPane();
-
-        board.getChildren().add(newPane);
-
-        step.setOnAction(event -> {
-            int ranNum = (int) Math.max(2, 1 + (Math.random() * 12));
-            System.out.println(ranNum);
-            Step(ranNum, newPane);
+        allPanes.forEach((pane) -> {
+            pane.setVisible(false);
         });
     }
 
-    private Pane getPane() {
+    public Pane getPane() {
         Pane newPane = new Pane();
         newPane.setVisible(true);
         newPane.setPrefSize(20, 20);
@@ -175,7 +166,7 @@ public class GrunopolyMain {
         return newPane;
     }
 
-    public void Step(int stepCount, Pane player) {
+    public void step(int stepCount, Pane player) {
         if (pos.get() + stepCount <= 39) {
             pos.set(pos.get() + stepCount);
         } else {
@@ -184,11 +175,11 @@ public class GrunopolyMain {
 
         Pane newDesired = allPanes.get(pos.get());
 
-        double Xnew = newDesired.getLayoutX();
-        double Ynew = newDesired.getLayoutY();
+        double xNew = newDesired.getLayoutX();
+        double yNew = newDesired.getLayoutY();
 
-        player.setLayoutX(Xnew);
-        player.setLayoutY(Ynew);
+        player.setLayoutX(xNew);
+        player.setLayoutY(yNew);
     }
 
 
