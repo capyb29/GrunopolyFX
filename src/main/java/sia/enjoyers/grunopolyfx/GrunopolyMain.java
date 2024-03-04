@@ -422,6 +422,7 @@ public class GrunopolyMain {
 
             // Player death
             if (players.get(activePlayer).money <= 0) {
+                players.get(activePlayer).alive = false;
                 return;
             }
 
