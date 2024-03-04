@@ -27,8 +27,10 @@ public class Card {
     Player owner;
     int houses;
     StreetColor cardColor;
+    int id;
+    int baseRent;
 
-    Card(String name, int price, StreetColor color, int rent) {
+    Card(String name, int price, StreetColor color, int rent, int id) {
         this.playersOnCard = new ArrayList<Player>();
         this.name = name;
         this.price = price;
@@ -36,6 +38,8 @@ public class Card {
         this.houses = 0;
         this.cardColor = color;
         this.rent = rent;
+        this.id = id;
+        this.baseRent = rent;
     }
     public void buyStreet(Player player, Label eventText, Pane pane) {
         if (player.money >= this.price) {

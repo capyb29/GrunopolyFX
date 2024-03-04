@@ -5,6 +5,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.scene.Parent;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -94,9 +95,7 @@ public class Player extends Pane {
         return eligibleStreets;
     }
 
-
-
-    public void buildHouse(String card, Label eventText) {
+    public void buildHouse(String card, Label eventText, List<Pane> allPanes) {
         Card currentCard = properties.stream().filter(c -> c.name.equals(card)).toList().getFirst();
 
         if (currentCard.houses < 5 && money >= currentCard.price / 2) {
@@ -104,20 +103,66 @@ public class Player extends Pane {
             money -= currentCard.price / 2;
             eventText.setText(name + " hat ein Haus auf " + currentCard.name + " gebaut!");
             currentCard.updateRent(currentCard.houses);
+
+            Pane currentPane = allPanes.get(currentCard.id);
+
+            Pane housePane = new Pane();
+
+            String style = """
+                    -fx-background-radius: 15px;
+                    -fx-background-color: %s;
+                    -fx-text-fill: RED;
+
+                    -fx-border-radius: 3px;
+                    -fx-border-width: 2px;
+                    -fx-border-color: black;
+                    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 5, 0, 0, 0);
+                """;
+
+            housePane.setPrefHeight(13.0);
+            housePane.setPrefWidth(13.0);
+            housePane.setStyle(String.format(style, "#FF0000"));
+            housePane.setVisible(true);
+
+            currentPane.getChildren().add(housePane);
+
+            if (currentCard.id < 10) {
+                housePane.setLayoutY(-67);
+                housePane.setLayoutX(-52 + (17 * currentCard.houses));
+
+            } else if (currentCard.id < 20) {
+                housePane.setLayoutY(-48 + (15 * currentCard.houses));
+                housePane.setLayoutX(73);
+
+            } else if (currentCard.id < 30) {
+                housePane.setLayoutY(67);
+                housePane.setLayoutX(-52 + (17 * currentCard.houses));
+
+            } else if (currentCard.id < 40) {
+
+                housePane.setLayoutY(-48 + (15 * currentCard.houses));
+                housePane.setLayoutX(-70);
+            }
         }
     }
 
-    public void sellStreet(Label eventText, ChoiceBox<String> selector, Pane pane) {
+    public void sellStreet(Label eventText, ChoiceBox<String> selector, List<Pane> allPanes) {
         String card = selector.getValue();
         boolean exist = !properties.stream().filter(c -> c.name.equals(card)).toList().isEmpty();
         if (exist) {
             Card currentCard = properties.stream().filter(c -> c.name.equals(card)).toList().getFirst();
+            Pane currentPane = allPanes.get(currentCard.id);
             currentCard.owner = null;
-            money += (int) ((double)  currentCard.price * 0.8);
+            money += (int) (currentCard.price * 0.8 + ((currentCard.price / 2) * currentCard.houses));
             eventText.setText(name + " hat " + currentCard.name + " vekauft!");
-            pane.setVisible(false);
+
             properties.remove(currentCard);
             selector.getItems().remove(card);
+
+            currentCard.rent = currentCard.baseRent;
+            currentCard.houses = 0;
+            currentPane.setVisible(false);
+            currentPane.getChildren().clear();
         }
     }
 }
