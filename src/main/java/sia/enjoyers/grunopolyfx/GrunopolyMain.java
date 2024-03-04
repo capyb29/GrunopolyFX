@@ -388,6 +388,10 @@ public class GrunopolyMain {
         // Update player labels
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
+
+            // Check if player alive (naturally would be done first, but I am working with real gourmet chefs here)
+            player.isAliveCheck(allPanes);
+
             Label playerLabel = switch (i) {
                 case 0 -> player1;
                 case 1 -> player2;
@@ -472,8 +476,6 @@ public class GrunopolyMain {
             players.get(activePlayer).properties.forEach(c -> streetSelector.getItems().add(c.name));
             streetSellButton.setDisable(streetSelector.getItems().isEmpty());
 
-            System.out.println("??");
-            player.isAliveCheck(allPanes);
             try {
                 countAlivePlayers();
             } catch (IOException e) {
