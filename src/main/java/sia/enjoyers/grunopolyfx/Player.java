@@ -183,6 +183,7 @@ public class Player extends Pane {
                 pane.getChildren().clear();
             }
 
+            this.setOpacity(0.2);
             this.properties.clear();
         }
     }
