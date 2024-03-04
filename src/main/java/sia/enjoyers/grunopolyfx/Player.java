@@ -87,7 +87,7 @@ public class Player extends Pane {
         }
 
         for (Card.StreetColor color : cardsByColor.keySet()) {
-            int requiredCount = color == Card.StreetColor.BROWN || color == Card.StreetColor.BLUE ? 2: 3;
+            int requiredCount = color == Card.StreetColor.BROWN || color == Card.StreetColor.BLUE ? 2 : 3;
             if (cardsByColor.get(color).size() >= requiredCount && hasColor.contains(color)) {
                 eligibleStreets.addAll(cardsByColor.get(color));
             }
@@ -111,15 +111,15 @@ public class Player extends Pane {
             Pane housePane = new Pane();
 
             String style = """
-                    -fx-background-radius: 15px;
-                    -fx-background-color: %s;
-                    -fx-text-fill: RED;
+                        -fx-background-radius: 15px;
+                        -fx-background-color: %s;
+                        -fx-text-fill: RED;
 
-                    -fx-border-radius: 3px;
-                    -fx-border-width: 2px;
-                    -fx-border-color: black;
-                    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 5, 0, 0, 0);
-                """;
+                        -fx-border-radius: 3px;
+                        -fx-border-width: 2px;
+                        -fx-border-color: black;
+                        -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.5), 5, 0, 0, 0);
+                    """;
 
             housePane.setPrefHeight(13.0);
             housePane.setPrefWidth(13.0);
@@ -168,9 +168,22 @@ public class Player extends Pane {
         }
     }
 
-    public void isAliveCheck() {
-        if (this.money <= 0) {
-            alive = false;
+    public void isAliveCheck(List<Pane> allPanes) {
+        if (this.money <= 0 && this.alive == true) {
+            this.alive = false;
+
+            for (Card card : properties) {
+                System.out.println(card);
+                card.rent = card.baseRent;
+                card.houses = 0;
+                card.owner = null;
+
+                Pane pane = allPanes.get(card.id);
+                pane.setVisible(false);
+                pane.getChildren().clear();
+            }
+
+            this.properties.clear();
         }
     }
 }
