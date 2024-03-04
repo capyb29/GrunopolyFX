@@ -250,14 +250,16 @@ public class GrunopolyMain {
         cards.put(x40, new Card("Gefängnis", -1, Card.StreetColor.None, 0, 40));
 
         stepButton.setOnAction(event -> {
-            if (activePlayer >= players.size() - 1) {
-                activePlayer = 0;
-                rounds++;
-            } else {
-                activePlayer++;
+
+            // Keep counting until live player found
+            activePlayer = (activePlayer + 1) % 4;
+            while (!players.get(activePlayer).alive) {
+                activePlayer = (activePlayer + 1) % 4;
             }
 
-            this.diceNumber = (int) Math.max(2, 1 + (Math.random() * 12));
+            int dice1 = (int) (1 + (Math.random() * 6));
+            int dice2 = (int) (1 + (Math.random() * 6));
+            this.diceNumber = dice1 + dice2;
             step(this.diceNumber, players.get(activePlayer));
         });
 
@@ -386,6 +388,10 @@ public class GrunopolyMain {
         // Update player labels
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
+
+            // Check if player alive (naturally would be done first, but I am working with real gourmet chefs here)
+            player.isAliveCheck(allPanes);
+
             Label playerLabel = switch (i) {
                 case 0 -> player1;
                 case 1 -> player2;
@@ -470,7 +476,6 @@ public class GrunopolyMain {
             players.get(activePlayer).properties.forEach(c -> streetSelector.getItems().add(c.name));
             streetSellButton.setDisable(streetSelector.getItems().isEmpty());
 
-            player.isAliveCheck();
             try {
                 countAlivePlayers();
             } catch (IOException e) {
@@ -557,6 +562,8 @@ public class GrunopolyMain {
             oneStepButton.setLayoutX(100);
             Button changePlayerButton = new Button("Change Player");
             changePlayerButton.setLayoutX(200);
+            Button bankruptButton = new Button("Bankrupt Player");
+            bankruptButton.setLayoutX(300);
             cashButton.setOnAction(e -> {
                 players.get(activePlayer).money += 1000;
                 updateUi(allPanes.get(players.get(activePlayer).pos.intValue()), 0);
@@ -589,9 +596,15 @@ public class GrunopolyMain {
                 updateUi(allPanes.get(players.get(activePlayer).pos.intValue()), 0);
             });
 
+            bankruptButton.setOnAction(e -> {
+                players.get(activePlayer).money = -9999;
+                updateUi(allPanes.get(players.get(activePlayer).pos.intValue()), 0);
+            });
+
             board.getChildren().add(cashButton);
             board.getChildren().add(oneStepButton);
             board.getChildren().add(changePlayerButton);
+            board.getChildren().add(bankruptButton);
 
         }
     }
