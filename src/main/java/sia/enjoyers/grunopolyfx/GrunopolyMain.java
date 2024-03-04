@@ -420,11 +420,6 @@ public class GrunopolyMain {
                 propsLabel.setText(props[0]);
             }
 
-            // Player death
-            if (players.get(activePlayer).money <= 0) {
-                return;
-            }
-
             Card card = cards.get(currentPane);
 
             header.setText(players.get(activePlayer).name + " am Zug!");

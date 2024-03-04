@@ -4,20 +4,15 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to right,blue,grey);"
-            xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="sia.enjoyers.grunopolyfx.GrunopolyWin">
-    <Label fx:id="winLabel" layoutX="57.0" layoutY="159.0" prefHeight="82.0" prefWidth="486.0"
-           text="Spieler X hat gewonnen!!!">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: linear-gradient(to right,blue,grey);" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sia.enjoyers.grunopolyfx.GrunopolyWin">
+    <Label fx:id="winLabel" alignment="CENTER" contentDisplay="CENTER" layoutX="57.0" layoutY="159.0" prefHeight="82.0" prefWidth="486.0" text="Spieler X hat gewonnen!!!">
         <font>
-          <Font name="Comic Sans MS Bold" size="36.0"/>
+          <Font name="Comic Sans MS Bold" size="36.0" />
         </font>
     </Label>
-    <Button fx:id="endButton" layoutX="273.0" layoutY="354.0" mnemonicParsing="false"
-            style="-fx-background-color: linear-gradient(to left, lightgreen,red);" text="Hura">
+    <Button fx:id="endButton" layoutX="273.0" layoutY="354.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(to left, lightgreen,red);" text="Hura">
         <font>
-          <Font name="Comic Sans MS" size="15.0"/>
+          <Font name="Comic Sans MS" size="15.0" />
         </font>
     </Button>
 </AnchorPane>
