@@ -163,6 +163,7 @@ public class GrunopolyMain {
     int activePlayer = 0;
     int rounds = 0;
     int diceNumber = 0;
+    int playerCount;
 
     @FXML
     public void initialize() {
@@ -252,9 +253,9 @@ public class GrunopolyMain {
         stepButton.setOnAction(event -> {
 
             // Keep counting until live player found
-            activePlayer = (activePlayer + 1) % 4;
+            activePlayer = (activePlayer + 1) % playerCount;
             while (!players.get(activePlayer).alive) {
-                activePlayer = (activePlayer + 1) % 4;
+                activePlayer = (activePlayer + 1) % playerCount;
             }
 
             int dice1 = (int) (1 + (Math.random() * 6));
@@ -354,6 +355,8 @@ public class GrunopolyMain {
             board.getChildren().add(player);
             players.add(player);
         }
+
+        this.playerCount = playerCount;
 
         dieterCheck(players);
         hidePlayerStats(playerCount);
