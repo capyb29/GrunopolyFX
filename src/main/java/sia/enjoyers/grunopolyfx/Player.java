@@ -153,7 +153,7 @@ public class Player extends Pane {
             Card currentCard = properties.stream().filter(c -> c.name.equals(card)).toList().getFirst();
             Pane currentPane = allPanes.get(currentCard.id);
             currentCard.owner = null;
-            money += (int) (currentCard.price * 0.8 + ((currentCard.price / 2) * currentCard.houses));
+            money += (int) (currentCard.price * 0.5 + ((currentCard.price / 2) * currentCard.houses));
             eventText.setText(name + " hat " + currentCard.name + " vekauft!");
 
             properties.remove(currentCard);
