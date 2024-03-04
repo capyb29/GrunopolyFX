@@ -113,7 +113,7 @@ public class Player extends Pane {
         if (exist) {
             Card currentCard = properties.stream().filter(c -> c.name.equals(card)).toList().getFirst();
             currentCard.owner = null;
-            money += currentCard.price;
+            money += (int) ((double)  currentCard.price * 0.8);
             eventText.setText(name + " hat " + currentCard.name + " vekauft!");
             pane.setVisible(false);
             properties.remove(currentCard);
