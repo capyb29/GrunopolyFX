@@ -10,7 +10,7 @@
           <Font name="Comic Sans MS Bold" size="36.0" />
         </font>
     </Label>
-    <Button fx:id="endButton" layoutX="273.0" layoutY="354.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(to left, lightgreen,red);" text="Hura">
+    <Button fx:id="endButton" layoutX="273.0" layoutY="354.0" mnemonicParsing="false" style="-fx-background-color: linear-gradient(to left, lightgreen,red);" text="Hurra">
         <font>
           <Font name="Comic Sans MS" size="15.0" />
         </font>
