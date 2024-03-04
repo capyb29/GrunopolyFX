@@ -280,6 +280,10 @@ public class GrunopolyMain {
     }
 
     public void step(int stepCount, Player player) {
+        if (!player.alive) {
+            return;
+        }
+
         if (player.jailRounds > 0) {
             updateUi(x40, 0);
             return;
@@ -409,6 +413,11 @@ public class GrunopolyMain {
                 final String[] props = {""};
                 player.properties.forEach((card) -> props[0] += card.name + "[" + card.houses + "]" + ", ");
                 propsLabel.setText(props[0]);
+            }
+
+            // Player death
+            if (players.get(activePlayer).money <= 0) {
+                    return;
             }
 
             Card card = cards.get(currentPane);

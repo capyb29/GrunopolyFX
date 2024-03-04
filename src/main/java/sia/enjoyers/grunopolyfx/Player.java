@@ -12,6 +12,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Player extends Pane {
     String name;
+    boolean alive;
     int money;
     Color color;
     AtomicInteger pos;
@@ -31,6 +32,7 @@ public class Player extends Pane {
         this.pos = new AtomicInteger(0);
         this.setPrefSize(25, 25);
         this.color = color;
+        this.alive = true;
 
         // Player appearance
         String hex = String.format("#%02x%02x%02x", (int) (color.getRed() * 255), (int) (color.getGreen() * 255), (int) (color.getBlue() * 255));
