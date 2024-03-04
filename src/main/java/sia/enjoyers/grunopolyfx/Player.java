@@ -173,7 +173,6 @@ public class Player extends Pane {
             this.alive = false;
 
             for (Card card : properties) {
-                System.out.println(card);
                 card.rent = card.baseRent;
                 card.houses = 0;
                 card.owner = null;

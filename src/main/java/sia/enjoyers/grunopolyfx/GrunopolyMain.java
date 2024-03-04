@@ -422,12 +422,6 @@ public class GrunopolyMain {
                 propsLabel.setText(props[0]);
             }
 
-            // Player death
-            if (players.get(activePlayer).money <= 0) {
-                players.get(activePlayer).isAliveCheck(allPanes);
-                return;
-            }
-
             Card card = cards.get(currentPane);
 
             header.setText(players.get(activePlayer).name + " am Zug!");
@@ -478,6 +472,7 @@ public class GrunopolyMain {
             players.get(activePlayer).properties.forEach(c -> streetSelector.getItems().add(c.name));
             streetSellButton.setDisable(streetSelector.getItems().isEmpty());
 
+            System.out.println("??");
             player.isAliveCheck(allPanes);
             try {
                 countAlivePlayers();
