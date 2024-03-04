@@ -167,4 +167,10 @@ public class Player extends Pane {
             currentPane.getChildren().clear();
         }
     }
+
+    public void isAliveCheck() {
+        if (this.money <= 0) {
+            alive = false;
+        }
+    }
 }

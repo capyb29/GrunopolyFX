@@ -4,7 +4,10 @@ package sia.enjoyers.grunopolyfx;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -17,8 +20,10 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.transform.Scale;
+import javafx.stage.Stage;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -275,7 +280,7 @@ public class GrunopolyMain {
             Pane pane = allPanes.get(player.pos.get());
 
             player.sellStreet(eventText, streetSelector, allPanes);
-            updateUi(pane,0);
+            updateUi(pane, 0);
         });
     }
 
@@ -324,7 +329,7 @@ public class GrunopolyMain {
             int moolah = (int) (player.money * 0.1);
             player.money -= Math.abs(moolah);
 
-            eventText.setText(player.name + " hat die 10%-Steuer bezahlt!\n-"+ moolah + "€");
+            eventText.setText(player.name + " hat die 10%-Steuer bezahlt!\n-" + moolah + "€");
         }
 
         assert newDesiredCard != null;
@@ -417,7 +422,7 @@ public class GrunopolyMain {
 
             // Player death
             if (players.get(activePlayer).money <= 0) {
-                    return;
+                return;
             }
 
             Card card = cards.get(currentPane);
@@ -469,6 +474,14 @@ public class GrunopolyMain {
             streetSelector.getItems().clear();
             players.get(activePlayer).properties.forEach(c -> streetSelector.getItems().add(c.name));
             streetSellButton.setDisable(streetSelector.getItems().isEmpty());
+
+            player.isAliveCheck();
+            try {
+                countAlivePlayers();
+            } catch (IOException e) {
+                System.out.println(e + " Niemand kann gewinnen");
+            }
+
         }
     }
 
@@ -595,6 +608,38 @@ public class GrunopolyMain {
                 cards.get(x39).owner = player;
                 break;
             }
+        }
+    }
+
+    public void countAlivePlayers() throws IOException {
+        int alivePlayers = 0;
+        for (Player player : players) {
+            if (player.alive) {
+                alivePlayers++;
+            }
+        }
+        if (alivePlayers == 1) {
+            Stage currentStage = (Stage) board.getScene().getWindow();
+            currentStage.close();
+
+            FXMLLoader loader = new FXMLLoader(Main.class.getResource("grunopoly-win.fxml"));
+            Parent root = loader.load();
+
+            GrunopolyWin controller = loader.getController();
+            Optional<Player> maybeWinner = players.stream().filter(p -> p.alive).findFirst();
+
+            if (maybeWinner.isPresent()) {
+                controller.setWinner(maybeWinner.get().name);
+            } else {
+                System.out.println("Bruh");
+               System.exit(1);
+            }
+
+
+            Stage newStage = new Stage();
+            newStage.setScene(new Scene(root));
+            newStage.setTitle("Grunopoly Win");
+            newStage.show();
         }
     }
 }
