@@ -169,7 +169,7 @@ public class Player extends Pane {
     }
 
     public void isAliveCheck(List<Pane> allPanes) {
-        if (this.money <= 0 && this.alive == true) {
+        if (this.money <= 0 && this.alive) {
             this.alive = false;
 
             for (Card card : properties) {
