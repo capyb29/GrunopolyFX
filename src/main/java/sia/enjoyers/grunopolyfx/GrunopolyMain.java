@@ -250,11 +250,11 @@ public class GrunopolyMain {
         cards.put(x40, new Card("Gefängnis", -1, Card.StreetColor.None, 0, 40));
 
         stepButton.setOnAction(event -> {
-            if (activePlayer >= players.size() - 1) {
-                activePlayer = 0;
-                rounds++;
-            } else {
-                activePlayer++;
+
+            // Keep counting until live player found
+            activePlayer = (activePlayer + 1) % 4;
+            while (!players.get(activePlayer).alive) {
+                activePlayer = (activePlayer + 1) % 4;
             }
 
             int dice1 = (int) (1 + (Math.random() * 6));
