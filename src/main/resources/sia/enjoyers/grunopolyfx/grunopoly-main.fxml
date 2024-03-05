@@ -208,15 +208,16 @@
 
 
       </Pane>
-      <Pane layoutX="3.0" layoutY="2.0" prefHeight="147.0" prefWidth="147.0" style="-fx-background-color: #ff6e6e; -fx-border-color: BLACK; -fx-border-width: 3px;">
-         <children>
-      
-            <Label alignment="TOP_CENTER" layoutY="7.0" prefHeight="39.0" prefWidth="147.0" text="Finanzamt" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font name="Comic Sans MS Bold" size="22.0" />
-               </font>
-            </Label>
-         </children></Pane>
+      <Pane layoutX="3.0" layoutY="2.0" prefHeight="147.0" prefWidth="147.0"
+            style="-fx-background-color: #ff6e6e; -fx-border-color: BLACK; -fx-border-width: 3px;">
+
+         <Label alignment="TOP_CENTER" layoutY="7.0" prefHeight="39.0" prefWidth="147.0" text="Finanzamt"
+                textAlignment="CENTER" wrapText="true">
+            <font>
+               <Font name="Comic Sans MS Bold" size="22.0"/>
+            </font>
+         </Label>
+      </Pane>
 
       <Pane layoutX="989.0" layoutY="989" prefHeight="147.0" prefWidth="147.0" style="-fx-background-color: #8cffa5; -fx-border-color: BLACK; -fx-border-width: 3px;">
 
@@ -356,7 +357,7 @@
          <Font name="Comic Sans MS" size="16.0" />
       </font>
    </Label>
-   <Button fx:id="buyButton" layoutX="1216.0" layoutY="893.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="300.0" text="Kaufen">
+   <Button fx:id="buyButton" layoutX="1216.0" layoutY="893.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="311.0" text="Kaufen">
       <font>
          <Font name="Comic Sans MS" size="19.0" />
       </font>
@@ -377,10 +378,11 @@
          <Font name="Comic Sans MS" size="18.0" />
       </font>
    </Label>
-   <Button fx:id="streetSellButton" layoutX="1405.0" layoutY="944.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="112.0" text="Verkaufen">
+   <Button fx:id="streetSellButton" layoutX="1374.0" layoutY="944.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="76.0" text="Verkaufen">
       <font>
          <Font name="Comic Sans MS" size="12.0" />
       </font>
    </Button>
    <ChoiceBox fx:id="streetSelector" layoutX="1216.0" layoutY="944.0" prefWidth="150.0" />
+   <Button fx:id="tradeButton" layoutX="1465.0" layoutY="945.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="Handeln" />
 </Pane>

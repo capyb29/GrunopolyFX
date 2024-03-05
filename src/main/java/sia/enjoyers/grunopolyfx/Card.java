@@ -4,7 +4,6 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 public class Card {
@@ -31,7 +30,7 @@ public class Card {
     int baseRent;
 
     Card(String name, int price, StreetColor color, int rent, int id) {
-        this.playersOnCard = new ArrayList<Player>();
+        this.playersOnCard = new ArrayList<>();
         this.name = name;
         this.price = price;
         this.owner = null;

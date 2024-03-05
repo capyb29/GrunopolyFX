@@ -11,6 +11,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.Background;
@@ -53,8 +54,8 @@ public class GrunopolyMain {
     public Label youGotA;
     public Label header;
     public Button streetSellButton;
-
     public ChoiceBox<String> streetSelector;
+    public Button tradeButton;
 
 
     //Get Board and Background
@@ -284,6 +285,27 @@ public class GrunopolyMain {
             updateUi(pane, 0);
             streetSelector.setValue("");
         });
+
+        tradeButton.setOnAction(event -> {
+            try {
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("grunopoly-trade.fxml"));
+                Parent root = loader.load();
+
+                GrunopolyTrade controller = loader.getController();
+                controller.setTradePartnerBox(this.currentPlayer, players.toArray(new Player[0]));
+                controller.setTradePlayers(players);
+
+                Stage stage = new Stage();
+                stage.initOwner(board.getScene().getWindow());
+                stage.setScene(new Scene(root));
+                stage.setTitle("Grunopoly Trade");
+                stage.show();
+
+                this.board.getScene().getWindow().setOnCloseRequest(closeEvent -> stage.close());
+            } catch (IOException e) {
+                System.out.println("Problem while opening trade window: " + e);
+            }
+        });
     }
 
     public void step(int stepCount, Player player) {
@@ -476,10 +498,13 @@ public class GrunopolyMain {
                 streetChoiceHouses.getItems().add(street.name);
             }
             buyHouses.setDisable(streetChoiceHouses.getItems().isEmpty());
+            streetChoiceHouses.setDisable(streetChoiceHouses.getItems().isEmpty());
 
             streetSelector.getItems().clear();
             this.currentPlayer.properties.forEach(c -> streetSelector.getItems().add(c.name));
             streetSellButton.setDisable(streetSelector.getItems().isEmpty());
+            streetSelector.setDisable(streetSelector.getItems().isEmpty());
+            tradeButton.setDisable(streetSelector.getItems().isEmpty());
 
             try {
                 countAlivePlayers();
@@ -563,8 +588,8 @@ public class GrunopolyMain {
     public void devBuild(Player name) {
         if (Objects.equals(name.name, "dev")) {
             Button cashButton = new Button("Cash Money");
-            Button oneStepButton = new Button("One Step");
-            oneStepButton.setLayoutX(100);
+            TextField stepField = new TextField();
+            stepField.setLayoutX(100);
             Button changePlayerButton = new Button("Change Player");
             changePlayerButton.setLayoutX(200);
             Button bankruptButton = new Button("Bankrupt Player");
@@ -573,24 +598,23 @@ public class GrunopolyMain {
                 this.currentPlayer.money += 1000;
                 updateUi(allPanes.get(this.currentPlayer.pos.intValue()), 0);
             });
-            oneStepButton.setOnAction(e -> {
-                int initial = this.currentPlayer.pos.get();
-                int newPos = initial + 1 <= 39 ? initial + 1 : (initial + 1) % 40;
+            stepField.setOnAction(e -> {
+                try {
 
-                this.cards.forEach((pane, cards) -> cards.playersOnCard.removeIf(p -> p.id == this.currentPlayer.id));
-
-                Pane newDesiredPane = allPanes.get(newPos);
+                this.currentPlayer.pos = new AtomicInteger(Integer.parseInt(stepField.getText()));
+                Pane newDesiredPane = allPanes.get(this.currentPlayer.pos.intValue());
                 Card newDesiredCard = this.cards.get(newDesiredPane);
 
                 assert newDesiredCard != null;
                 newDesiredCard.playersOnCard.add(this.currentPlayer);
-
-                this.currentPlayer.setPosition(newDesiredPane, newPos);
-
-                updateUi(newDesiredPane, 1);
+                updateUi(newDesiredPane, 0);
+                } catch (Exception ex) {
+                    System.err.println("Error " + ex);
+                }
             });
 
             changePlayerButton.setOnAction(e -> {
+                this.currentPlayer = players.get(activePlayer);
                 if (activePlayer >= players.size() - 1) {
                     activePlayer = 0;
                     rounds++;
@@ -607,7 +631,7 @@ public class GrunopolyMain {
             });
 
             board.getChildren().add(cashButton);
-            board.getChildren().add(oneStepButton);
+            board.getChildren().add(stepField);
             board.getChildren().add(changePlayerButton);
             board.getChildren().add(bankruptButton);
 
@@ -624,6 +648,7 @@ public class GrunopolyMain {
         }
     }
 
+    //todo fix two win screens
     public void countAlivePlayers() throws IOException {
         int alivePlayers = 0;
         for (Player player : players) {
