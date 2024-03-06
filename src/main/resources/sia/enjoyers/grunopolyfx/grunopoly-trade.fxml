@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<AnchorPane fx:id="tradingBoardMain" prefHeight="336.0" prefWidth="413.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sia.enjoyers.grunopolyfx.GrunopolyTrade">
+   <ChoiceBox fx:id="tradePartnerBox" layoutX="104.0" layoutY="54.0" prefHeight="25.0" prefWidth="206.0" />
+   <Label alignment="CENTER" layoutX="104.0" layoutY="14.0" prefHeight="17.0" prefWidth="206.0" text="Handelspartner:" textAlignment="CENTER">
+      <font>
+         <Font name="Comic Sans MS" size="17.0" />
+      </font>
+   </Label>
+   <ToggleButton fx:id="setMoneyOrStreet" layoutX="14.0" layoutY="143.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="93.0" text="Geld" />
+   <Label layoutX="14.0" layoutY="116.0" text="Dein Angebot:">
+      <font>
+         <Font name="Comic Sans MS" size="14.0" />
+      </font>
+   </Label>
+   <Slider fx:id="sliderMoneyAmount" layoutX="14.0" layoutY="168.0" orientation="VERTICAL" />
+   <Label fx:id="tradeMoneyAmmount" alignment="TOP_CENTER" layoutX="34.0" layoutY="205.0" prefHeight="52.0" prefWidth="93.0" text="XXXX€" wrapText="true">
+      <font>
+         <Font name="Comic Sans MS" size="15.0" />
+      </font>
+   </Label>
+   <Label fx:id="tradPartnerLabel" layoutX="207.0" layoutY="117.0" prefHeight="52.0" prefWidth="136.0" text="Handelspartner wählen." textAlignment="CENTER" wrapText="true">
+      <font>
+         <Font name="Comic Sans MS" size="14.0" />
+      </font>
+   </Label>
+   <ChoiceBox fx:id="tradePartnerStreets" layoutX="200.0" layoutY="193.0" prefWidth="150.0" />
+   <Button fx:id="sendTradeOffer" layoutX="187.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="212.0" text="Handelsanfrage abschicken">
+      <font>
+         <Font name="Comic Sans MS Italic" size="14.0" />
+      </font>
+   </Button>
+   <Button fx:id="cancleTradeBtn" layoutX="88.0" layoutY="285.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="93.0" text="Abbrechen">
+      <font>
+         <Font name="Comic Sans MS Italic" size="14.0" />
+      </font>
+   </Button>
+   <ChoiceBox fx:id="chooseOwnStreet" layoutX="21.0" layoutY="245.0" prefWidth="150.0" />
+   <Label fx:id="ownStreetLabel" layoutX="29.0" layoutY="186.0" prefHeight="52.0" prefWidth="119.0" text="Wähle eine eigene Straße aus:" textAlignment="CENTER" wrapText="true">
+      <font>
+         <Font name="Comic Sans MS" size="14.0" />
+      </font>
+   </Label>
+</AnchorPane>
