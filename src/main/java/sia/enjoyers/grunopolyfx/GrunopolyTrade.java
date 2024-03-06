@@ -2,13 +2,17 @@ package sia.enjoyers.grunopolyfx;
 
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
-import java.util.ArrayList;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 
 public class GrunopolyTrade {
+
+    public interface TradingCompleteListener {
+        void onTradingComplete();
+    }
+
     public AnchorPane tradingBoardMain;
     public ChoiceBox<String> tradePartnerBox;
     public ToggleButton setMoneyOrStreet;
@@ -23,8 +27,9 @@ public class GrunopolyTrade {
 
     private ArrayList<Player> tradePlayers;
     private Player currentTrader;
-
-//todo add trade offer to player
+    private HashMap<Pane, Card> holyHashMap;
+    private Label eventText;
+    private TradingCompleteListener listener;
 
     public void initialize() {
         this.tradePartnerBox.setOnAction((event) -> {
@@ -50,21 +55,56 @@ public class GrunopolyTrade {
                     this.setMoneyOrStreet.setDisable(false);
 
                 }
-
                 this.tradeMoneyAmmount.setVisible(true);
 
+            } else {
+                this.sendTradeOffer.setDisable(true);
+                this.sliderMoneyAmount.setDisable(true);
+                this.setMoneyOrStreet.setDisable(true);
+                this.tradPartnerLabel.setText("Wähle eine Straße zum Handeln aus!");
+                this.tradeMoneyAmmount.setVisible(false);
             }
-            updateUi2();
         });
 
-        this.setMoneyOrStreet.setOnAction((event) -> updateUi2());
+        this.setMoneyOrStreet.setOnAction((event) -> {
+            if (setMoneyOrStreet.isSelected()) {
+                this.sliderMoneyAmount.setDisable(true);
+                this.sliderMoneyAmount.setVisible(false);
+                this.tradeMoneyAmmount.setVisible(false);
+                this.ownStreetLabel.setVisible(true);
+                this.chooseOwnStreet.setVisible(true);
+                this.chooseOwnStreet.setDisable(false);
+
+                this.setMoneyOrStreet.setText("Straße");
+
+                this.chooseOwnStreet.getItems().clear();
+                for (Card card : this.currentTrader.properties) {
+                    this.chooseOwnStreet.getItems().add(card.name);
+                }
+            } else {
+                this.setMoneyOrStreet.setText("Geld");
+
+                this.sliderMoneyAmount.setDisable(false);
+                this.sliderMoneyAmount.setVisible(true);
+                this.tradeMoneyAmmount.setVisible(true);
+                this.ownStreetLabel.setVisible(false);
+                this.chooseOwnStreet.setVisible(false);
+                this.chooseOwnStreet.setDisable(true);
+            }
+        });
+
+        this.sendTradeOffer.setOnAction((event) -> {
+                sendTradeOffer();
+                listener.onTradingComplete();
+        });
+
         updateUi2();
     }
 
     public void setTradePartnerBox(Player crrPlayer, Player[] players) {
         this.currentTrader = crrPlayer;
         for (Player player : players) {
-            if (player != this.currentTrader) {
+            if (player != this.currentTrader && player.alive && !player.properties.isEmpty() ){
                 this.tradePartnerBox.getItems().add(player.name);
             }
         }
@@ -72,8 +112,8 @@ public class GrunopolyTrade {
     }
 
     private void updateUi2() {
+        this.tradePartnerStreets.getItems().clear();
         if (this.tradePartnerBox.getValue() != null && !this.tradePartnerBox.getValue().isEmpty()) {
-            this.tradePartnerStreets.getItems().clear();
             String tradePartnerName = this.tradePartnerBox.getValue();
             Optional<Player> tradePartner = this.tradePlayers.stream().filter((player) -> player.name.equals(tradePartnerName)).findFirst();
             if (tradePartner.isPresent()) {
@@ -83,7 +123,7 @@ public class GrunopolyTrade {
             }
             this.tradePartnerStreets.setDisable(false);
         } else {
-            this.tradePartnerStreets.getItems().clear();
+
             this.tradePartnerStreets.setDisable(true);
             this.sendTradeOffer.setDisable(true);
             this.sliderMoneyAmount.setDisable(true);
@@ -92,22 +132,7 @@ public class GrunopolyTrade {
             this.tradeMoneyAmmount.setVisible(false);
             this.chooseOwnStreet.setDisable(true);
         }
-
-        if (setMoneyOrStreet.isSelected()) {
-            this.sliderMoneyAmount.setDisable(true);
-            this.sliderMoneyAmount.setVisible(false);
-            this.tradeMoneyAmmount.setVisible(false);
-            this.ownStreetLabel.setVisible(true);
-            this.chooseOwnStreet.setVisible(true);
-            this.chooseOwnStreet.setDisable(false);
-
-            this.setMoneyOrStreet.setText("Straße");
-
-            this.chooseOwnStreet.getItems().clear();
-            for (Card card : this.currentTrader.properties) {
-                this.chooseOwnStreet.getItems().add(card.name);
-            }
-        } else {
+        if (!this.setMoneyOrStreet.isSelected()) {
             this.setMoneyOrStreet.setText("Geld");
 
             this.sliderMoneyAmount.setDisable(false);
@@ -117,7 +142,6 @@ public class GrunopolyTrade {
             this.chooseOwnStreet.setVisible(false);
             this.chooseOwnStreet.setDisable(true);
         }
-
 
     }
 
@@ -130,6 +154,55 @@ public class GrunopolyTrade {
         this.sliderMoneyAmount.setMax(this.currentTrader.money);
         this.sliderMoneyAmount.setValue(tradeProperty.price);
         this.sliderMoneyAmount.valueProperty().addListener((observable, oldValue, newValue) -> this.tradeMoneyAmmount.setText(newValue.intValue() + "€"));
+    }
+
+    public void sendTradeOffer() {
+        String tradePartnerName = this.tradePartnerBox.getValue();
+        Optional<Player> tradePartner = this.tradePlayers.stream().filter((player) -> player.name.equals(tradePartnerName)).findFirst();
+        if (tradePartner.isPresent()) {
+            String tradePartnerStreet = this.tradePartnerStreets.getValue();
+            Optional<Card> tradeProperty = tradePartner.get().properties.stream().filter((card) -> card.name.equals(tradePartnerStreet)).findFirst();
+            if (tradeProperty.isPresent()) {
+                if (setMoneyOrStreet.isSelected()) {
+                    Optional<Card> ownProperty = this.currentTrader.properties.stream().filter((card) -> card.name.equals(this.chooseOwnStreet.getValue())).findFirst();
+                    ownProperty.ifPresent(card -> {
+                        for (Map.Entry<Pane, Card> entry : holyHashMap.entrySet()) {
+                            if (entry.getValue().equals(card)) {
+                                ownProperty.get().buyStreet(tradePartner.get(),eventText,entry.getKey(),true);
+                                tradePartner.get().properties.remove(tradeProperty.get());
+                            }
+                            if (entry.getValue().equals(tradeProperty.get())) {
+                                tradeProperty.get().buyStreet(this.currentTrader,eventText,entry.getKey(),true);
+                                currentTrader.properties.remove(ownProperty.get());
+                            }
+                        }
+                    });
+                } else {
+                    for (Map.Entry<Pane, Card> entry : holyHashMap.entrySet()) {
+                        if (entry.getValue().equals(tradeProperty.get())) {
+                            tradeProperty.get().buyStreet(this.currentTrader,eventText,entry.getKey(),true);
+                            tradePartner.get().properties.remove(tradeProperty.get());
+                        }
+                    }
+                    this.currentTrader.money -= (int) this.sliderMoneyAmount.getValue();
+                    tradePartner.get().money += (int) this.sliderMoneyAmount.getValue();
+                }
+            }
+        }
+        Stage thisStage = (Stage) this.tradingBoardMain.getScene().getWindow();
+        thisStage.close();
+    }
+
+    public void portHolyHashmap(HashMap<Pane, Card> hhmap) {
+        this.holyHashMap = hhmap;
+    }
+
+    public void getEventText(Label eventText) {
+        this.eventText = eventText;
+    }
+
+    public void setTradingCompleteListener(TradingCompleteListener listener) {
+        this.listener = listener;
     }
 
 }

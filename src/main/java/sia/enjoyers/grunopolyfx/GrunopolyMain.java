@@ -158,6 +158,7 @@ public class GrunopolyMain {
 
     // Declare data
 
+    int winScreenCounter = 0;
     List<Pane> allPanes;
     ArrayList<Player> players = new ArrayList<>();
     public HashMap<Pane, Card> cards;
@@ -202,7 +203,7 @@ public class GrunopolyMain {
         buyButton.setOnAction(e -> {
             Pane cPane = allPanes.get(this.currentPlayer.pos.intValue());
             Card cCard = cards.get(cPane);
-            cCard.buyStreet(this.currentPlayer, eventText, cPane);
+            cCard.buyStreet(this.currentPlayer, eventText, cPane, false);
             // Update UI
             updateUi(cPane, diceNumber);
         });
@@ -255,7 +256,7 @@ public class GrunopolyMain {
             this.currentPlayer = players.get(activePlayer);
             // Keep counting until live player found
             activePlayer = (activePlayer + 1) % playerCount;
-            while (!this.currentPlayer.alive) {
+            while (!players.get(activePlayer).alive) {
                 activePlayer = (activePlayer + 1) % playerCount;
             }
 
@@ -294,6 +295,9 @@ public class GrunopolyMain {
                 GrunopolyTrade controller = loader.getController();
                 controller.setTradePartnerBox(this.currentPlayer, players.toArray(new Player[0]));
                 controller.setTradePlayers(players);
+                controller.portHolyHashmap(cards);
+                controller.getEventText(eventText);
+                controller.setTradingCompleteListener(() -> updateUi(allPanes.get(this.currentPlayer.pos.get()), 0));
 
                 Stage stage = new Stage();
                 stage.initOwner(board.getScene().getWindow());
@@ -417,6 +421,7 @@ public class GrunopolyMain {
             Player player = players.get(i);
 
             // Check if player alive (naturally would be done first, but I am working with real gourmet chefs here)
+            // Says the guy who messed up the dice roll mechanism
             player.isAliveCheck(allPanes);
 
             Label playerLabel = switch (i) {
@@ -552,7 +557,8 @@ public class GrunopolyMain {
     }
 
     public void setBackgroundImage() {
-        File imageFile = recursiveSearchImage(new File("."), "Board.png");
+        File imageFile = AssetFiles.recursiveFileSearch(new File("."), "Board.png");
+        assert imageFile != null;
         String imagePath = imageFile.getAbsolutePath();
         try {
             Image image = new Image("file:" + imagePath);
@@ -568,21 +574,6 @@ public class GrunopolyMain {
         } catch (Exception e) {
             System.exit(1);
         }
-    }
-
-    public File recursiveSearchImage(File rootDirectory, String filename) {
-        if (rootDirectory.isDirectory()) {
-            for (File file : Objects.requireNonNull(rootDirectory.listFiles())) {
-                if (file.getName().equals(filename)) {
-                    return file;
-                }
-                File foundFile = recursiveSearchImage(file, filename);
-                if (foundFile != null) {
-                    return foundFile;
-                }
-            }
-        }
-        return null;
     }
 
     public void devBuild(Player name) {
@@ -601,13 +592,13 @@ public class GrunopolyMain {
             stepField.setOnAction(e -> {
                 try {
 
-                this.currentPlayer.pos = new AtomicInteger(Integer.parseInt(stepField.getText()));
-                Pane newDesiredPane = allPanes.get(this.currentPlayer.pos.intValue());
-                Card newDesiredCard = this.cards.get(newDesiredPane);
+                    this.currentPlayer.pos = new AtomicInteger(Integer.parseInt(stepField.getText()));
+                    Pane newDesiredPane = allPanes.get(this.currentPlayer.pos.intValue());
+                    Card newDesiredCard = this.cards.get(newDesiredPane);
 
-                assert newDesiredCard != null;
-                newDesiredCard.playersOnCard.add(this.currentPlayer);
-                updateUi(newDesiredPane, 0);
+                    assert newDesiredCard != null;
+                    newDesiredCard.playersOnCard.add(this.currentPlayer);
+                    updateUi(newDesiredPane, 0);
                 } catch (Exception ex) {
                     System.err.println("Error " + ex);
                 }
@@ -648,7 +639,6 @@ public class GrunopolyMain {
         }
     }
 
-    //todo fix two win screens
     public void countAlivePlayers() throws IOException {
         int alivePlayers = 0;
         for (Player player : players) {
@@ -656,28 +646,32 @@ public class GrunopolyMain {
                 alivePlayers++;
             }
         }
-        if (alivePlayers == 1) {
-            Stage currentStage = (Stage) board.getScene().getWindow();
-            currentStage.close();
 
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("grunopoly-win.fxml"));
-            Parent root = loader.load();
+        if (winScreenCounter == 0) {
+            if (alivePlayers == 1) {
+                this.winScreenCounter++;
+                Stage currentStage = (Stage) board.getScene().getWindow();
+                currentStage.close();
 
-            GrunopolyWin controller = loader.getController();
-            Optional<Player> maybeWinner = players.stream().filter(p -> p.alive).findFirst();
+                FXMLLoader loader = new FXMLLoader(Main.class.getResource("grunopoly-win.fxml"));
+                Parent root = loader.load();
 
-            if (maybeWinner.isPresent()) {
-                controller.setWinner(maybeWinner.get().name);
-            } else {
-                System.out.println("Bruh");
-               System.exit(1);
+                GrunopolyWin controller = loader.getController();
+                Optional<Player> maybeWinner = players.stream().filter(p -> p.alive).findFirst();
+
+                if (maybeWinner.isPresent()) {
+                    controller.setWinner(maybeWinner.get().name);
+                } else {
+                    System.out.println("Bruh");
+                    System.exit(1);
+                }
+
+
+                Stage newStage = new Stage();
+                newStage.setScene(new Scene(root));
+                newStage.setTitle("Grunopoly Win");
+                newStage.show();
             }
-
-
-            Stage newStage = new Stage();
-            newStage.setScene(new Scene(root));
-            newStage.setTitle("Grunopoly Win");
-            newStage.show();
         }
     }
 }
