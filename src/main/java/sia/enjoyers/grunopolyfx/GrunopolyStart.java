@@ -27,6 +27,8 @@ public class GrunopolyStart {
 
     public String[] playerNames;
 
+    public static GrunopolyMain controller;
+
     public void initialize() {
         playerChoiceBox.getItems().addAll("2 Spieler", "3 Spieler", "4 Spieler");
         playerChoiceBox.setValue("2 Spieler");
@@ -65,7 +67,7 @@ public class GrunopolyStart {
         FXMLLoader loader = new FXMLLoader(Main.class.getResource("grunopoly-main.fxml"));
         Parent root = loader.load();
 
-        GrunopolyMain controller = loader.getController();
+        controller = loader.getController();
         controller.initPlayers(playerChoiceBox.getSelectionModel().getSelectedIndex() + 2, playerNames);
 
 

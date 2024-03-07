@@ -358,6 +358,21 @@ public class GrunopolyMain {
             player.money -= Math.abs(moolah);
 
             eventText.setText(player.name + " hat die 10%-Steuer bezahlt!\n-" + moolah + "€");
+        } else if (newDesiredPane == x15 || newDesiredPane == x35) {
+            player.setPosition(newDesiredPane, newPos);
+            updateUi(newDesiredPane, stepCount);
+
+            // Event ausführen
+            ChanceEvent event = new ChanceEvent(players, player, eventText, allPanes);
+
+            // Event-Karte endet den Spielzug.
+            activePlayer = (activePlayer + 1) % playerCount;
+            while (!players.get(activePlayer).alive) {
+                activePlayer = (activePlayer + 1) % playerCount;
+            }
+
+            return;
+
         }
 
         assert newDesiredCard != null;
@@ -415,7 +430,7 @@ public class GrunopolyMain {
         }
     }
 
-    private void updateUi(Pane currentPane, int rolled) {
+    public void updateUi(Pane currentPane, int rolled) {
         // Update player labels
         for (int i = 0; i < players.size(); i++) {
             Player player = players.get(i);
@@ -449,6 +464,7 @@ public class GrunopolyMain {
                 playerLabel.setText(player.name);
             }
             if (moneyLabel != null) {
+                System.out.println(player.money);
                 moneyLabel.setText(player.money + "€");
             }
 
@@ -592,13 +608,15 @@ public class GrunopolyMain {
             stepField.setOnAction(e -> {
                 try {
 
-                    this.currentPlayer.pos = new AtomicInteger(Integer.parseInt(stepField.getText()));
-                    Pane newDesiredPane = allPanes.get(this.currentPlayer.pos.intValue());
-                    Card newDesiredCard = this.cards.get(newDesiredPane);
-
-                    assert newDesiredCard != null;
-                    newDesiredCard.playersOnCard.add(this.currentPlayer);
-                    updateUi(newDesiredPane, 0);
+//                    this.currentPlayer.pos = new AtomicInteger(Integer.parseInt(stepField.getText()));
+//                    Pane newDesiredPane = allPanes.get(this.currentPlayer.pos.intValue());
+//                    Card newDesiredCard = this.cards.get(newDesiredPane);
+//
+//                    assert newDesiredCard != null;
+//                    newDesiredCard.playersOnCard.add(this.currentPlayer);
+//
+                    step(Integer.parseInt(stepField.getText()), this.currentPlayer);
+                    //updateUi(newDesiredPane, 0);
                 } catch (Exception ex) {
                     System.err.println("Error " + ex);
                 }
