@@ -56,6 +56,7 @@ public class GrunopolyMain {
     public Button streetSellButton;
     public ChoiceBox<String> streetSelector;
     public Button tradeButton;
+    public Button sellHouse;
 
 
     //Get Board and Background
@@ -279,6 +280,18 @@ public class GrunopolyMain {
 
         });
 
+        sellHouse.setOnAction(event -> {
+            if (streetChoiceHouses.getValue() == null) {
+                eventText.setText("Bitte wählen Sie eine Straße aus!");
+                return;
+            }
+
+            String streetName = streetChoiceHouses.getValue();
+            this.currentPlayer.sellHouse(streetName, eventText, allPanes);
+            updateUi(allPanes.get(this.currentPlayer.pos.get()), 0);
+            streetChoiceHouses.setValue(streetName);
+        });
+
         streetSellButton.setOnAction(event -> {
             Pane pane = allPanes.get(this.currentPlayer.pos.get());
 
@@ -363,7 +376,7 @@ public class GrunopolyMain {
             updateUi(newDesiredPane, stepCount);
 
             // Event ausführen
-            ChanceEvent event = new ChanceEvent(players, player, eventText, allPanes);
+            new ChanceEvent(players, player, eventText, allPanes);
 
             // Event-Karte endet den Spielzug.
             activePlayer = (activePlayer + 1) % playerCount;
@@ -464,7 +477,6 @@ public class GrunopolyMain {
                 playerLabel.setText(player.name);
             }
             if (moneyLabel != null) {
-                System.out.println(player.money);
                 moneyLabel.setText(player.money + "€");
             }
 
@@ -520,6 +532,7 @@ public class GrunopolyMain {
             }
             buyHouses.setDisable(streetChoiceHouses.getItems().isEmpty());
             streetChoiceHouses.setDisable(streetChoiceHouses.getItems().isEmpty());
+            sellHouse.setDisable(this.currentPlayer.properties.stream().map(c -> c.houses).reduce(0, Integer::sum) == 0);
 
             streetSelector.getItems().clear();
             this.currentPlayer.properties.forEach(c -> streetSelector.getItems().add(c.name));
@@ -650,8 +663,7 @@ public class GrunopolyMain {
     public void dieterCheck(ArrayList<Player> playersN) {
         for (Player player : playersN) {
             if (player.name.equals("Dieter Janzen")) {
-                player.properties.add(cards.get(x39));
-                cards.get(x39).owner = player;
+                cards.get(x39).buyStreet(player, eventText, allPanes.get(39), true);
                 break;
             }
         }

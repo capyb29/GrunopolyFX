@@ -19,6 +19,7 @@ public class Card {
         BLUE,
         None
     }
+
     ArrayList<Player> playersOnCard;
     int price;
     int rent;
@@ -40,6 +41,7 @@ public class Card {
         this.id = id;
         this.baseRent = rent;
     }
+
     public void buyStreet(Player player, Label eventText, Pane pane, Boolean trading) {
         if (!trading) {
             if (player.money >= this.price) {
@@ -51,15 +53,15 @@ public class Card {
                 Color color = player.color;
                 String hex = String.format("#%02x%02x%02x", (int) (color.getRed() * 255), (int) (color.getGreen() * 255), (int) (color.getBlue() * 255));
                 String style = """
-                    -fx-background-radius: 15px;
-                    -fx-background-color: %s;
-                    -fx-text-fill: RED;
+                            -fx-background-radius: 15px;
+                            -fx-background-color: %s;
+                            -fx-text-fill: RED;
 
-                    -fx-border-radius: 3px;
-                    -fx-border-width: 2px;
-                    -fx-border-color: black;
-                    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 15, 0, 0, 0);
-                """;
+                            -fx-border-radius: 3px;
+                            -fx-border-width: 2px;
+                            -fx-border-color: black;
+                            -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 15, 0, 0, 0);
+                        """;
 
                 pane.setPrefHeight(15.0);
                 pane.setPrefWidth(15.0);
@@ -76,15 +78,15 @@ public class Card {
             Color color = player.color;
             String hex = String.format("#%02x%02x%02x", (int) (color.getRed() * 255), (int) (color.getGreen() * 255), (int) (color.getBlue() * 255));
             String style = """
-                    -fx-background-radius: 15px;
-                    -fx-background-color: %s;
-                    -fx-text-fill: RED;
+                        -fx-background-radius: 15px;
+                        -fx-background-color: %s;
+                        -fx-text-fill: RED;
 
-                    -fx-border-radius: 3px;
-                    -fx-border-width: 2px;
-                    -fx-border-color: black;
-                    -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 15, 0, 0, 0);
-                """;
+                        -fx-border-radius: 3px;
+                        -fx-border-width: 2px;
+                        -fx-border-color: black;
+                        -fx-effect: dropshadow(three-pass-box, rgba(0, 0, 0, 0.8), 15, 0, 0, 0);
+                    """;
 
             pane.setPrefHeight(15.0);
             pane.setPrefWidth(15.0);
@@ -104,8 +106,9 @@ public class Card {
     }
 
     public void updateRent(int houses) {
+        this.rent = this.baseRent;
         for (int i = 0; i < houses; i++) {
-            this.rent = (int) (this.rent * 1.25);
+            this.rent += (int) (this.baseRent * 1.25);
         }
     }
 

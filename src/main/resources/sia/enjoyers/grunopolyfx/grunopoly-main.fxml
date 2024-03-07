@@ -378,7 +378,7 @@
          <Font name="Comic Sans MS" size="18.0" />
       </font>
    </Label>
-   <Button fx:id="buyHouses" layoutX="1399.0" layoutY="1053.0" mnemonicParsing="false" prefHeight="1.0" prefWidth="128.0" text="1 Haus Kaufen">
+   <Button fx:id="buyHouses" layoutX="1399.0" layoutY="1053.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="+">
       <font>
          <Font name="Comic Sans MS" size="14.0" />
       </font>
@@ -395,4 +395,9 @@
    </Button>
    <ChoiceBox fx:id="streetSelector" layoutX="1216.0" layoutY="944.0" prefWidth="150.0" />
    <Button fx:id="tradeButton" layoutX="1465.0" layoutY="945.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="63.0" text="Handeln" />
+   <Button fx:id="sellHouse" layoutX="1469.0" layoutY="1053.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="56.0" text="-">
+      <font>
+         <Font name="Comic Sans MS" size="14.0" />
+      </font>
+   </Button>
 </Pane>

@@ -103,7 +103,7 @@ public class Player extends Pane {
 
         if (currentCard.houses < 5 && money >= currentCard.price / 2) {
             currentCard.houses++;
-            money -= currentCard.price / 2;
+            money -= (int) (currentCard.price * 1.5);
             eventText.setText(name + " hat ein Haus auf " + currentCard.name + " gebaut!");
             currentCard.updateRent(currentCard.houses);
 
@@ -146,6 +146,19 @@ public class Player extends Pane {
                 housePane.setLayoutY(-48 + (15 * currentCard.houses));
                 housePane.setLayoutX(-70);
             }
+        }
+    }
+
+    public void sellHouse(String card, Label eventText, List<Pane> allPanes) {
+        Card currentCard = properties.stream().filter(c -> c.name.equals(card)).toList().getFirst();
+        if (currentCard.houses > 0) {
+            currentCard.houses--;
+            money += (int) (currentCard.price / 1.5);
+            eventText.setText(name + " hat ein Haus auf " + currentCard.name + " verkauft!");
+            currentCard.updateRent(currentCard.houses);
+
+            Pane currentPane = allPanes.get(currentCard.id);
+            currentPane.getChildren().removeLast();
         }
     }
 

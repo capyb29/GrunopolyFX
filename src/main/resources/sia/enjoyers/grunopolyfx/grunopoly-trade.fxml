@@ -23,13 +23,13 @@
          <Font name="Comic Sans MS" size="15.0" />
       </font>
    </Label>
-   <Label fx:id="tradPartnerLabel" layoutX="207.0" layoutY="117.0" prefHeight="52.0" prefWidth="136.0" text="Handelspartner wählen." textAlignment="CENTER" wrapText="true">
+   <Label fx:id="tradPartnerLabel" layoutX="207.0" layoutY="101.0" prefHeight="86.0" prefWidth="136.0" text="Handelspartner wählen." textAlignment="CENTER" wrapText="true">
       <font>
          <Font name="Comic Sans MS" size="14.0" />
       </font>
    </Label>
    <ChoiceBox fx:id="tradePartnerStreets" layoutX="200.0" layoutY="193.0" prefWidth="150.0" />
-   <Button fx:id="sendTradeOffer" layoutX="187.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="212.0" text="Handelsanfrage abschicken">
+   <Button fx:id="sendTradeOffer" layoutX="187.0" layoutY="285.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="212.0" text="Handel ausführen">
       <font>
          <Font name="Comic Sans MS Italic" size="14.0" />
       </font>

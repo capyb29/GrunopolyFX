@@ -163,11 +163,19 @@ public class GrunopolyTrade {
             String tradePartnerStreet = this.tradePartnerStreets.getValue();
             Optional<Card> tradeProperty = tradePartner.get().properties.stream().filter((card) -> card.name.equals(tradePartnerStreet)).findFirst();
             if (tradeProperty.isPresent()) {
+                if (tradeProperty.get().houses > 0) {
+                    this.tradPartnerLabel.setText("Du kannst keine Straße mit Häusern handeln!");
+                    return;
+                }
                 if (setMoneyOrStreet.isSelected()) {
                     Optional<Card> ownProperty = this.currentTrader.properties.stream().filter((card) -> card.name.equals(this.chooseOwnStreet.getValue())).findFirst();
-                    ownProperty.ifPresent(card -> {
+                    if (ownProperty.isPresent()) {
+                        if (ownProperty.get().houses > 0) {
+                            this.tradPartnerLabel.setText("Du kannst keine Straße mit Häusern handeln!");
+                            return;
+                        }
                         for (Map.Entry<Pane, Card> entry : holyHashMap.entrySet()) {
-                            if (entry.getValue().equals(card)) {
+                            if (entry.getValue().equals(ownProperty.get())) {
                                 ownProperty.get().buyStreet(tradePartner.get(),eventText,entry.getKey(),true);
                                 tradePartner.get().properties.remove(tradeProperty.get());
                             }
@@ -176,7 +184,7 @@ public class GrunopolyTrade {
                                 currentTrader.properties.remove(ownProperty.get());
                             }
                         }
-                    });
+                    }
                 } else {
                     for (Map.Entry<Pane, Card> entry : holyHashMap.entrySet()) {
                         if (entry.getValue().equals(tradeProperty.get())) {
