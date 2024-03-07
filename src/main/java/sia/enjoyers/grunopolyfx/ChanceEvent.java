@@ -10,13 +10,12 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class ChanceEvent {
 
     ChanceEvent(ArrayList<Player> players, Player player, Label eventText, List<Pane> allPanes) {
-        int chosen = (int) (Math.random() * 5) + 1;
-        System.out.println(player);
+        int chosen = (int) (Math.random() * 7) + 1;
+
         switch (chosen) {
             case 1:
                 // Ins Gefängnis
 
-                System.out.println("bruh");
                 player.setPosition(allPanes.get(40), player.pos.intValue());
                 player.jailRounds = 3;
 
@@ -52,7 +51,10 @@ public class ChanceEvent {
                     cost += (card.houses * 25);
                 }
 
+                player.money -= cost;
                 eventText.setText("Chance Karte: " + player.name + " zahlt 25€ Renovierungskosten für jedes besitzte Haus! (" + cost + "€)");
+
+                GrunopolyStart.controller.updateUi(allPanes.get(player.pos.get()), 0);
 
                 break;
             case 5:
@@ -60,6 +62,28 @@ public class ChanceEvent {
 
                 GrunopolyStart.controller.step(-3, player);
                 eventText.setText("Chance Karte: " + player.name + " rückt 3 Felder zurück!");
+
+                break;
+            case 6:
+                // Geld an spieler zahlen
+
+                for (int i = 0; i < players.size(); i++) {
+                    Player plr = players.get(i);
+                    if (!plr.alive || plr.id == player.id) {continue;}
+
+                    player.money -= 50;
+                    plr.money += 50;
+                }
+                eventText.setText("Chance Karte: " + player.name + " zahlt jedem Spieler 50€!");
+
+                GrunopolyStart.controller.updateUi(allPanes.get(player.pos.get()), 0);
+
+                break;
+            case 7:
+                // Zufallsfeld
+
+                GrunopolyStart.controller.step((int) (Math.random() * 40) + 1, player);
+                eventText.setText("Chance Karte: " + player.name + " rückt auf ein zufälliges Feld!");
 
                 break;
         }
