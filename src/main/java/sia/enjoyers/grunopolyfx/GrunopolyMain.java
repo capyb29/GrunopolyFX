@@ -379,7 +379,6 @@ public class GrunopolyMain {
             new ChanceEvent(players, player, eventText, allPanes);
 
             // Event-Karte endet den Spielzug.
-            activePlayer = (activePlayer + 1) % playerCount;
             while (!players.get(activePlayer).alive) {
                 activePlayer = (activePlayer + 1) % playerCount;
             }
@@ -475,6 +474,11 @@ public class GrunopolyMain {
             };
             if (playerLabel != null) {
                 playerLabel.setText(player.name);
+                if (player.alive) {
+                    playerLabel.setTextFill(player.color);
+                } else {
+                    playerLabel.setTextFill(Color.GRAY);
+                }
             }
             if (moneyLabel != null) {
                 moneyLabel.setText(player.money + "€");
@@ -542,7 +546,7 @@ public class GrunopolyMain {
 
             try {
                 countAlivePlayers();
-            } catch (IOException e) {
+            } catch (IOException | InterruptedException e) {
                 System.out.println(e + " Niemand kann gewinnen");
             }
 
@@ -669,7 +673,7 @@ public class GrunopolyMain {
         }
     }
 
-    public void countAlivePlayers() throws IOException {
+    public void countAlivePlayers() throws IOException, InterruptedException {
         int alivePlayers = 0;
         for (Player player : players) {
             if (player.alive) {
@@ -680,6 +684,7 @@ public class GrunopolyMain {
         if (winScreenCounter == 0) {
             if (alivePlayers == 1) {
                 this.winScreenCounter++;
+                Thread.sleep(1000);
                 Stage currentStage = (Stage) board.getScene().getWindow();
                 currentStage.close();
 
