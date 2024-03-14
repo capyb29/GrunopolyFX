@@ -1,6 +1,7 @@
 package sia.enjoyers.grunopolyfx;
 
 
+import javafx.animation.TranslateTransition;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -22,6 +23,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.transform.Scale;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.File;
 import java.io.IOException;
@@ -201,14 +203,6 @@ public class GrunopolyMain {
 
         allPanes.forEach((pane) -> pane.setVisible(false));
 
-        buyButton.setOnAction(e -> {
-            Pane cPane = allPanes.get(this.currentPlayer.pos.intValue());
-            Card cCard = cards.get(cPane);
-            cCard.buyStreet(this.currentPlayer, eventText, cPane, false);
-            // Update UI
-            updateUi(cPane, diceNumber);
-        });
-
         // Set properties
         cards = new HashMap<>();
         cards.put(x0, new Card("Los", -1, Card.StreetColor.None, 0, 0));
@@ -252,6 +246,14 @@ public class GrunopolyMain {
         cards.put(x38, new Card("Unbesetzt", -1, Card.StreetColor.None, 0, 38));
         cards.put(x39, new Card("Jobelmann-Schule", 500, Card.StreetColor.BLUE, 400, 39));
         cards.put(x40, new Card("Gefängnis", -1, Card.StreetColor.None, 0, 40));
+
+        buyButton.setOnAction(e -> {
+            Pane cPane = allPanes.get(this.currentPlayer.pos.intValue());
+            Card cCard = cards.get(cPane);
+            cCard.buyStreet(this.currentPlayer, eventText, cPane, false);
+            // Update UI
+            updateUi(cPane, diceNumber);
+        });
 
         stepButton.setOnAction(event -> {
             this.currentPlayer = players.get(activePlayer);
@@ -358,13 +360,18 @@ public class GrunopolyMain {
 
         //  Gehe ins Gefängnis
         if (newDesiredPane == x30) {
-            player.setPosition(x40, player.pos.intValue());
-            player.jailRounds = 3;
-            updateUi(x40, 10);
+            player.setPosition(x30, newPos);
+            updateUi(x30, stepCount);
 
             eventText.setText(player.name + " ist ins Gefängnis geraten!");
-            player.pos = new AtomicInteger(10);
-            return;
+
+            // Event listener for jail movement
+            player.currentAnimation.setOnFinished(event -> {
+                player.setPosition(x40, 10); // Actual jail position
+                player.jailRounds = 3;
+                updateUi(x40, 10);
+                player.pos = new AtomicInteger(10);
+            });
         } else if (newDesiredPane == x20) {
             // Steuern
             int moolah = (int) (player.money * 0.1);
@@ -388,13 +395,18 @@ public class GrunopolyMain {
         }
 
         assert newDesiredCard != null;
+        player.setPosition(newDesiredPane, newPos);
         newDesiredCard.payRent(player, eventText);
         newDesiredCard.playersOnCard.add(player);
 
-        player.setPosition(newDesiredPane, newPos);
         updateUi(newDesiredPane, stepCount);
-
-
+        player.currentAnimation.setOnFinished(event -> {
+            try {
+                countAlivePlayers();
+            } catch (IOException | InterruptedException e) {
+                System.out.println(e + " Niemand kann gewinnen");
+            }
+        });
     }
 
     public void initPlayers(int playerCount, String[] playerNames) {
@@ -544,12 +556,6 @@ public class GrunopolyMain {
             streetSelector.setDisable(streetSelector.getItems().isEmpty());
             tradeButton.setDisable(streetSelector.getItems().isEmpty());
 
-            try {
-                countAlivePlayers();
-            } catch (IOException | InterruptedException e) {
-                System.out.println(e + " Niemand kann gewinnen");
-            }
-
         }
     }
 
@@ -618,6 +624,13 @@ public class GrunopolyMain {
             changePlayerButton.setLayoutX(200);
             Button bankruptButton = new Button("Bankrupt Player");
             bankruptButton.setLayoutX(300);
+            Button playAnimationButton = new Button("Play Animation");
+            playAnimationButton.setLayoutX(400);
+            Button getPlayerPos = new Button("Get Player Pos");
+            getPlayerPos.setLayoutX(500);
+            Button giveAllStreets = new Button("Give all Streets");
+            giveAllStreets.setLayoutX(600);
+
             cashButton.setOnAction(e -> {
                 this.currentPlayer.money += 1000;
                 updateUi(allPanes.get(this.currentPlayer.pos.intValue()), 0);
@@ -625,15 +638,7 @@ public class GrunopolyMain {
             stepField.setOnAction(e -> {
                 try {
 
-//                    this.currentPlayer.pos = new AtomicInteger(Integer.parseInt(stepField.getText()));
-//                    Pane newDesiredPane = allPanes.get(this.currentPlayer.pos.intValue());
-//                    Card newDesiredCard = this.cards.get(newDesiredPane);
-//
-//                    assert newDesiredCard != null;
-//                    newDesiredCard.playersOnCard.add(this.currentPlayer);
-//
                     step(Integer.parseInt(stepField.getText()), this.currentPlayer);
-                    //updateUi(newDesiredPane, 0);
                 } catch (Exception ex) {
                     System.err.println("Error " + ex);
                 }
@@ -656,10 +661,33 @@ public class GrunopolyMain {
                 updateUi(allPanes.get(this.currentPlayer.pos.intValue()), 0);
             });
 
+            playAnimationButton.setOnAction(e -> {
+                TranslateTransition animation = new TranslateTransition();
+                animation.setDuration(Duration.seconds(1.0));
+                animation.setNode(this.currentPlayer);
+                animation.setToX(x5.getLayoutX() - this.currentPlayer.getLayoutX());
+                animation.setToY(x5.getLayoutY() - this.currentPlayer.getLayoutY());
+                animation.play();
+            });
+
+            giveAllStreets.setOnAction(e -> {
+                for (Card card : cards.values()) {
+                    if (card.cardColor != Card.StreetColor.None) {
+                        card.buyStreet(this.currentPlayer, eventText, allPanes.get(card.id), true);
+                    }
+                }
+                updateUi(allPanes.get(this.currentPlayer.pos.intValue()), 0);
+            });
+
+            getPlayerPos.setOnAction(e -> eventText.setText("Player " + this.currentPlayer.name + " is at " + this.currentPlayer.pos.get()));
+
             board.getChildren().add(cashButton);
             board.getChildren().add(stepField);
             board.getChildren().add(changePlayerButton);
             board.getChildren().add(bankruptButton);
+            board.getChildren().add(playAnimationButton);
+            board.getChildren().add(getPlayerPos);
+            board.getChildren().add(giveAllStreets);
 
         }
     }

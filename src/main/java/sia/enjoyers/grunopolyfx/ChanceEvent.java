@@ -15,24 +15,25 @@ public class ChanceEvent {
         switch (chosen) {
             case 1:
                 // Ins Gefängnis
+                player.currentAnimation.setOnFinished(event -> {
+                    player.setPosition(allPanes.get(40), player.pos.intValue());
+                    player.jailRounds = 3;
 
-                player.setPosition(allPanes.get(40), player.pos.intValue());
-                player.jailRounds = 3;
+                    GrunopolyStart.controller.updateUi(allPanes.get(40), 0);
 
-                GrunopolyStart.controller.updateUi(allPanes.get(40), 0);
-
-                eventText.setText("Chance Karte: " + player.name + " kommt ins Gefängnis!");
-                player.pos = new AtomicInteger(10);
+                    eventText.setText("Chance Karte: " + player.name + " kommt ins Gefängnis!");
+                    player.pos = new AtomicInteger(10);
+                });
 
                 break;
             case 2:
                 // Auf Los ziehen.
+                player.currentAnimation.setOnFinished(event -> {
+                    eventText.setText("Chance Karte: " + player.name + " rückt auf Los!");
+                    int diff = (40 - player.pos.get());
 
-                eventText.setText("Chance Karte: " + player.name + " rückt auf Los!");
-                int diff = (40 - player.pos.get());
-
-                GrunopolyStart.controller.step(diff, player);
-
+                    GrunopolyStart.controller.step(diff, player);
+                });
                 break;
             case 3:
                 // Dividenden
@@ -59,10 +60,11 @@ public class ChanceEvent {
                 break;
             case 5:
                 // 3 Schritte nach hinten
+                player.currentAnimation.setOnFinished(event -> {
+                    GrunopolyStart.controller.step(-3, player);
+                    eventText.setText("Chance Karte: " + player.name + " rückt 3 Felder zurück!");
 
-                GrunopolyStart.controller.step(-3, player);
-                eventText.setText("Chance Karte: " + player.name + " rückt 3 Felder zurück!");
-
+                });
                 break;
             case 6:
                 // Geld an spieler zahlen

@@ -1,10 +1,12 @@
 package sia.enjoyers.grunopolyfx;
 
+import javafx.animation.TranslateTransition;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -23,6 +25,7 @@ public class Player extends Pane {
 
     public ArrayList<Card.StreetColor> hasColor;
     public ArrayList<Card> housableStreets;
+    public TranslateTransition currentAnimation;
 
     Player(String name, int id, Color color, int initialMoney) {
         this.name = name;
@@ -67,14 +70,17 @@ public class Player extends Pane {
     }
 
     public void setPosition(Pane referencePane, int pos) {
-        // Set player object position and update metadata
-        double x = referencePane.getLayoutX();
-        double y = referencePane.getLayoutY();
-
-        this.setLayoutX(x + (15 * (id % 2)));
-        this.setLayoutY(y + 20 - (15 * (id % 3)));
+        double targetX = referencePane.getLayoutX() + (15 * (id % 2));
+        double targetY = referencePane.getLayoutY() + 20 - (15 * (id % 3));
 
         this.pos.set(pos);
+
+        currentAnimation = new TranslateTransition();
+        currentAnimation.setDuration(Duration.seconds(0.3));
+        currentAnimation.setNode(this);
+        currentAnimation.setToX(targetX - this.getLayoutX());
+        currentAnimation.setToY(targetY - this.getLayoutY());
+        currentAnimation.play();
 
         this.setVisible(true);
     }
